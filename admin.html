@@ -463,6 +463,45 @@
                 transform: rotate(360deg);
             }
         }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .admin-main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            #admin-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .welcome-text h1 {
+                font-size: 1.8rem;
+            }
+
+            .login-card {
+                padding: 30px 20px;
+            }
+
+            .modal-content {
+                padding: 25px;
+            }
+
+            th:nth-child(2),
+            td:nth-child(2),
+            th:nth-child(3),
+            td:nth-child(3) {
+                display: none;
+                /* Hide date/interest on small mobile tables to fit actions */
+            }
+        }
     </style>
 </head>
 
@@ -592,6 +631,41 @@
         const adminContent = document.getElementById('admin-content');
         const errorMsg = document.getElementById('errorMsg');
         const overlay = document.getElementById('loading-overlay');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const passwordInput = document.getElementById('adminPassword');
+            const enteredPass = passwordInput.value.trim();
+
+            if (enteredPass === SECRET_KEY) {
+                // Focus out of input to hide mobile keyboard
+                passwordInput.blur();
+
+                overlay.style.display = 'flex';
+
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    loginSection.style.display = 'none';
+                    adminContent.style.display = 'block';
+                    document.body.style.overflow = 'auto'; // Re-enable scrolling
+
+                    localStorage.setItem('adminAccess', 'true');
+                    loadDashboardData();
+
+                    // Force a layout recalculation for mobile
+                    window.dispatchEvent(new Event('resize'));
+                }, 1000);
+            } else {
+                errorMsg.style.display = 'block';
+                passwordInput.value = '';
+                setTimeout(() => { errorMsg.style.display = 'none'; }, 3000);
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('adminAccess');
+            location.reload();
+        }
 
         // Initial Data Load
         function loadDashboardData() {
