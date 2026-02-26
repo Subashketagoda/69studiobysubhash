@@ -177,4 +177,23 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // Secret Admin Access (Triple click logo)
+    const logo = document.querySelector('.logo');
+    let clickCount = 0;
+    let clickTimer;
+
+    if (logo) {
+        logo.addEventListener('click', () => {
+            clickCount++;
+            clearTimeout(clickTimer);
+            clickTimer = setTimeout(() => {
+                clickCount = 0;
+            }, 500);
+
+            if (clickCount === 3) {
+                window.location.href = 'admin.html';
+            }
+        });
+    }
 });

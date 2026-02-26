@@ -631,10 +631,13 @@ nav ul li a.active {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
     position: relative;
+    overflow: hidden;
 }
 
 .progress-line span {
     position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
     background: var(--primary-gradient);
     border-radius: 10px;
@@ -1237,7 +1240,33 @@ section.reveal {
     }
 
     .floating-box {
-        display: none;
+        display: flex;
+        padding: 12px 20px;
+        gap: 10px;
+        white-space: nowrap;
+    }
+
+    .floating-box i {
+        font-size: 1rem;
+    }
+
+    .floating-box span {
+        font-size: 0.8rem;
+    }
+
+    .box-1 {
+        top: 30px;
+        left: -10px;
+    }
+
+    .box-2 {
+        bottom: 60px;
+        left: -20px;
+    }
+
+    .box-3 {
+        top: 120px;
+        right: -10px;
     }
 
     nav {
@@ -1347,11 +1376,12 @@ section.reveal {
     .skills-showcase {
         width: 100%;
         padding: 30px 20px;
+        box-sizing: border-box;
     }
 
     .hero-visual {
         max-width: 100%;
-        overflow: hidden;
+        overflow: visible;
     }
 }
 
@@ -1429,6 +1459,7 @@ section.reveal {
 .floating-chat i {
     background: var(--primary-gradient);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 

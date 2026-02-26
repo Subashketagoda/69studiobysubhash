@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | 69 Studio</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-dark);
+            margin: 0;
+            overflow: auto;
+            color: white;
+        }
+
+        /* Override global section hiding from style.css */
+        section {
+            opacity: 1 !important;
+            transform: none !important;
+            visibility: visible !important;
+        }
+
+        #login-section {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            text-align: center;
+            z-index: 100;
+        }
+
+        .login-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .login-logo {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .login-logo span {
+            color: var(--primary-color);
+        }
+
+        .login-subtitle {
+            color: var(--text-grey);
+            font-size: 0.9rem;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-grey);
+            padding-left: 5px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            opacity: 0.7;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            padding: 15px 15px 15px 50px;
+            border-radius: 15px;
+            color: white;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-wrapper input:focus {
+            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px rgba(255, 77, 77, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.4s;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .login-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(255, 77, 77, 0.3);
+        }
+
+        .error-msg {
+            color: #ff4d4d;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            display: none;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        #admin-content {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+            padding: 40px;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .welcome-text h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+        }
+
+        .welcome-text p {
+            color: var(--text-grey);
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 77, 77, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .stats-grid-admin {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .stat-card-admin {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 25px;
+            border: 1px solid var(--border-glass);
+            transition: 0.3s;
+        }
+
+        .stat-card-admin:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .stat-card-admin i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .stat-card-admin .number {
+            font-size: 2rem;
+            font-weight: 800;
+            display: block;
+        }
+
+        .stat-card-admin .label {
+            color: var(--text-grey);
+            font-size: 0.9rem;
+        }
+
+        .admin-main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .data-table-card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 25px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .data-table-card h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            color: var(--text-grey);
+            font-size: 0.85rem;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .status-badge.new {
+            background: rgba(77, 255, 140, 0.1);
+            color: #4dff8c;
+        }
+
+        .status-badge.pending {
+            background: rgba(255, 200, 77, 0.1);
+            color: #ffc84d;
+        }
+
+        /* Loading Overlay */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Decor -->
+    <div class="bg-decoration">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="loader">
+            <div class="loader-circle"></div>
+        </div>
+    </div>
+
+    <!-- Login Section -->
+    <section id="login-section" class="reveal">
+        <div class="login-card">
+            <div class="login-logo"><span>69</span>STUDIO</div>
+            <div class="login-subtitle">Admin Portal</div>
+
+            <form id="loginForm">
+                <div class="input-group">
+                    <label>Admin Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="adminPassword" placeholder="Enter password" required>
+                    </div>
+                </div>
+                <button type="submit" class="login-btn">
+                    Access Portal <i class="fas fa-arrow-right"></i>
+                </button>
+                <div id="errorMsg" class="error-msg">Incorrect password. Please try again.</div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Admin Dashboard Content (Hidden by default) -->
+    <section id="admin-content" class="reveal">
+        <div class="admin-header">
+            <div class="welcome-text">
+                <h1>Founder <span class="gradient-text">Dashboard</span></h1>
+                <p>Welcome back, Subhash. Here's what's happening today.</p>
+            </div>
+            <a href="#" class="logout-btn" onclick="logout()">Logout <i class="fas fa-sign-out-alt"></i></a>
+        </div>
+
+        <div class="stats-grid-admin">
+            <div class="stat-card-admin">
+                <i class="fas fa-users"></i>
+                <span class="number">12</span>
+                <span class="label">New Inquiries This Week</span>
+            </div>
+            <div class="stat-card-admin">
+                <i class="fas fa-chart-line"></i>
+                <span class="number">24</span>
+                <span class="label">Active Projects</span>
+            </div>
+            <div class="stat-card-admin">
+                <i class="fas fa-clock"></i>
+                <span class="number">85%</span>
+                <span class="label">Project Success Rate</span>
+            </div>
+        </div>
+
+        <div class="admin-main-grid">
+            <div class="data-table-card">
+                <h3>Recent Leads</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alex Johnson</td>
+                            <td>Web Development</td>
+                            <td>Feb 25, 2026</td>
+                            <td><span class="status-badge new">New</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sarah Miller</td>
+                            <td>UI/UX Design</td>
+                            <td>Feb 24, 2026</td>
+                            <td><span class="status-badge pending">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>David Chen</td>
+                            <td>Social Media</td>
+                            <td>Feb 23, 2026</td>
+                            <td><span class="status-badge new">New</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="data-table-card">
+                <h3>Quick Actions</h3>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <a href="#" class="btn secondary" style="width: 100%; text-align: center;">Edit Portfolio</a>
+                    <a href="#" class="btn secondary" style="width: 100%; text-align: center;">View Messages</a>
+                    <a href="#" class="btn secondary" style="width: 100%; text-align: center;">Site Analytics</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Simple client-side security (Note: For demo/personal use only)
+        // In a production environment, this should be handled by a backend.
+        const SECRET_KEY = "69studio77"; // You can change this to your preferred password
+
+        const loginForm = document.getElementById('loginForm');
+        const loginSection = document.getElementById('login-section');
+        const adminContent = document.getElementById('admin-content');
+        const errorMsg = document.getElementById('errorMsg');
+        const overlay = document.getElementById('loading-overlay');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const enteredPass = document.getElementById('adminPassword').value;
+
+            if (enteredPass === SECRET_KEY) {
+                // Success
+                overlay.style.display = 'flex';
+
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    loginSection.style.display = 'none';
+                    adminContent.style.display = 'block';
+                    document.body.style.overflow = 'auto';
+
+                    // Store session (simple)
+                    localStorage.setItem('adminAccess', 'true');
+                }, 1500);
+            } else {
+                // Failure
+                errorMsg.style.display = 'block';
+                document.getElementById('adminPassword').value = '';
+
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 3000);
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('adminAccess');
+            location.reload();
+        }
+
+        // Check if already logged in
+        window.onload = () => {
+            if (localStorage.getItem('adminAccess') === 'true') {
+                loginSection.style.display = 'none';
+                adminContent.style.display = 'block';
+                document.body.style.overflow = 'auto';
+            }
+        };
+    </script>
+</body>
+
+</html>
