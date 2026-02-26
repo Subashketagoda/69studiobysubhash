@@ -4,424 +4,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>69 Studio by Subhash | Digital Solutions Company</title>
-    <!-- Google Fonts -->
+    <title>DinePro Advisors | Elite Restaurant Consulting</title>
+    <meta name="description"
+        content="Premium restaurant consulting and advisory services. Elevate your hospitality business with DinePro Advisors.">
+    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <!-- Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/png" href="logo.png.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <!-- Favicon & SEO Metadata -->
-    <link rel="icon" type="image/png" sizes="32x32" href="logo.png.PNG">
-    <link rel="icon" type="image/png" sizes="16x16" href="logo.png.PNG">
-    <link rel="shortcut icon" href="logo.png.PNG" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="logo.png.PNG">
-    <link rel="manifest" href="site.webmanifest">
-
-    <!-- Meta tags for Google Search -->
-    <meta name="description"
-        content="69 Studio by Subhash is a premier digital solutions company specializing in web development and premium digital branding.">
-    <meta property="og:title" content="69 Studio by Subhash">
-    <meta property="og:image" content="logo.png.PNG">
-    <meta property="og:description"
-        content="Innovation-Driven Digital Excellence. We build future-ready digital experiences.">
-    <meta property="og:type" content="website">
 </head>
 
 <body>
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="loader">
-            <div class="loader-circle"></div>
-            <span>69</span>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="contact-info">
+                <span><i class="fas fa-phone"></i> +94 76 121 0164</span>
+                <span><i class="fas fa-envelope"></i> info@globehospitalitymc.com</span>
+            </div>
+            <div class="top-right">
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <div class="lang-selector">
+                    <img src="https://flagcdn.com/w20/gb.png" alt="English">
+                    <span>English</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Custom Cursor Glow -->
-    <div class="cursor-glow"></div>
-
+    <!-- Navigation -->
     <header>
-        <div class="logo">
-            <div class="logo-text"><span>69</span>STUDIO</div>
-            <div class="tagline">DIGITAL SOLUTIONS</div>
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.png.png" alt="DinePro Advisors Logo">
+                </div>
+                <div class="logo-text">
+                    <span class="main">DINEPRO ADVISORS</span>
+                    <span class="sub">ELITE RESTAURANT CONSULTING</span>
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#home" class="active">HOME</a></li>
+                    <li><a href="#about">ABOUT</a></li>
+                    <li class="dropdown">
+                        <a href="#services">SERVICES <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#services">Restaurant Startup</a></li>
+                            <li><a href="#services">Menu Engineering</a></li>
+                            <li><a href="#services">Operations Review</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact.html">CONTACT US</a></li>
+                </ul>
+                <div class="mobile-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
         </div>
-        <div class="menu-toggle" id="menuToggle">
-            <i class="fas fa-bars"></i>
-        </div>
-        <nav id="navMenu">
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-        <a href="#contact" class="cta-button">Get Started</a>
     </header>
 
+    <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="badge">Digital Agency 2026</div>
-            <h1>We Build <span class="gradient-text">Future-Ready</span> Digital Experiences</h1>
-            <p class="hero-description">Specializing in high-performance web development and
-                premium digital branding for modern businesses.</p>
-            <div class="hero-btns">
-                <a href="#portfolio" class="btn primary">View Our Work</a>
-                <a href="#contact" class="btn secondary">Inquire Now</a>
-            </div>
-            <div class="locations-compact">
-                <div class="loc-item"><i class="fas fa-location-dot"></i> <span>Dubai, UAE</span></div>
-                <div class="loc-item"><i class="fas fa-location-dot"></i> <span>Colombo, SL</span></div>
-                <a href="tel:+971561865946" class="loc-item clickable">
-                    <i class="fas fa-phone"></i>
-                    <span>+971 56 186 5946</span>
-                </a>
-                <a href="mailto:69studiobysubhash@gmail.com" class="loc-item clickable">
-                    <i class="fas fa-envelope"></i>
-                    <span>69studiobysubhash@gmail.com</span>
-                </a>
-            </div>
-        </div>
-        <div class="hero-visual">
-            <div class="glass-card main-card">
-                <img src="me.jpg" alt="Subhash Ketagoda" class="founder-img">
-                <div class="card-badge">
-                    <div class="badge-icon"><i class="fas fa-check"></i></div>
-                    <div class="badge-text">Verified Founder</div>
+        <div class="hero-slider">
+            <div class="slide active"
+                style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url('hero.jpg');">
+                <div class="container hero-content">
+                    <div class="tagline">WE PROVIDE</div>
+                    <h1>THE BEST SOLUTION<br>FOR <span>HOSPITALITY INDUSTRY</span></h1>
+                    <p>Expert consulting to elevate your restaurant operations and guest experience.</p>
+                    <div class="hero-btns">
+                        <a href="#services" class="btn btn-primary">Our Services</a>
+                        <a href="https://wa.me/94761210164?text=Hello Globe Hospitality! I would like to book a free consultation."
+                            class="btn btn-outline">Free Consultation</a>
+                    </div>
                 </div>
             </div>
-            <div class="floating-box box-1">
-                <i class="fas fa-code"></i>
-                <span>Expert Developer</span>
+            <div class="slide"
+                style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url('hero2.jpg');">
+                <div class="container hero-content">
+                    <div class="tagline">INNOVATIVE DESIGN</div>
+                    <h1>TRANSFORMING YOUR<br><span>RESTAURANT SPACE</span></h1>
+                    <p>Modern layouts and industrial kitchen designs for peak efficiency.</p>
+                    <div class="hero-btns">
+                        <a href="#services" class="btn btn-primary">View Concepts</a>
+                        <a href="https://wa.me/94761210164?text=Hello Globe Hospitality! I would like to get a quote for my restaurant project."
+                            class="btn btn-outline">Get a Quote</a>
+                    </div>
+                </div>
             </div>
-            <div class="floating-box box-2">
-                <i class="fas fa-pencil-alt"></i>
-                <span>Creative Designer</span>
+            <div class="slide"
+                style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url('hero3.jpg');">
+                <div class="container hero-content">
+                    <div class="tagline">EXPERT STRATEGY</div>
+                    <h1>MENU ENGINEERING<br>FOR <span>ELITE RESULTS</span></h1>
+                    <p>Strategic menu design tailored to your market and resources.</p>
+                    <div class="hero-btns">
+                        <a href="#services" class="btn btn-primary">Learn More</a>
+                        <a href="https://wa.me/94761210164?text=Hello DinePro Advisors! I want to consult about my restaurant menu."
+                            class="btn btn-outline">Consult Now</a>
+                    </div>
+                </div>
             </div>
-            <div class="floating-box box-3">
-                <i class="fas fa-rocket"></i>
-                <span>Project Manager</span>
-            </div>
-
-            <!-- Decorative Blobs -->
-            <div class="blob blob-1"></div>
-            <div class="blob blob-2"></div>
+        </div>
+        <div class="slider-arrows">
+            <div class="arrow prev"><i class="fas fa-chevron-left"></i></div>
+            <div class="arrow next"><i class="fas fa-chevron-right"></i></div>
         </div>
     </section>
 
-    <!-- Global Decoration -->
-    <div class="bg-decoration">
-        <div class="circle circle-1"></div>
-        <div class="circle circle-2"></div>
-    </div>
-
-    <section id="partners" class="partners">
-        <div class="partners-container">
-            <div class="section-header centered">
-                <span class="dash"></span>
-                <h2>Our Trusted Clients</h2>
+    <!-- Mini Features -->
+    <section class="mini-features">
+        <div class="container">
+            <div class="feature-item">
+                <i class="fas fa-utensils"></i>
+                <h3>Quality Service</h3>
             </div>
-            <div class="partners-wrapper">
-                <div class="partner-card">
-                    <img src="./p1.jpg" alt="Rocco's">
-                    <span class="partner-name">Rocco's</span>
-                </div>
-                <div class="partner-card">
-                    <img src="./p2.jpg" alt="Real Ceylon Gems">
-                    <span class="partner-name">Real Ceylon Gems</span>
-                </div>
-                <div class="partner-card">
-                    <img src="./p3.jpg" alt="69 Studio">
-                    <span class="partner-name">69 Studio</span>
-                </div>
-                <div class="partner-card">
-                    <img src="./p4.jpg" alt="Special Beats">
-                    <span class="partner-name">Special Beats</span>
-                </div>
+            <div class="feature-item">
+                <i class="fas fa-clock"></i>
+                <h3>Fast Turnaround</h3>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-award"></i>
+                <h3>Expert Solutions</h3>
             </div>
         </div>
     </section>
 
-    <section id="about" class="about">
-        <div class="about-grid">
-            <div class="stats-container">
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="150">0</span>
-                        <span class="stat-label">Projects Completed</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="50">0</span>
-                        <span class="stat-label">Happy Clients</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="12">0</span>
-                        <span class="stat-label">Global Awards</span>
-                    </div>
-                </div>
+    <!-- Services Section -->
+    <section id="services" class="services section-padding">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tagline">EXPERT SOLUTIONS</span>
+                <h2>Our Premium Services</h2>
+                <div class="divider"></div>
             </div>
-            <div class="about-text-content">
-                <div class="section-header">
-                    <span class="dash"></span>
-                    <h2>Innovation-Driven Digital Excellence</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="service1.jpg" alt="Concept Development" class="service-img">
+                    <div class="service-body">
+                        <div class="icon-box"><i class="fas fa-rocket"></i></div>
+                        <h3>Concept Development</h3>
+                        <p>Building unique restaurant concepts from the ground up, tailored to your target market.</p>
+                    </div>
                 </div>
-                <p>At 69 Studio, we specialize in amplifying your brand's presence across social media platforms. We
-                    combine creative strategy with data-driven insights to deliver engagement that truly matters.</p>
-                <div class="skills-showcase">
-                    <div class="skill-bar-item">
-                        <div class="skill-info">
-                            <span class="skill-title">Social Media Strategy</span>
-                            <span class="skill-percentage">95%</span>
-                        </div>
-                        <div class="progress-line" data-progress="95%"><span style="width: 95%;"></span></div>
+                <div class="service-card">
+                    <img src="service2.jpg" alt="Menu Engineering" class="service-img">
+                    <div class="service-body">
+                        <div class="icon-box"><i class="fas fa-clipboard-list"></i></div>
+                        <h3>Menu Engineering</h3>
+                        <p>Optimizing your menu for profitability, efficiency, and customer satisfaction.</p>
                     </div>
-                    <div class="skill-bar-item">
-                        <div class="skill-info">
-                            <span class="skill-title">Content Creation</span>
-                            <span class="skill-percentage">98%</span>
-                        </div>
-                        <div class="progress-line" data-progress="98%"><span style="width: 98%;"></span></div>
+                </div>
+                <div class="service-card">
+                    <img src="service3.jpg" alt="Staff Training" class="service-img">
+                    <div class="service-body">
+                        <div class="icon-box"><i class="fas fa-users"></i></div>
+                        <h3>Staff Training</h3>
+                        <p>Comprehensive training programs to ensure your team delivers world-class service.</p>
                     </div>
-                    <div class="skill-bar-item">
-                        <div class="skill-info">
-                            <span class="skill-title">Brand Growth</span>
-                            <span class="skill-percentage">92%</span>
-                        </div>
-                        <div class="progress-line" data-progress="92%"><span style="width: 92%;"></span></div>
+                </div>
+                <div class="service-card">
+                    <img src="hero.jpg" alt="Operational Audit" class="service-img">
+                    <div class="service-body">
+                        <div class="icon-box"><i class="fas fa-chart-line"></i></div>
+                        <h3>Operational Audit</h3>
+                        <p>Deep dive into your existing operations to identify inefficiencies and growth areas.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="services" class="services">
-        <div class="section-header centered">
-            <span class="dash"></span>
-            <h2>Our Specialized Services</h2>
-            <p>From conceptualization to deployment, we provide end-to-end digital services.</p>
-        </div>
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-code"></i></div>
-                <h3>Web Development</h3>
-                <p>High-performance websites and web applications built with the latest technologies for ultimate speed.
-                </p>
-                <ul class="service-list">
-                    <li><i class="fas fa-check"></i> React & Next.js</li>
-                    <li><i class="fas fa-check"></i> E-commerce Solutions</li>
-                    <li><i class="fas fa-check"></i> CMS Integration</li>
-                </ul>
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section section-padding">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tagline">GET IN TOUCH</span>
+                <h2>Contact Us For Expert Consulting</h2>
+                <div class="divider"></div>
             </div>
 
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-pen-nib"></i></div>
-                <h3>UI/UX Design</h3>
-                <p>User-centric design that balances aesthetics with functionality to create engaging digital journeys.
-                </p>
-                <ul class="service-list">
-                    <li><i class="fas fa-check"></i> Interface Design</li>
-                    <li><i class="fas fa-check"></i> User Research</li>
-                    <li><i class="fas fa-check"></i> Prototyping</li>
-                </ul>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-rocket"></i></div>
-                <h3>Social Media Headline</h3>
-                <p>Strategic growth campaigns including SEO, SMM, and content strategy to boost your online presence.
-                </p>
-                <ul class="service-list">
-                    <li><i class="fas fa-check"></i> Search Optimization</li>
-                    <li><i class="fas fa-check"></i> Social Strategy</li>
-                    <li><i class="fas fa-check"></i> Brand Identity</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <section id="portfolio" class="portfolio">
-        <div class="section-header">
-            <span class="dash"></span>
-            <h2>Selected Works</h2>
-        </div>
-        <div class="portfolio-grid">
-            <div class="portfolio-item large">
-                <div class="portfolio-img-container">
-                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                        alt="Social Strategy">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <span class="category">Brand Strategy</span>
-                            <h3>Content Planning</h3>
-                            <a href="#" class="view-link">View Case Study <i class="fas fa-arrow-right"></i></a>
-                        </div>
+            <div class="contact-info-cards">
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="info-text">
+                        <p>265/A-1/1, Torrington Complex,<br>Torrington Avenue,<br>Colombo 07, Sri Lanka</p>
                     </div>
                 </div>
-            </div>
-            <div class="portfolio-item">
-                <div class="portfolio-img-container">
-                    <img src="https://images.unsplash.com/photo-1557838923-2985c318be48?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        alt="Ad Campaign">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <span class="category">Social Ads</span>
-                            <h3>Targeted Reach</h3>
-                            <a href="#" class="view-link">View Project <i class="fas fa-arrow-right"></i></a>
-                        </div>
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="info-text">
+                        <p>info@globehospitalitymc.com</p>
                     </div>
                 </div>
-            </div>
-            <div class="portfolio-item">
-                <div class="portfolio-img-container">
-                    <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        alt="Engagement">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <span class="category">Growth</span>
-                            <h3>Influencer Collab</h3>
-                            <a href="#" class="view-link">View Project <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-item">
-                <div class="portfolio-img-container">
-                    <img src="https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        alt="Brand Identity">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <span class="category">Identity</span>
-                            <h3>Visual Branding</h3>
-                            <a href="#" class="view-link">View Project <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-item">
-                <div class="portfolio-img-container">
-                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        alt="Analytics">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <span class="category">Data</span>
-                            <h3>Growth Analytics</h3>
-                            <a href="#" class="view-link">View Project <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-item">
-                <div class="portfolio-img-container">
-                    <img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        alt="Community">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <span class="category">Community</span>
-                            <h3>Fan Engagement</h3>
-                            <a href="#" class="view-link">View Project <i class="fas fa-arrow-right"></i></a>
-                        </div>
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-phone"></i></div>
+                    <div class="info-text">
+                        <p>+94 76 121 0164</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="contact">
-        <div class="contact-container">
-            <div class="contact-info">
-                <h2>Let's Craft Something <span class="gradient-text">Exceptional</span></h2>
-                <p>Have a project in mind? Let's talk about how we can help you achieve your digital goals.</p>
-                <div class="contact-details">
-                    <a href="tel:+971561865946" class="detail-item clickable">
-                        <div class="icon-box"><i class="fas fa-phone"></i></div>
-                        <div>
-                            <h4>Call Us</h4>
-                            <p>+971 56 186 5946</p>
-                        </div>
-                    </a>
-                    <a href="mailto:69studiobysubhash@gmail.com" class="detail-item clickable">
-                        <div class="icon-box"><i class="fas fa-envelope"></i></div>
-                        <div>
-                            <h4>Email Us</h4>
-                            <p>69studiobysubhash@gmail.com</p>
-                        </div>
-                    </a>
-                    <div class="detail-item">
-                        <div class="icon-box"><i class="fas fa-location-dot"></i></div>
-                        <div>
-                            <h4>Visit Us</h4>
-                            <p>United Arab Emirates</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="contact-form-container">
-                <form id="contactForm" action="https://formsubmit.co/69studiobysubhash@gmail.com" method="POST">
-                    <!-- Hidden fields for better deliverability -->
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_template" value="table">
-                    <input type="hidden" name="_subject" value="New Inquiry from 69 Studio Website!">
-                    <input type="hidden" name="_honey" style="display:none">
-
-                    <div class="form-group">
-                        <input type="text" name="name" placeholder="Your Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" name="email" placeholder="Your Email" required>
-                    </div>
-                    <div class="form-group">
-                        <select name="interest">
-                            <option value="">Interested In</option>
-                            <option value="web">Web Development</option>
-
-                            <option value="design">UI/UX Design</option>
-                            <option value="marketing">Social Media Headline</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <textarea name="message" placeholder="Your Message" rows="5"></textarea>
-                    </div>
-                    <button type="submit" class="btn primary submit-btn">Send Message <i
-                            class="fas fa-paper-plane"></i></button>
-                </form>
-            </div>
-        </div>
-    </section>
-
+    <!-- Detailed Footer -->
     <footer>
-        <div class="footer-top">
-            <div class="footer-logo">
-                <span>69</span><span class="highlight">STUDIO</span>
+        <div class="container footer-content">
+            <div class="footer-col about-col">
+                <h3>ABOUT US</h3>
+                <div class="footer-divider"></div>
+                <p>Blending Hospitality With High Standards, Tradition With Digital Technology, And International Growth
+                    With Globe Hospitality Management Consultants, We Unite 5+ Successful Hotel Brands Under One Roof.
+                </p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                </div>
             </div>
-            <div class="footer-social">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-behance"></i></a>
+            <div class="footer-col links-col">
+                <h3>QUICK LINKS</h3>
+                <div class="footer-divider"></div>
+                <ul class="footer-links">
+                    <li><a href="#home">- HOME</a></li>
+                    <li><a href="#about">- ABOUT</a></li>
+                    <li><a href="#services">- SERVICES</a></li>
+                    <li><a href="contact.html">- CONTACT US</a></li>
+                </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 69 Studio by Subhash. All Rights Reserved.</p>
-            <div class="footer-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="admin.html" style="opacity: 0.3; font-size: 0.7rem; margin-left: 20px;">Admin</a>
+            <div class="container">
+                <p>&copy; 2026 DinePro Advisors. <a href="admin.html"
+                        style="color: inherit; text-decoration: none; cursor: default;">All Rights Reserved.</a> |
+                    Designed By <a href="https://69studiobysubash.online/" target="_blank"
+                        style="color: var(--accent-color); text-decoration: none; font-weight: 600;">69 Studio by
+                        Subhash</a></p>
             </div>
         </div>
     </footer>
 
-    <!-- Floating Chat Button -->
-    <a href="https://wa.me/971561865946?text=Hi%20Subhash!%20I'm%20interested%20in%20your%20services." target="_blank"
-        class="floating-chat" title="Chat with me on WhatsApp">
-        <div class="chat-tooltip">Chat with us</div>
-        <div class="chat-icon">
-            <i class="fab fa-whatsapp"></i>
-            <span class="notification-dot"></span>
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <button class="close-chat" id="closeChat">&times;</button>
+                <div class="header-content">
+                    <p>Need help? Search our help center for answers or start a conversation:</p>
+                </div>
+            </div>
+            <div class="chat-body">
+                <!-- Home View (default) -->
+                <div id="chatHome">
+                    <div class="chat-card help-center-card">
+                        <h4>Help Center</h4>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="helpSearch" placeholder="Search for answers">
+                        </div>
+                        <div class="search-results" id="searchResults"></div>
+                    </div>
+                    <div class="chat-card conversation-card" id="startChat">
+                        <div class="card-left">
+                            <h4>New Conversation</h4>
+                            <p>Assistant is online</p>
+                        </div>
+                        <div class="card-right">
+                            <i class="far fa-paper-plane"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat View (initially hidden) -->
+                <div id="chatMessagesView" style="display: none;">
+                    <div class="messages-container" id="messagesContainer">
+                        <!-- Messages will appear here -->
+                    </div>
+                    <div class="message-input-area">
+                        <input type="text" id="chatInput" placeholder="Type a message...">
+                        <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-footer">
+                <div class="footer-icons">
+                    <i class="fas fa-home active" id="goHome"></i>
+                    <i class="far fa-comment-alt" id="goChat"></i>
+                </div>
+                <div class="powered-by">
+                    <img src="https://flagcdn.com/w40/lk.png" alt="Icon" style="width: 35px; margin-right: 8px;">
+                    Powered by <a href="https://69studiobysubash.online/" target="_blank"
+                        style="color: inherit; text-decoration: none; margin-left: 3px; font-weight: 600;">69 Studio by
+                        Subhash</a>
+                </div>
+            </div>
         </div>
-    </a>
+        <div class="chat-toggle" id="chatToggle">
+            <div class="chat-bubble">
+                <i class="fas fa-comment-dots"></i>
+                <span class="badge">1</span>
+            </div>
+            <div class="chat-label">Online</div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
