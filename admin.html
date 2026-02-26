@@ -14,6 +14,8 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             display: flex;
@@ -151,6 +153,10 @@
             box-shadow: 0 15px 30px rgba(255, 77, 77, 0.3);
         }
 
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+
         .error-msg {
             color: #ff4d4d;
             font-size: 0.85rem;
@@ -222,8 +228,10 @@
         }
 
         .logout-btn:hover {
-            background: rgba(255, 77, 77, 0.1);
+            background: rgba(255, 77, 77, 0.2);
             border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateX(5px);
         }
 
         .stats-grid-admin {
@@ -242,8 +250,14 @@
         }
 
         .stat-card-admin:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: var(--primary-color);
+            box-shadow: 0 20px 40px rgba(255, 77, 77, 0.1);
+        }
+
+        .stat-card-admin:hover i {
+            transform: scale(1.1);
+            transition: 0.3s;
         }
 
         .stat-card-admin i {
@@ -254,14 +268,22 @@
         }
 
         .stat-card-admin .number {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 800;
             display: block;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .stat-card-admin .label {
             color: var(--text-grey);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+            display: block;
         }
 
         .admin-main-grid {
@@ -296,8 +318,13 @@
         }
 
         td {
-            padding: 15px;
+            padding: 18px 15px;
             border-bottom: 1px solid var(--border-glass);
+            font-size: 0.95rem;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .status-badge {
@@ -502,6 +529,27 @@
                 /* Hide date/interest on small mobile tables to fit actions */
             }
         }
+
+        /* Ambient Glow Decor */
+        .ambient-glow {
+            position: fixed;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 77, 77, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glow-1 {
+            top: -200px;
+            left: -200px;
+        }
+
+        .glow-2 {
+            bottom: -200px;
+            right: -200px;
+        }
     </style>
 </head>
 
@@ -510,7 +558,12 @@
     <div class="bg-decoration">
         <div class="circle circle-1"></div>
         <div class="circle circle-2"></div>
+        <div class="blob" style="top: 20%; right: 10%; opacity: 0.05;"></div>
+        <div class="blob" style="bottom: 10%; left: 5%; opacity: 0.05; animation-delay: -2s;"></div>
     </div>
+
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
 
     <!-- Loading Overlay -->
     <div id="loading-overlay">
@@ -603,9 +656,21 @@
                 </div>
 
                 <h3 style="margin-top: 30px;">Site Traffic</h3>
-                <div class="stat-card-admin" style="padding: 20px; text-align: center;">
-                    <span class="number" id="visit-count">0</span>
-                    <span class="label">Total Unique Visits</span>
+                <div class="stat-card-admin" style="padding: 25px;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
+                        <div>
+                            <span class="number" id="visit-count" style="font-size: 2.5rem; line-height: 1.2;">0</span>
+                            <span class="label">Total Unique Visits</span>
+                        </div>
+                        <div
+                            style="color: #4dff8c; font-size: 0.85rem; font-weight: 600; background: rgba(77, 255, 140, 0.1); padding: 5px 12px; border-radius: 20px;">
+                            <i class="fas fa-arrow-trend-up"></i> Active
+                        </div>
+                    </div>
+                    <div style="height: 150px; width: 100%; position: relative;">
+                        <canvas id="trafficChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -674,7 +739,10 @@
 
             // Update Stats
             document.querySelector('.stat-card-admin:nth-child(1) .number').innerText = leads.length;
-            document.getElementById('visit-count').innerText = stats.visits;
+            document.getElementById('visit-count').innerText = stats.visits || 0;
+
+            // Initialize Chart
+            initTrafficChart(stats);
 
             // Update Table
             const leadsBody = document.getElementById('leads-body');
@@ -792,6 +860,91 @@
             a.href = url;
             a.download = `leads_${new Date().toISOString().split('T')[0]}.json`;
             a.click();
+        }
+
+        let trafficChartInstance = null;
+
+        function initTrafficChart(stats) {
+            const ctx = document.getElementById('trafficChart').getContext('2d');
+
+            const labels = [];
+            const dataValues = [];
+            const dailyVisits = stats.dailyVisits || {};
+
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+                const dayName = d.toLocaleDateString('en-US', { weekday: 'short' });
+
+                labels.push(dayName);
+                dataValues.push(dailyVisits[dateStr] || 0);
+            }
+
+            if (trafficChartInstance) {
+                trafficChartInstance.data.labels = labels;
+                trafficChartInstance.data.datasets[0].data = dataValues;
+                trafficChartInstance.update();
+                return;
+            }
+
+            let gradient = ctx.createLinearGradient(0, 0, 0, 150);
+            gradient.addColorStop(0, 'rgba(255, 77, 77, 0.5)');
+            gradient.addColorStop(1, 'rgba(255, 77, 77, 0.0)');
+
+            trafficChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Visits',
+                        data: dataValues,
+                        borderColor: '#ff4d4d',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#121212',
+                        pointBorderColor: '#ff4d4d',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(18, 18, 18, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#a0a0a0',
+                            borderColor: 'rgba(255,77,77,0.3)',
+                            borderWidth: 1,
+                            padding: 10,
+                            displayColors: false,
+                            callbacks: {
+                                label: function (context) {
+                                    return context.parsed.y + ' Visits';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false, drawOnChartArea: false },
+                            ticks: { color: '#a0a0a0', font: { family: "'Plus Jakarta Sans', sans-serif", size: 10 } },
+                            border: { display: false }
+                        },
+                        y: {
+                            display: false,
+                            grid: { display: false },
+                            min: 0
+                        }
+                    }
+                }
+            });
         }
 
         // Check login on load

@@ -135,7 +135,9 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('studio_leads', JSON.stringify(leads));
 
             // Also track total inquiries
-            const stats = JSON.parse(localStorage.getItem('studio_stats') || '{"inquiries": 0, "visits": 0}');
+            let stats;
+            try { stats = JSON.parse(localStorage.getItem('studio_stats')); } catch (e) { }
+            if (!stats) stats = { inquiries: 0, visits: 0, dailyVisits: {} };
             stats.inquiries++;
             localStorage.setItem('studio_stats', JSON.stringify(stats));
 
@@ -178,13 +180,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Simple Visit Tracker
     const trackVisit = () => {
-        const stats = JSON.parse(localStorage.getItem('studio_stats') || '{"inquiries": 0, "visits": 0}');
+        let stats;
+        try { stats = JSON.parse(localStorage.getItem('studio_stats')); } catch (e) { }
+        if (!stats) stats = { inquiries: 0, visits: 0, dailyVisits: {} };
+        if (!stats.dailyVisits) stats.dailyVisits = {};
+
         const lastVisit = localStorage.getItem('last_visit');
         const now = new Date().getTime();
 
         // Count visit if it's been more than 1 hour since last session
         if (!lastVisit || (now - parseInt(lastVisit)) > 3600000) {
             stats.visits++;
+
+            const today = new Date();
+            const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+            stats.dailyVisits[todayStr] = (stats.dailyVisits[todayStr] || 0) + 1;
+
             localStorage.setItem('studio_stats', JSON.stringify(stats));
             localStorage.setItem('last_visit', now.toString());
         }
