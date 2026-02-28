@@ -297,6 +297,7 @@
             padding: 30px;
             border-radius: 25px;
             border: 1px solid var(--border-glass);
+            overflow-x: auto;
         }
 
         .data-table-card h3 {
@@ -521,12 +522,31 @@
                 padding: 25px;
             }
 
+            .data-table-card {
+                padding: 20px 15px;
+            }
+
             th:nth-child(2),
             td:nth-child(2),
             th:nth-child(3),
             td:nth-child(3) {
                 display: none;
                 /* Hide date/interest on small mobile tables to fit actions */
+            }
+
+            /* Mobile styling for ChatGPT */
+            .chatgpt-widget {
+                width: calc(100% - 40px);
+                right: 20px;
+                bottom: 100px;
+                padding: 20px;
+            }
+
+            .chatgpt-floating-btn {
+                right: 20px;
+                bottom: 20px;
+                width: 55px;
+                height: 55px;
             }
         }
 
@@ -549,6 +569,200 @@
         .glow-2 {
             bottom: -200px;
             right: -200px;
+        }
+
+        /* Floating Chat Button */
+        .chatgpt-floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #10a37f;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(16, 163, 127, 0.4);
+            transition: 0.4s;
+            z-index: 1000;
+        }
+
+        .chatgpt-floating-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* ChatGPT Widget Styles */
+        .chatgpt-widget {
+            display: none;
+            position: fixed;
+            bottom: 105px;
+            right: 30px;
+            width: 380px;
+            background: rgba(20, 20, 25, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: 25px;
+            padding: 25px;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .chatgpt-widget.active {
+            display: flex;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .chatgpt-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .chatgpt-header-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chatgpt-header-info i {
+            font-size: 1.8rem;
+            color: #10a37f;
+        }
+
+        .chatgpt-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-family: var(--font-heading);
+        }
+
+        .chatgpt-close-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        .chatgpt-close-btn:hover {
+            background: #ff4d4d;
+        }
+
+        .chatgpt-messages {
+            height: 350px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding-right: 10px;
+            scroll-behavior: smooth;
+        }
+
+        .chat-message {
+            max-width: 80%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .chat-message.bot {
+            align-self: flex-start;
+            background: rgba(40, 40, 40, 0.4);
+            border: 1px solid var(--border-glass);
+            border-bottom-left-radius: 5px;
+        }
+
+        .chat-message.user {
+            align-self: flex-end;
+            background: var(--primary-gradient);
+            border-bottom-right-radius: 5px;
+            color: white;
+        }
+
+        .chatgpt-input-area {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .chatgpt-input-area input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            padding: 15px 25px;
+            border-radius: 25px;
+            color: white;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .chatgpt-input-area input:focus {
+            border-color: #10a37f;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px rgba(16, 163, 127, 0.15);
+        }
+
+        .chatgpt-send-btn {
+            background: #10a37f;
+            color: white;
+            border: none;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.4s;
+            font-size: 1.2rem;
+        }
+
+        .chatgpt-send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(16, 163, 127, 0.2);
+        }
+
+        .chatgpt-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chatgpt-messages::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .chatgpt-messages::-webkit-scrollbar-track {
+            background: transparent;
         }
     </style>
 </head>
@@ -673,6 +887,39 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- ChatGPT Widget Integration -->
+        <div class="chatgpt-floating-btn" id="chatgpt-toggle">
+            <i class="fa-solid fa-robot"></i>
+        </div>
+
+        <div class="chatgpt-widget" id="chatgpt-widget">
+            <div class="chatgpt-header">
+                <div class="chatgpt-header-info">
+                    <i class="fa-solid fa-robot"></i>
+                    <div style="flex-direction: column;">
+                        <h3>AI Admin Assistant</h3>
+                        <p style="color: var(--text-grey); font-size: 0.85rem; margin-top: 3px;">Powered by ChatGPT</p>
+                    </div>
+                </div>
+                <button class="chatgpt-close-btn" id="chatgpt-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatgpt-messages" id="chatgpt-messages">
+                <div class="chat-message bot">
+                    Hello Subhash! I am your AI assistant. How can I help you manage the studio today? I can help draft
+                    emails, analyze traffic, or provide digital strategy tips.
+                </div>
+            </div>
+            <form class="chatgpt-input-area" id="chatgpt-form">
+                <input type="text" id="chatgpt-input" placeholder="Message your AI Assistant..." autocomplete="off"
+                    required>
+                <button type="submit" class="chatgpt-send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
         </div>
     </section>
 
@@ -946,6 +1193,69 @@
                 }
             });
         }
+
+        // ChatGPT Simulation Logic
+        const chatForm = document.getElementById('chatgpt-form');
+        const chatInput = document.getElementById('chatgpt-input');
+        const chatMessages = document.getElementById('chatgpt-messages');
+        const chatToggle = document.getElementById('chatgpt-toggle');
+        const chatWidget = document.getElementById('chatgpt-widget');
+        const chatClose = document.getElementById('chatgpt-close');
+
+        chatToggle.addEventListener('click', () => {
+            chatWidget.classList.toggle('active');
+            if (chatWidget.classList.contains('active')) {
+                chatInput.focus();
+            }
+        });
+
+        chatClose.addEventListener('click', () => {
+            chatWidget.classList.remove('active');
+        });
+
+        const aiResponses = [
+            "I can certainly help with that! Let me analyze the latest data.",
+            "That's a great idea, Subhash. I've noted that down.",
+            "Based on the recent site traffic patterns, it seems user interest is peaking around evening hours.",
+            "I see you have new leads! A quick follow-up might increase the conversion rate substantially.",
+            "Here is a draft response: 'Hi there! Thank you for reaching out to 69 Studio. We'd love to chat more about your digital needs...'",
+            "Web Development inquiries are up 15% this month! Keep pushing the SEO strategy."
+        ];
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-message user';
+            userMsg.innerText = text;
+            chatMessages.appendChild(userMsg);
+
+            chatInput.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Simulate Bot Typing
+            const typingMsg = document.createElement('div');
+            typingMsg.className = 'chat-message bot';
+            typingMsg.innerHTML = '<i class="fas fa-ellipsis-h" style="opacity: 0.5;"></i>';
+            chatMessages.appendChild(typingMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            setTimeout(() => {
+                chatMessages.removeChild(typingMsg);
+                const botMsg = document.createElement('div');
+                botMsg.className = 'chat-message bot';
+
+                // Demo logic: Pick random response
+                const randomRes = aiResponses[Math.floor(Math.random() * aiResponses.length)];
+                botMsg.innerText = randomRes;
+
+                chatMessages.appendChild(botMsg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1200);
+        });
 
         // Check login on load
         window.onload = () => {
