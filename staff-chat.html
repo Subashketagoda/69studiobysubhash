@@ -344,8 +344,14 @@
                 <h2><i class="fas fa-comments"></i> 69 Studio Internal Hub</h2>
                 <p>Private end-to-end encrypted staff communication room.</p>
             </div>
-            <div class="current-user-badge" id="currentUserBadge" title="Click to change name">
-                User
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button id="startCallBtn"
+                    style="background: rgba(139, 92, 246, 0.2); border: 1px solid #8b5cf6; color: #d8b4fe; padding: 8px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-video"></i> Group Call
+                </button>
+                <div class="current-user-badge" id="currentUserBadge" title="Click to change name">
+                    User
+                </div>
             </div>
         </div>
 
@@ -365,6 +371,23 @@
         </form>
     </div>
 
+    <!-- Video Call Modal -->
+    <div id="callModal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; flex-direction: column;">
+        <div
+            style="padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; background: #121212; border-bottom: 1px solid #333;">
+            <h3 style="margin: 0; font-family: var(--font-heading); color: white;"><i class="fas fa-video"
+                    style="color: #8b5cf6; margin-right: 10px;"></i> Studio Group Call</h3>
+            <button id="closeCallBtn"
+                style="background: rgba(255, 77, 77, 0.2); color: #ff4d4d; border: 1px solid #ff4d4d; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.3s;">
+                <i class="fas fa-phone-slash"></i> Leave Call
+            </button>
+        </div>
+        <div id="jitsiContainer" style="flex: 1; width: 100%; height: 100%;"></div>
+    </div>
+
+    <!-- Jitsi Meet API -->
+    <script src="https://meet.jit.si/external_api.js"></script>
     <script>
         const identityModal = document.getElementById('identityModal');
         const joinForm = document.getElementById('joinForm');
@@ -379,6 +402,13 @@
         const fileInput = document.getElementById('fileInput');
         const attachBtn = document.getElementById('attachBtn');
         let selectedFileData = null;
+
+        // Call Elements
+        const startCallBtn = document.getElementById('startCallBtn');
+        const callModal = document.getElementById('callModal');
+        const closeCallBtn = document.getElementById('closeCallBtn');
+        const jitsiContainer = document.getElementById('jitsiContainer');
+        let jitsiApi = null;
 
         attachBtn.addEventListener('click', () => {
             fileInput.click();
@@ -462,6 +492,59 @@
             loadMessages();
         }
 
+        // --- Call System --- //
+        window.joinCallRoom = function () {
+            callModal.style.display = 'flex';
+            if (!jitsiApi) {
+                const domain = 'meet.jit.si';
+                const options = {
+                    roomName: '69StudioStaff_InternalSecureRoom_2583', // Unique room name
+                    width: '100%',
+                    height: '100%',
+                    parentNode: jitsiContainer,
+                    userInfo: {
+                        displayName: currentUser
+                    },
+                    configOverwrite: { startWithAudioMuted: true, startWithVideoMuted: true }
+                };
+                jitsiApi = new JitsiMeetExternalAPI(domain, options);
+            }
+        };
+
+        startCallBtn.addEventListener('click', () => {
+            const messages = JSON.parse(localStorage.getItem('studio_staff_chat') || '[]');
+            messages.push({
+                id: Date.now(),
+                sender: 'System', // System message
+                text: `
+                    <div style="text-align: center; padding: 15px; background: rgba(139, 92, 246, 0.1); border-radius: 15px; border: 1px solid rgba(139, 92, 246, 0.3); margin-top: 10px;">
+                        <strong style="color: #d8b4fe;">🎥 ${currentUser} started a Group Call</strong><br>
+                        <p style="font-size: 0.85rem; color: var(--text-grey); margin-bottom: 10px;">Join the call to discuss with the team.</p>
+                        <button onclick="window.joinCallRoom()" style="background: linear-gradient(135deg, #1a73e8, #8b5cf6); color: white; border: none; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.9rem; box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);">
+                            <i class="fas fa-video"></i> Join Call
+                        </button>
+                    </div>
+                `,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            });
+
+            localStorage.setItem('studio_staff_chat', JSON.stringify(messages));
+            loadMessages();
+
+            // Self join the room
+            window.joinCallRoom();
+        });
+
+        closeCallBtn.addEventListener('click', () => {
+            callModal.style.display = 'none';
+            if (jitsiApi) {
+                jitsiApi.dispose(); // Drop the iframe call
+                jitsiApi = null;
+            }
+        });
+
+        // --- End Call System --- //
+
         // Send Message
         chatForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -519,8 +602,11 @@
             }
 
             messages.forEach(msg => {
+                const isSystem = msg.sender === 'System';
                 const isMine = msg.sender === currentUser;
-                const alignmentClass = isMine ? 'mine' : 'others';
+
+                let alignmentClass = isMine ? 'mine' : 'others';
+                if (isSystem) alignmentClass = 'system-msg'; // Center aligned
 
                 let imageHtml = '';
                 if (msg.image) {
@@ -528,12 +614,12 @@
                 }
 
                 const msgHTML = `
-                    <div class="msg-container ${alignmentClass}">
-                        <div class="msg-sender">${msg.sender}</div>
-                        <div class="msg-bubble">
+                    <div class="msg-container ${alignmentClass}" style="${isSystem ? 'max-width: 100%; align-items: center; align-self: center;' : ''}">
+                        ${isSystem ? '' : `<div class="msg-sender">${msg.sender}</div>`}
+                        <div class="${isSystem ? '' : 'msg-bubble'}">
                             ${imageHtml}
                             ${msg.text}
-                            <span class="msg-time">${msg.time}</span>
+                            ${isSystem ? '' : `<span class="msg-time">${msg.time}</span>`}
                         </div>
                     </div>
                 `;
