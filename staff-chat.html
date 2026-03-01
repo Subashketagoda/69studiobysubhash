@@ -433,131 +433,120 @@
             </button>
             <input type="text" id="messageInput" placeholder="Type a message or send a photo..." autocomplete="off">
             <button type="submit" class="send-btn"><i class="fas fa-paper-plane"></i></button>
-        </form>
+            <script>
+                const identityModal = document.getElementById('identityModal');
+                const joinForm = document.getElementById('joinForm');
+                const staffNameInput = document.getElementById('staffNameInput');
+                const staffPasswordInput = document.getElementById('staffPasswordInput');
+                const loginError = document.getElementById('loginError');
+                const currentUserBadge = document.getElementById('currentUserBadge');
 
-        <!-- Firebase SDK (v8) -->
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-        <script>
-            // Initialize Firebase - Using a temporary open database config for demonstration
-            // IMPORTANT: In production, you would attach your own firebase config here
-            const firebaseConfig = {
-                databaseURL: "https://studiohub-live-default-rtdb.firebaseio.com",
-            };
-            firebase.initializeApp(firebaseConfig);
-            const db = firebase.database();
-            const chatRef = db.ref("studio_chat");
+                const chatForm = document.getElementById('chatForm');
+                const messageInput = document.getElementById('messageInput');
+                const chatArea = document.getElementById('chatArea');
+                const fileInput = document.getElementById('fileInput');
+                const attachBtn = document.getElementById('attachBtn');
+                let selectedFileData = null;
 
-            const identityModal = document.getElementById('identityModal');
-            const joinForm = document.getElementById('joinForm');
-            const staffNameInput = document.getElementById('staffNameInput');
-            const staffPasswordInput = document.getElementById('staffPasswordInput');
-            const loginError = document.getElementById('loginError');
-            const currentUserBadge = document.getElementById('currentUserBadge');
+                // Call Elements
+                const startCallBtn = document.getElementById('startCallBtn');
 
-            const chatForm = document.getElementById('chatForm');
-            const messageInput = document.getElementById('messageInput');
-            const chatArea = document.getElementById('chatArea');
-            const fileInput = document.getElementById('fileInput');
-            const attachBtn = document.getElementById('attachBtn');
-            let selectedFileData = null;
+                attachBtn.addEventListener('click', () => {
+                    fileInput.click();
+                });
 
-            // Call Elements
-            const startCallBtn = document.getElementById('startCallBtn');
-
-            attachBtn.addEventListener('click', () => {
-                fileInput.click();
-            });
-
-            fileInput.addEventListener('change', () => {
-                const file = fileInput.files[0];
-                if (file) {
-                    if (file.size > 2 * 1024 * 1024) { // 2MB limit
-                        alert('File is too large! Please select an image under 2MB.');
-                        fileInput.value = '';
-                        return;
-                    }
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        selectedFileData = e.target.result;
-                        attachBtn.style.color = '#ff4d4d'; // Indicate selection
-                        attachBtn.style.borderColor = '#ff4d4d';
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-
-            let currentUser = localStorage.getItem('staff_chat_name') || '';
-
-            // Check if user has a name already
-            if (currentUser) {
-                identityModal.style.display = 'none';
-                currentUserBadge.innerText = currentUser + ' (Logout)';
-                loadMessages();
-            } else {
-                staffNameInput.focus();
-            }
-
-            // Change Name/Logout
-            currentUserBadge.addEventListener('click', () => {
-                localStorage.removeItem('staff_chat_name');
-                currentUser = '';
-                staffNameInput.value = '';
-                staffPasswordInput.value = '';
-                loginError.style.display = 'none';
-                identityModal.style.display = 'flex';
-                staffNameInput.focus();
-            });
-
-            // Join form submit
-            joinForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const name = staffNameInput.value.trim();
-                const password = staffPasswordInput.value.trim();
-
-                if (name && password) {
-                    // Fetch registered users or create new object
-                    const registeredUsers = JSON.parse(localStorage.getItem('studio_staff_users') || '{}');
-
-                    if (registeredUsers[name]) {
-                        // User exists, check password
-                        if (registeredUsers[name] === password) {
-                            loginSuccess(name);
-                        } else {
-                            // Incorrect password
-                            loginError.style.display = 'block';
-                            staffPasswordInput.value = '';
-                            setTimeout(() => { loginError.style.display = 'none'; }, 3000);
+                fileInput.addEventListener('change', () => {
+                    const file = fileInput.files[0];
+                    if (file) {
+                        if (file.size > 2 * 1024 * 1024) { // 2MB limit
+                            alert('File is too large! Please select an image under 2MB.');
+                            fileInput.value = '';
+                            return;
                         }
-                    } else {
-                        // New user, register them
-                        registeredUsers[name] = password;
-                        localStorage.setItem('studio_staff_users', JSON.stringify(registeredUsers));
-                        loginSuccess(name);
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            selectedFileData = e.target.result;
+                            attachBtn.style.color = '#ff4d4d'; // Indicate selection
+                            attachBtn.style.borderColor = '#ff4d4d';
+                        };
+                        reader.readAsDataURL(file);
                     }
+                });
+
+                let currentUser = localStorage.getItem('staff_chat_name') || '';
+
+                // Check if user has a name already
+                if (currentUser) {
+                    identityModal.style.display = 'none';
+                    currentUserBadge.innerText = currentUser + ' (Logout)';
+                    loadMessages();
+                } else {
+                    staffNameInput.focus();
                 }
-            });
 
-            function loginSuccess(name) {
-                currentUser = name;
-                localStorage.setItem('staff_chat_name', currentUser);
-                currentUserBadge.innerText = currentUser + ' (Logout)';
-                loginError.style.display = 'none';
-                identityModal.style.display = 'none';
-            }
+                // Change Name/Logout
+                currentUserBadge.addEventListener('click', () => {
+                    localStorage.removeItem('staff_chat_name');
+                    currentUser = '';
+                    staffNameInput.value = '';
+                    staffPasswordInput.value = '';
+                    loginError.style.display = 'none';
+                    identityModal.style.display = 'flex';
+                    staffNameInput.focus();
+                });
 
-            // --- Call System --- //
-            window.joinCallRoom = function (url) {
-                window.open(url, '_blank');
-            };
+                // Join form submit
+                joinForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const name = staffNameInput.value.trim();
+                    const password = staffPasswordInput.value.trim();
 
-            startCallBtn.addEventListener('click', () => {
-                const roomName = '69StudioStaff_' + Math.floor(Math.random() * 1000000);
-                const callUrl = 'https://vdo.ninja/?room=' + roomName;
+                    if (name && password) {
+                        // Fetch registered users or create new object
+                        const registeredUsers = JSON.parse(localStorage.getItem('studio_staff_users') || '{}');
 
-                chatRef.push({
-                    sender: 'System', // System message
-                    text: `
+                        if (registeredUsers[name]) {
+                            // User exists, check password
+                            if (registeredUsers[name] === password) {
+                                loginSuccess(name);
+                            } else {
+                                // Incorrect password
+                                loginError.style.display = 'block';
+                                staffPasswordInput.value = '';
+                                setTimeout(() => { loginError.style.display = 'none'; }, 3000);
+                            }
+                        } else {
+                            // New user, register them
+                            registeredUsers[name] = password;
+                            localStorage.setItem('studio_staff_users', JSON.stringify(registeredUsers));
+                            loginSuccess(name);
+                        }
+                    }
+                });
+
+                function loginSuccess(name) {
+                    currentUser = name;
+                    localStorage.setItem('staff_chat_name', currentUser);
+                    currentUserBadge.innerText = currentUser + ' (Logout)';
+                    loginError.style.display = 'none';
+                    identityModal.style.display = 'none';
+                    loadMessages();
+                }
+
+                // --- Call System --- //
+                window.joinCallRoom = function (url) {
+                    window.open(url, '_blank');
+                };
+
+                startCallBtn.addEventListener('click', () => {
+                    const roomName = '69StudioStaff_' + Math.floor(Math.random() * 1000000);
+                    const callUrl = 'https://vdo.ninja/?room=' + roomName;
+
+                    const messages = JSON.parse(localStorage.getItem('studio_staff_chat') || '[]');
+                    messages.push({
+                        id: Date.now(),
+                        sender: 'System', // System message
+                        text: `
                     <div style="text-align: center; padding: 15px; background: rgba(139, 92, 246, 0.1); border-radius: 15px; border: 1px solid rgba(139, 92, 246, 0.3); margin-top: 10px;">
                         <strong style="color: #d8b4fe;">🎥 ${currentUser} started a Video Call</strong><br>
                         <p style="font-size: 0.85rem; color: var(--text-grey); margin-bottom: 10px;">Join the call via the secure link below.</p>
@@ -566,64 +555,85 @@
                         </button>
                     </div>
                 `,
-                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                    });
+
+                    localStorage.setItem('studio_staff_chat', JSON.stringify(messages));
+                    loadMessages();
+
+                    window.joinCallRoom(callUrl);
                 });
 
-                window.joinCallRoom(callUrl);
-            });
+                // --- End Call System --- //
 
-            // --- End Call System --- //
+                // Send Message
+                chatForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const text = messageInput.value.trim();
+                    if (!text && !selectedFileData) return;
 
-            // Send Message
-            chatForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const text = messageInput.value.trim();
-                if (!text && !selectedFileData) return;
+                    const messages = JSON.parse(localStorage.getItem('studio_staff_chat') || '[]');
 
-                const newMsg = {
-                    sender: currentUser,
-                    text: text,
-                    image: selectedFileData || null,
-                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                    timestamp: firebase.database.ServerValue.TIMESTAMP
-                };
+                    const newMsg = {
+                        id: Date.now(),
+                        sender: currentUser,
+                        text: text,
+                        image: selectedFileData || null,
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                    };
 
-                chatRef.push(newMsg);
+                    messages.push(newMsg);
 
-                messageInput.value = '';
-                fileInput.value = '';
-                selectedFileData = null;
-                attachBtn.style.color = 'white';
-                attachBtn.style.borderColor = 'var(--border-glass)';
-            });
+                    // Keep only last 100 messages to avoid localstorage getting too large
+                    if (messages.length > 100) {
+                        messages.shift();
+                    }
 
-            // Listen for Messages from Firebase realtime database
-            chatRef.orderByChild('timestamp').limitToLast(100).on('value', (snapshot) => {
-                chatArea.innerHTML = '';
+                    try {
+                        localStorage.setItem('studio_staff_chat', JSON.stringify(messages));
+                    } catch (err) {
+                        console.error("Storage error", err);
+                        if (err.name === 'QuotaExceededError' || err.code === 22) {
+                            alert('Browser Storage is full! Cannot send this image. Try sending a smaller one, or clear old data.');
+                            return;
+                        }
+                    }
 
-                if (!snapshot.exists()) {
-                    chatArea.innerHTML = `<div style="text-align:center; color: var(--text-grey); margin-top: auto; margin-bottom: auto;">
+                    messageInput.value = '';
+                    fileInput.value = '';
+                    selectedFileData = null;
+                    attachBtn.style.color = 'white';
+                    attachBtn.style.borderColor = 'var(--border-glass)';
+
+                    loadMessages();
+                });
+
+                // Render Messages
+                function loadMessages() {
+                    const messages = JSON.parse(localStorage.getItem('studio_staff_chat') || '[]');
+                    chatArea.innerHTML = '';
+
+                    if (messages.length === 0) {
+                        chatArea.innerHTML = `<div style="text-align:center; color: var(--text-grey); margin-top: auto; margin-bottom: auto;">
                     <i class="fas fa-shield-alt" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
                     <p>No messages yet.<br>Send a message to start the conversation.</p>
                 </div>`;
-                    return;
-                }
-
-                snapshot.forEach((childSnapshot) => {
-                    const msg = childSnapshot.val();
-                    const isSystem = msg.sender === 'System';
-                    const isMine = msg.sender === currentUser;
-
-                    let alignmentClass = isMine ? 'mine' : 'others';
-                    if (isSystem) alignmentClass = 'system-msg';
-
-                    let imageHtml = '';
-                    if (msg.image) {
-                        imageHtml = `<img src="${msg.image}" style="max-width: 100%; max-height: 250px; border-radius: 10px; margin-bottom: 8px; display: block; object-fit: contain;">`;
+                        return;
                     }
 
-                    const msgHTML = `
+                    messages.forEach(msg => {
+                        const isSystem = msg.sender === 'System';
+                        const isMine = msg.sender === currentUser;
+
+                        let alignmentClass = isMine ? 'mine' : 'others';
+                        if (isSystem) alignmentClass = 'system-msg';
+
+                        let imageHtml = '';
+                        if (msg.image) {
+                            imageHtml = `<img src="${msg.image}" style="max-width: 100%; max-height: 250px; border-radius: 10px; margin-bottom: 8px; display: block; object-fit: contain;">`;
+                        }
+
+                        const msgHTML = `
                     <div class="msg-container ${alignmentClass}" style="${isSystem ? 'max-width: 100%; align-items: center; align-self: center;' : ''}">
                         ${isSystem ? '' : `<div class="msg-sender">${msg.sender}</div>`}
                         <div class="${isSystem ? '' : 'msg-bubble'}">
@@ -633,14 +643,32 @@
                         </div>
                     </div>
                     `;
-                    chatArea.insertAdjacentHTML('beforeend', msgHTML);
+                        chatArea.insertAdjacentHTML('beforeend', msgHTML);
+                    });
+
+                    // Scroll to bottom
+                    chatArea.scrollTop = chatArea.scrollHeight;
+                }
+
+                // Auto Refresh 
+                window.addEventListener('storage', (e) => {
+                    if (e.key === 'studio_staff_chat') {
+                        loadMessages();
+                    }
                 });
 
-                // Scroll to bottom
-                chatArea.scrollTop = chatArea.scrollHeight;
-            });
+                // Manual polling fallback
+                setInterval(() => {
+                    if (currentUser) {
+                        const lastRenderedCount = chatArea.querySelectorAll('.msg-container').length;
+                        const currentDataCount = JSON.parse(localStorage.getItem('studio_staff_chat') || '[]').length;
+                        if (lastRenderedCount !== currentDataCount && currentDataCount > 0) {
+                            loadMessages();
+                        }
+                    }
+                }, 2000);
 
-        </script>
+            </script>
 </body>
 
 </html>
