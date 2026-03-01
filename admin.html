@@ -824,14 +824,16 @@
                 <span class="number">12</span>
                 <span class="label">New Inquiries This Week</span>
             </div>
-            <div class="stat-card-admin">
+            <div class="stat-card-admin" onclick="updateStat('activeProjects', 'Active Projects')"
+                style="cursor:pointer;" title="Click to update">
                 <i class="fas fa-chart-line"></i>
-                <span class="number">24</span>
+                <span class="number" id="active-projects-count">24</span>
                 <span class="label">Active Projects</span>
             </div>
-            <div class="stat-card-admin">
+            <div class="stat-card-admin" onclick="updateStat('successRate', 'Project Success Rate (%)')"
+                style="cursor:pointer;" title="Click to update">
                 <i class="fas fa-clock"></i>
-                <span class="number">85%</span>
+                <span class="number" id="success-rate-count">85%</span>
                 <span class="label">Project Success Rate</span>
             </div>
         </div>
@@ -933,83 +935,103 @@
             <div id="modal-body">
                 <!-- Details will be injected here -->
             </div>
-        </div>
-    </div>
+            <!-- Stat Edit Modal -->
+            <div id="statEditModal" class="modal">
+                <div class="modal-content" style="max-width: 400px;">
+                    <div class="modal-header">
+                        <h2>Update <span class="gradient-text">Stat</span></h2>
+                        <button class="close-modal" onclick="closeStatModal()"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div id="stat-edit-body" style="margin-top: 20px;">
+                        <label id="stat-edit-label"
+                            style="display:block; margin-bottom: 10px; color: var(--text-grey);">Enter new
+                            value:</label>
+                        <input type="text" id="stat-edit-input"
+                            style="width: 100%; padding: 15px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); color: white; outline: none; margin-bottom: 20px;"
+                            placeholder="e.g. 25">
+                        <input type="hidden" id="stat-edit-key">
+                        <button onclick="saveStat()" class="btn primary submit-btn" style="width: 100%;">Save Changes <i
+                                class="fas fa-check"></i></button>
+                    </div>
+                </div>
+            </div>
 
-    <script>
-        const SECRET_KEY = "69studio77";
-        const loginForm = document.getElementById('loginForm');
-        const loginSection = document.getElementById('login-section');
-        const adminContent = document.getElementById('admin-content');
-        const errorMsg = document.getElementById('errorMsg');
-        const overlay = document.getElementById('loading-overlay');
+            <script>
+                const SECRET_KEY = "69studio77";
+                const loginForm = document.getElementById('loginForm');
+                const loginSection = document.getElementById('login-section');
+                const adminContent = document.getElementById('admin-content');
+                const errorMsg = document.getElementById('errorMsg');
+                const overlay = document.getElementById('loading-overlay');
 
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const passwordInput = document.getElementById('adminPassword');
-            const enteredPass = passwordInput.value.trim();
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const passwordInput = document.getElementById('adminPassword');
+                    const enteredPass = passwordInput.value.trim();
 
-            if (enteredPass === SECRET_KEY) {
-                // Focus out of input to hide mobile keyboard
-                passwordInput.blur();
+                    if (enteredPass === SECRET_KEY) {
+                        // Focus out of input to hide mobile keyboard
+                        passwordInput.blur();
 
-                overlay.style.display = 'flex';
+                        overlay.style.display = 'flex';
 
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                    loginSection.style.display = 'none';
-                    adminContent.style.display = 'block';
-                    document.body.style.overflow = 'auto'; // Re-enable scrolling
+                        setTimeout(() => {
+                            overlay.style.display = 'none';
+                            loginSection.style.display = 'none';
+                            adminContent.style.display = 'block';
+                            document.body.style.overflow = 'auto'; // Re-enable scrolling
 
-                    localStorage.setItem('adminAccess', 'true');
-                    loadDashboardData();
+                            localStorage.setItem('adminAccess', 'true');
+                            loadDashboardData();
 
-                    // Force a layout recalculation for mobile
-                    window.dispatchEvent(new Event('resize'));
-                }, 1000);
-            } else {
-                errorMsg.style.display = 'block';
-                passwordInput.value = '';
-                setTimeout(() => { errorMsg.style.display = 'none'; }, 3000);
-            }
-        });
+                            // Force a layout recalculation for mobile
+                            window.dispatchEvent(new Event('resize'));
+                        }, 1000);
+                    } else {
+                        errorMsg.style.display = 'block';
+                        passwordInput.value = '';
+                        setTimeout(() => { errorMsg.style.display = 'none'; }, 3000);
+                    }
+                });
 
-        function logout() {
-            localStorage.removeItem('adminAccess');
-            location.reload();
-        }
+                function logout() {
+                    localStorage.removeItem('adminAccess');
+                    location.reload();
+                }
 
-        // Initial Data Load
-        function loadDashboardData() {
-            const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
-            const stats = JSON.parse(localStorage.getItem('studio_stats') || '{"inquiries": 0, "visits": 0}');
+                // Initial Data Load
+                function loadDashboardData() {
+                    const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
+                    const stats = JSON.parse(localStorage.getItem('studio_stats') || '{"inquiries": 0, "visits": 0, "activeProjects": 24, "successRate": 85}');
 
-            // Update Stats
-            document.querySelector('.stat-card-admin:nth-child(1) .number').innerText = leads.length;
-            document.getElementById('visit-count').innerText = stats.visits || 0;
+                    // Update Stats
+                    document.querySelector('.stat-card-admin:nth-child(1) .number').innerText = leads.length;
+                    document.getElementById('active-projects-count').innerText = stats.activeProjects !== undefined ? stats.activeProjects : 24;
+                    document.getElementById('success-rate-count').innerText = (stats.successRate !== undefined ? stats.successRate : 85) + '%';
+                    document.getElementById('visit-count').innerText = stats.visits || 0;
 
-            // Initialize Chart
-            initTrafficChart(stats);
+                    // Initialize Chart
+                    initTrafficChart(stats);
 
-            // Update Table
-            const leadsBody = document.getElementById('leads-body');
-            leadsBody.innerHTML = '';
+                    // Update Table
+                    const leadsBody = document.getElementById('leads-body');
+                    leadsBody.innerHTML = '';
 
-            if (leads.length === 0) {
-                leadsBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-grey);">No leads found yet.</td></tr>';
-            } else {
-                leads.forEach((lead, index) => {
-                    const row = document.createElement('tr');
+                    if (leads.length === 0) {
+                        leadsBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-grey);">No leads found yet.</td></tr>';
+                    } else {
+                        leads.forEach((lead, index) => {
+                            const row = document.createElement('tr');
 
-                    // Map service codes to names
-                    const serviceMap = {
-                        'web': 'Web Development',
-                        'design': 'UI/UX Design',
-                        'marketing': 'Social Media'
-                    };
-                    const serviceName = serviceMap[lead.interest] || lead.interest;
+                            // Map service codes to names
+                            const serviceMap = {
+                                'web': 'Web Development',
+                                'design': 'UI/UX Design',
+                                'marketing': 'Social Media'
+                            };
+                            const serviceName = serviceMap[lead.interest] || lead.interest;
 
-                    row.innerHTML = `
+                            row.innerHTML = `
                         <td>${lead.name}</td>
                         <td>${serviceName}</td>
                         <td>${lead.date}</td>
@@ -1019,25 +1041,54 @@
                             <button title="Delete Lead" onclick="deleteLead(${index})" class="action-btn delete"><i class="fas fa-trash"></i></button>
                         </td>
                     `;
-                    leadsBody.appendChild(row);
-                });
-            }
-        }
+                            leadsBody.appendChild(row);
+                        });
+                    }
+                }
 
-        function viewLead(index) {
-            const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
-            const lead = leads[index];
-            const modal = document.getElementById('leadModal');
-            const modalBody = document.getElementById('modal-body');
+                function updateStat(key, label) {
+                    const currentStats = JSON.parse(localStorage.getItem('studio_stats') || '{"inquiries": 0, "visits": 0, "activeProjects": 24, "successRate": 85}');
+                    let defaultVal = currentStats[key] !== undefined ? currentStats[key] : (key === 'activeProjects' ? 24 : 85);
 
-            const serviceMap = {
-                'web': 'Web Development',
-                'design': 'UI/UX Design',
-                'marketing': 'Social Media'
-            };
-            const serviceName = serviceMap[lead.interest] || lead.interest;
+                    document.getElementById('stat-edit-label').innerText = `Enter new value for ${label}:`;
+                    document.getElementById('stat-edit-input').value = defaultVal;
+                    document.getElementById('stat-edit-key').value = key;
 
-            modalBody.innerHTML = `
+                    document.getElementById('statEditModal').style.display = 'flex';
+                }
+
+                function closeStatModal() {
+                    document.getElementById('statEditModal').style.display = 'none';
+                }
+
+                function saveStat() {
+                    const key = document.getElementById('stat-edit-key').value;
+                    const newVal = document.getElementById('stat-edit-input').value;
+
+                    if (newVal !== null && newVal.trim() !== "") {
+                        const currentStats = JSON.parse(localStorage.getItem('studio_stats') || '{"inquiries": 0, "visits": 0, "activeProjects": 24, "successRate": 85}');
+                        let valueToSave = newVal.replace('%', '').trim();
+                        currentStats[key] = isNaN(valueToSave) ? valueToSave : Number(valueToSave);
+                        localStorage.setItem('studio_stats', JSON.stringify(currentStats));
+                        loadDashboardData();
+                        closeStatModal();
+                    }
+                }
+
+                function viewLead(index) {
+                    const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
+                    const lead = leads[index];
+                    const modal = document.getElementById('leadModal');
+                    const modalBody = document.getElementById('modal-body');
+
+                    const serviceMap = {
+                        'web': 'Web Development',
+                        'design': 'UI/UX Design',
+                        'marketing': 'Social Media'
+                    };
+                    const serviceName = serviceMap[lead.interest] || lead.interest;
+
+                    modalBody.innerHTML = `
                 <div class="lead-detail-item">
                     <label>Full Name</label>
                     <p>${lead.name}</p>
@@ -1060,213 +1111,213 @@
                 </div>
             `;
 
-            modal.style.display = 'flex';
+                    modal.style.display = 'flex';
 
-            // Mark as viewed if it was new
-            if (lead.status === 'New') {
-                leads[index].status = 'Pending';
-                localStorage.setItem('studio_leads', JSON.stringify(leads));
-                loadDashboardData();
-            }
-        }
+                    // Mark as viewed if it was new
+                    if (lead.status === 'New') {
+                        leads[index].status = 'Pending';
+                        localStorage.setItem('studio_leads', JSON.stringify(leads));
+                        loadDashboardData();
+                    }
+                }
 
-        function closeModal() {
-            document.getElementById('leadModal').style.display = 'none';
-        }
+                function closeModal() {
+                    document.getElementById('leadModal').style.display = 'none';
+                }
 
-        // Close modal when clicking outside
-        window.onclick = function (event) {
-            const modal = document.getElementById('leadModal');
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
+                // Close modal when clicking outside
+                window.onclick = function (event) {
+                    const modal = document.getElementById('leadModal');
+                    if (event.target == modal) {
+                        closeModal();
+                    }
+                }
 
-        function deleteLead(index) {
-            if (confirm('Delete this lead?')) {
-                const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
-                leads.splice(index, 1);
-                localStorage.setItem('studio_leads', JSON.stringify(leads));
-                loadDashboardData();
-            }
-        }
+                function deleteLead(index) {
+                    if (confirm('Delete this lead?')) {
+                        const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
+                        leads.splice(index, 1);
+                        localStorage.setItem('studio_leads', JSON.stringify(leads));
+                        loadDashboardData();
+                    }
+                }
 
-        function clearLeads() {
-            if (confirm('Delete ALL leads and stats?')) {
-                localStorage.removeItem('studio_leads');
-                localStorage.setItem('studio_stats', '{"inquiries": 0, "visits": 0}');
-                loadDashboardData();
-            }
-        }
+                function clearLeads() {
+                    if (confirm('Delete ALL leads and stats?')) {
+                        localStorage.removeItem('studio_leads');
+                        localStorage.setItem('studio_stats', '{"inquiries": 0, "visits": 0}');
+                        loadDashboardData();
+                    }
+                }
 
-        function exportLeads() {
-            const leads = localStorage.getItem('studio_leads') || '[]';
-            const blob = new Blob([leads], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `leads_${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-        }
+                function exportLeads() {
+                    const leads = localStorage.getItem('studio_leads') || '[]';
+                    const blob = new Blob([leads], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `leads_${new Date().toISOString().split('T')[0]}.json`;
+                    a.click();
+                }
 
-        let trafficChartInstance = null;
+                let trafficChartInstance = null;
 
-        function initTrafficChart(stats) {
-            const ctx = document.getElementById('trafficChart').getContext('2d');
+                function initTrafficChart(stats) {
+                    const ctx = document.getElementById('trafficChart').getContext('2d');
 
-            const labels = [];
-            const dataValues = [];
-            const dailyVisits = stats.dailyVisits || {};
+                    const labels = [];
+                    const dataValues = [];
+                    const dailyVisits = stats.dailyVisits || {};
 
-            for (let i = 6; i >= 0; i--) {
-                const d = new Date();
-                d.setDate(d.getDate() - i);
-                const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-                const dayName = d.toLocaleDateString('en-US', { weekday: 'short' });
+                    for (let i = 6; i >= 0; i--) {
+                        const d = new Date();
+                        d.setDate(d.getDate() - i);
+                        const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+                        const dayName = d.toLocaleDateString('en-US', { weekday: 'short' });
 
-                labels.push(dayName);
-                dataValues.push(dailyVisits[dateStr] || 0);
-            }
+                        labels.push(dayName);
+                        dataValues.push(dailyVisits[dateStr] || 0);
+                    }
 
-            if (trafficChartInstance) {
-                trafficChartInstance.data.labels = labels;
-                trafficChartInstance.data.datasets[0].data = dataValues;
-                trafficChartInstance.update();
-                return;
-            }
+                    if (trafficChartInstance) {
+                        trafficChartInstance.data.labels = labels;
+                        trafficChartInstance.data.datasets[0].data = dataValues;
+                        trafficChartInstance.update();
+                        return;
+                    }
 
-            let gradient = ctx.createLinearGradient(0, 0, 0, 150);
-            gradient.addColorStop(0, 'rgba(255, 77, 77, 0.5)');
-            gradient.addColorStop(1, 'rgba(255, 77, 77, 0.0)');
+                    let gradient = ctx.createLinearGradient(0, 0, 0, 150);
+                    gradient.addColorStop(0, 'rgba(255, 77, 77, 0.5)');
+                    gradient.addColorStop(1, 'rgba(255, 77, 77, 0.0)');
 
-            trafficChartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Visits',
-                        data: dataValues,
-                        borderColor: '#ff4d4d',
-                        backgroundColor: gradient,
-                        borderWidth: 3,
-                        pointBackgroundColor: '#121212',
-                        pointBorderColor: '#ff4d4d',
-                        pointBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHoverRadius: 6,
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            backgroundColor: 'rgba(18, 18, 18, 0.9)',
-                            titleColor: '#fff',
-                            bodyColor: '#a0a0a0',
-                            borderColor: 'rgba(255,77,77,0.3)',
-                            borderWidth: 1,
-                            padding: 10,
-                            displayColors: false,
-                            callbacks: {
-                                label: function (context) {
-                                    return context.parsed.y + ' Visits';
+                    trafficChartInstance = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Visits',
+                                data: dataValues,
+                                borderColor: '#ff4d4d',
+                                backgroundColor: gradient,
+                                borderWidth: 3,
+                                pointBackgroundColor: '#121212',
+                                pointBorderColor: '#ff4d4d',
+                                pointBorderWidth: 2,
+                                pointRadius: 4,
+                                pointHoverRadius: 6,
+                                fill: true,
+                                tension: 0.4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false },
+                                tooltip: {
+                                    backgroundColor: 'rgba(18, 18, 18, 0.9)',
+                                    titleColor: '#fff',
+                                    bodyColor: '#a0a0a0',
+                                    borderColor: 'rgba(255,77,77,0.3)',
+                                    borderWidth: 1,
+                                    padding: 10,
+                                    displayColors: false,
+                                    callbacks: {
+                                        label: function (context) {
+                                            return context.parsed.y + ' Visits';
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    grid: { display: false, drawOnChartArea: false },
+                                    ticks: { color: '#a0a0a0', font: { family: "'Plus Jakarta Sans', sans-serif", size: 10 } },
+                                    border: { display: false }
+                                },
+                                y: {
+                                    display: false,
+                                    grid: { display: false },
+                                    min: 0
                                 }
                             }
                         }
-                    },
-                    scales: {
-                        x: {
-                            grid: { display: false, drawOnChartArea: false },
-                            ticks: { color: '#a0a0a0', font: { family: "'Plus Jakarta Sans', sans-serif", size: 10 } },
-                            border: { display: false }
-                        },
-                        y: {
-                            display: false,
-                            grid: { display: false },
-                            min: 0
-                        }
-                    }
+                    });
                 }
-            });
-        }
 
-        // ChatGPT Simulation Logic
-        const chatForm = document.getElementById('chatgpt-form');
-        const chatInput = document.getElementById('chatgpt-input');
-        const chatMessages = document.getElementById('chatgpt-messages');
-        const chatToggle = document.getElementById('chatgpt-toggle');
-        const chatWidget = document.getElementById('chatgpt-widget');
-        const chatClose = document.getElementById('chatgpt-close');
+                // ChatGPT Simulation Logic
+                const chatForm = document.getElementById('chatgpt-form');
+                const chatInput = document.getElementById('chatgpt-input');
+                const chatMessages = document.getElementById('chatgpt-messages');
+                const chatToggle = document.getElementById('chatgpt-toggle');
+                const chatWidget = document.getElementById('chatgpt-widget');
+                const chatClose = document.getElementById('chatgpt-close');
 
-        chatToggle.addEventListener('click', () => {
-            chatWidget.classList.toggle('active');
-            if (chatWidget.classList.contains('active')) {
-                chatInput.focus();
-            }
-        });
+                chatToggle.addEventListener('click', () => {
+                    chatWidget.classList.toggle('active');
+                    if (chatWidget.classList.contains('active')) {
+                        chatInput.focus();
+                    }
+                });
 
-        chatClose.addEventListener('click', () => {
-            chatWidget.classList.remove('active');
-        });
+                chatClose.addEventListener('click', () => {
+                    chatWidget.classList.remove('active');
+                });
 
-        const aiResponses = [
-            "I can certainly help with that! Let me analyze the latest data.",
-            "That's a great idea, Subhash. I've noted that down.",
-            "Based on the recent site traffic patterns, it seems user interest is peaking around evening hours.",
-            "I see you have new leads! A quick follow-up might increase the conversion rate substantially.",
-            "Here is a draft response: 'Hi there! Thank you for reaching out to 69 Studio. We'd love to chat more about your digital needs...'",
-            "Web Development inquiries are up 15% this month! Keep pushing the SEO strategy."
-        ];
+                const aiResponses = [
+                    "I can certainly help with that! Let me analyze the latest data.",
+                    "That's a great idea, Subhash. I've noted that down.",
+                    "Based on the recent site traffic patterns, it seems user interest is peaking around evening hours.",
+                    "I see you have new leads! A quick follow-up might increase the conversion rate substantially.",
+                    "Here is a draft response: 'Hi there! Thank you for reaching out to 69 Studio. We'd love to chat more about your digital needs...'",
+                    "Web Development inquiries are up 15% this month! Keep pushing the SEO strategy."
+                ];
 
-        chatForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const text = chatInput.value.trim();
-            if (!text) return;
+                chatForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const text = chatInput.value.trim();
+                    if (!text) return;
 
-            // Add user message
-            const userMsg = document.createElement('div');
-            userMsg.className = 'chat-message user';
-            userMsg.innerText = text;
-            chatMessages.appendChild(userMsg);
+                    // Add user message
+                    const userMsg = document.createElement('div');
+                    userMsg.className = 'chat-message user';
+                    userMsg.innerText = text;
+                    chatMessages.appendChild(userMsg);
 
-            chatInput.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+                    chatInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // Simulate Bot Typing
-            const typingMsg = document.createElement('div');
-            typingMsg.className = 'chat-message bot';
-            typingMsg.innerHTML = '<i class="fas fa-ellipsis-h" style="opacity: 0.5;"></i>';
-            chatMessages.appendChild(typingMsg);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+                    // Simulate Bot Typing
+                    const typingMsg = document.createElement('div');
+                    typingMsg.className = 'chat-message bot';
+                    typingMsg.innerHTML = '<i class="fas fa-ellipsis-h" style="opacity: 0.5;"></i>';
+                    chatMessages.appendChild(typingMsg);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            setTimeout(() => {
-                chatMessages.removeChild(typingMsg);
-                const botMsg = document.createElement('div');
-                botMsg.className = 'chat-message bot';
+                    setTimeout(() => {
+                        chatMessages.removeChild(typingMsg);
+                        const botMsg = document.createElement('div');
+                        botMsg.className = 'chat-message bot';
 
-                // Demo logic: Pick random response
-                const randomRes = aiResponses[Math.floor(Math.random() * aiResponses.length)];
-                botMsg.innerText = randomRes;
+                        // Demo logic: Pick random response
+                        const randomRes = aiResponses[Math.floor(Math.random() * aiResponses.length)];
+                        botMsg.innerText = randomRes;
 
-                chatMessages.appendChild(botMsg);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 1200);
-        });
+                        chatMessages.appendChild(botMsg);
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }, 1200);
+                });
 
-        // Check login on load
-        window.onload = () => {
-            if (localStorage.getItem('adminAccess') === 'true') {
-                loginSection.style.display = 'none';
-                adminContent.style.display = 'block';
-                document.body.style.overflow = 'auto';
-                loadDashboardData();
-            }
-        };
-    </script>
+                // Check login on load
+                window.onload = () => {
+                    if (localStorage.getItem('adminAccess') === 'true') {
+                        loginSection.style.display = 'none';
+                        adminContent.style.display = 'block';
+                        document.body.style.overflow = 'auto';
+                        loadDashboardData();
+                    }
+                };
+            </script>
 </body>
 
 </html>
