@@ -293,22 +293,87 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                padding: 0;
+            }
+
             .chat-container {
-                height: 90vh;
-                border-radius: 20px;
+                height: 100vh;
+                height: 100dvh;
+                /* For iOS Safari */
+                border-radius: 0;
+                border: none;
+            }
+
+            .chat-header {
+                padding: 15px 20px;
+                padding-top: 55px;
+                /* Leave space for go-back button */
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .header-title h2 {
+                font-size: 1.2rem;
+            }
+
+            .chat-header>div:last-child {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            #startCallBtn {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+
+            .current-user-badge {
+                padding: 6px 12px;
+                font-size: 0.8rem;
             }
 
             .go-back {
                 top: 15px;
                 left: 20px;
+                background: rgba(0, 0, 0, 0.5);
+                padding: 5px 12px;
+                border-radius: 20px;
+                backdrop-filter: blur(5px);
             }
 
-            body {
-                padding: 10px;
+            .chat-area {
+                padding: 15px;
             }
 
             .msg-container {
-                max-width: 85%;
+                max-width: 90%;
+            }
+
+            .msg-bubble {
+                padding: 12px 15px;
+                font-size: 0.95rem;
+            }
+
+            .chat-input-container {
+                padding: 15px 20px;
+                gap: 10px;
+            }
+
+            .chat-input-container input {
+                padding: 12px 15px;
+                font-size: 0.9rem;
+            }
+
+            #attachBtn,
+            .send-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+
+            .identity-box {
+                padding: 30px 20px;
             }
         }
     </style>
@@ -369,7 +434,20 @@
             <input type="text" id="messageInput" placeholder="Type a message or send a photo..." autocomplete="off">
             <button type="submit" class="send-btn"><i class="fas fa-paper-plane"></i></button>
         </form>
+
+        <!-- Firebase SDK (v8) -->
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
         <script>
+            // Initialize Firebase - Using a temporary open database config for demonstration
+            // IMPORTANT: In production, you would attach your own firebase config here
+            const firebaseConfig = {
+                databaseURL: "https://studiohub-live-default-rtdb.firebaseio.com",
+            };
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.database();
+            const chatRef = db.ref("studio_chat");
+
             const identityModal = document.getElementById('identityModal');
             const joinForm = document.getElementById('joinForm');
             const staffNameInput = document.getElementById('staffNameInput');
@@ -466,7 +544,6 @@
                 currentUserBadge.innerText = currentUser + ' (Logout)';
                 loginError.style.display = 'none';
                 identityModal.style.display = 'none';
-                loadMessages();
             }
 
             // --- Call System --- //
@@ -476,13 +553,9 @@
 
             startCallBtn.addEventListener('click', () => {
                 const roomName = '69StudioStaff_' + Math.floor(Math.random() * 1000000);
-
-                // Using VDO.ninja for completely ad-free, open-source secure WebRTC group calls
                 const callUrl = 'https://vdo.ninja/?room=' + roomName;
 
-                const messages = JSON.parse(localStorage.getItem('studio_staff_chat') || '[]');
-                messages.push({
-                    id: Date.now(),
+                chatRef.push({
                     sender: 'System', // System message
                     text: `
                     <div style="text-align: center; padding: 15px; background: rgba(139, 92, 246, 0.1); border-radius: 15px; border: 1px solid rgba(139, 92, 246, 0.3); margin-top: 10px;">
@@ -493,13 +566,11 @@
                         </button>
                     </div>
                 `,
-                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
                 });
 
-                localStorage.setItem('studio_staff_chat', JSON.stringify(messages));
-                loadMessages();
-
-                window.joinCallRoom(callUrl); // Self join the room
+                window.joinCallRoom(callUrl);
             });
 
             // --- End Call System --- //
@@ -510,49 +581,28 @@
                 const text = messageInput.value.trim();
                 if (!text && !selectedFileData) return;
 
-                const messages = JSON.parse(localStorage.getItem('studio_staff_chat') || '[]');
-
                 const newMsg = {
-                    id: Date.now(),
                     sender: currentUser,
                     text: text,
-                    image: selectedFileData,
-                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                    image: selectedFileData || null,
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
                 };
 
-                messages.push(newMsg);
-
-                // Keep only last 100 messages to avoid localstorage getting too large
-                if (messages.length > 100) {
-                    messages.shift();
-                }
-
-                try {
-                    localStorage.setItem('studio_staff_chat', JSON.stringify(messages));
-                } catch (err) {
-                    console.error("Storage error", err);
-                    if (err.name === 'QuotaExceededError' || err.code === 22) {
-                        alert('Browser Storage is full! Cannot send this image. Try sending a smaller one, or clear old data.');
-                        return;
-                    }
-                }
+                chatRef.push(newMsg);
 
                 messageInput.value = '';
                 fileInput.value = '';
                 selectedFileData = null;
                 attachBtn.style.color = 'white';
                 attachBtn.style.borderColor = 'var(--border-glass)';
-
-                // Re-render
-                loadMessages();
             });
 
-            // Render Messages
-            function loadMessages() {
-                const messages = JSON.parse(localStorage.getItem('studio_staff_chat') || '[]');
+            // Listen for Messages from Firebase realtime database
+            chatRef.orderByChild('timestamp').limitToLast(100).on('value', (snapshot) => {
                 chatArea.innerHTML = '';
 
-                if (messages.length === 0) {
+                if (!snapshot.exists()) {
                     chatArea.innerHTML = `<div style="text-align:center; color: var(--text-grey); margin-top: auto; margin-bottom: auto;">
                     <i class="fas fa-shield-alt" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
                     <p>No messages yet.<br>Send a message to start the conversation.</p>
@@ -560,12 +610,13 @@
                     return;
                 }
 
-                messages.forEach(msg => {
+                snapshot.forEach((childSnapshot) => {
+                    const msg = childSnapshot.val();
                     const isSystem = msg.sender === 'System';
                     const isMine = msg.sender === currentUser;
 
                     let alignmentClass = isMine ? 'mine' : 'others';
-                    if (isSystem) alignmentClass = 'system-msg'; // Center aligned
+                    if (isSystem) alignmentClass = 'system-msg';
 
                     let imageHtml = '';
                     if (msg.image) {
@@ -581,32 +632,13 @@
                             ${isSystem ? '' : `<span class="msg-time">${msg.time}</span>`}
                         </div>
                     </div>
-                `;
+                    `;
                     chatArea.insertAdjacentHTML('beforeend', msgHTML);
                 });
 
                 // Scroll to bottom
                 chatArea.scrollTop = chatArea.scrollHeight;
-            }
-
-            // Auto Refresh to see others messages (Simulating Realtime Database)
-            window.addEventListener('storage', (e) => {
-                if (e.key === 'studio_staff_chat') {
-                    loadMessages();
-                }
             });
-
-            // Optional: Manual polling fallback if same browser doesn't trigger storage event across windows cleanly
-            setInterval(() => {
-                if (currentUser) {
-                    // simple check
-                    const lastRenderedCount = chatArea.querySelectorAll('.msg-container').length;
-                    const currentDataCount = JSON.parse(localStorage.getItem('studio_staff_chat') || '[]').length;
-                    if (lastRenderedCount !== currentDataCount && currentDataCount > 0) {
-                        loadMessages();
-                    }
-                }
-            }, 2000);
 
         </script>
 </body>
