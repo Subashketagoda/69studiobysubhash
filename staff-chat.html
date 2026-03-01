@@ -463,16 +463,34 @@
             fileInput.addEventListener('change', () => {
                 const file = fileInput.files[0];
                 if (file) {
-                    if (file.size > 2 * 1024 * 1024) { // 2MB limit
-                        alert('File is too large! Please select an image under 2MB.');
-                        fileInput.value = '';
-                        return;
-                    }
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        selectedFileData = e.target.result;
-                        attachBtn.style.color = '#ff4d4d'; // Indicate selection
-                        attachBtn.style.borderColor = '#ff4d4d';
+                        const img = new Image();
+                        img.onload = () => {
+                            // Resize image down to prevent crushing LocalStorage and MQTT
+                            const canvas = document.createElement('canvas');
+                            let width = img.width;
+                            let height = img.height;
+                            const MAX_WIDTH = 500;
+
+                            if (width > MAX_WIDTH) {
+                                height = Math.round((height * MAX_WIDTH) / width);
+                                width = MAX_WIDTH;
+                            }
+
+                            canvas.width = width;
+                            canvas.height = height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, height);
+
+                            // Get compressed base64 jpeg (quality 0.6) - Usually ~30KB
+                            selectedFileData = canvas.toDataURL("image/jpeg", 0.6);
+
+                            attachBtn.innerHTML = '<i class="fas fa-check"></i>';
+                            attachBtn.style.color = '#ff4d4d';
+                            attachBtn.style.borderColor = '#ff4d4d';
+                        };
+                        img.src = e.target.result;
                     };
                     reader.readAsDataURL(file);
                 }
@@ -540,7 +558,9 @@
 
             // --- Realtime Sync System --- //
             const mqttClientId = "staff_chat_" + Math.random().toString(16).substr(2, 8);
-            const mqttClient = new Paho.MQTT.Client("broker.emqx.io", 8084, mqttClientId);
+
+            // HiveMQ public broker is very reliable for small messages
+            const mqttClient = new Paho.MQTT.Client("broker.hivemq.com", 8884, mqttClientId);
             const liveTopic = "69studio_live_sync_room_23581";
 
             mqttClient.onMessageArrived = function (message) {
@@ -551,7 +571,7 @@
                     // If we don't already have this message (from other device)
                     if (!messages.some(m => m.id === payload.id)) {
                         messages.push(payload);
-                        if (messages.length > 100) messages.shift();
+                        if (messages.length > 50) messages.shift(); // Keep lighter history
                         localStorage.setItem('studio_staff_chat', JSON.stringify(messages));
                         loadMessages(); // Re-render chat
                     }
@@ -571,6 +591,7 @@
                     mqttClient.connect({
                         useSSL: true,
                         timeout: 3,
+                        keepAliveInterval: 60,
                         onSuccess: function () {
                             console.log("Live Sync Connected!");
                             mqttClient.subscribe(liveTopic);
@@ -666,6 +687,7 @@
                 messageInput.value = '';
                 fileInput.value = '';
                 selectedFileData = null;
+                attachBtn.innerHTML = '<i class="fas fa-paperclip"></i>';
                 attachBtn.style.color = 'white';
                 attachBtn.style.borderColor = 'var(--border-glass)';
 
