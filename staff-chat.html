@@ -354,7 +354,13 @@
         </div>
 
         <form class="chat-input-container" id="chatForm">
-            <input type="text" id="messageInput" placeholder="Type a message..." required autocomplete="off">
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            <button type="button" class="btn secondary" id="attachBtn"
+                style="border-radius: 50%; width: 55px; height: 55px; display: flex; justify-content: center; align-items: center; border: 1px solid var(--border-glass); background: rgba(255,255,255,0.05); color: white; cursor: pointer; transition: 0.3s; flex-shrink: 0;"
+                title="Attach Image">
+                <i class="fas fa-paperclip"></i>
+            </button>
+            <input type="text" id="messageInput" placeholder="Type a message or send a photo..." autocomplete="off">
             <button type="submit" class="send-btn"><i class="fas fa-paper-plane"></i></button>
         </form>
     </div>
@@ -370,6 +376,31 @@
         const chatForm = document.getElementById('chatForm');
         const messageInput = document.getElementById('messageInput');
         const chatArea = document.getElementById('chatArea');
+        const fileInput = document.getElementById('fileInput');
+        const attachBtn = document.getElementById('attachBtn');
+        let selectedFileData = null;
+
+        attachBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            if (file) {
+                if (file.size > 2 * 1024 * 1024) { // 2MB limit
+                    alert('File is too large! Please select an image under 2MB.');
+                    fileInput.value = '';
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    selectedFileData = e.target.result;
+                    attachBtn.style.color = '#ff4d4d'; // Indicate selection
+                    attachBtn.style.borderColor = '#ff4d4d';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
 
         let currentUser = localStorage.getItem('staff_chat_name') || '';
 
@@ -435,7 +466,7 @@
         chatForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const text = messageInput.value.trim();
-            if (!text) return;
+            if (!text && !selectedFileData) return;
 
             const messages = JSON.parse(localStorage.getItem('studio_staff_chat') || '[]');
 
@@ -443,6 +474,7 @@
                 id: Date.now(),
                 sender: currentUser,
                 text: text,
+                image: selectedFileData,
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             };
 
@@ -453,9 +485,21 @@
                 messages.shift();
             }
 
-            localStorage.setItem('studio_staff_chat', JSON.stringify(messages));
+            try {
+                localStorage.setItem('studio_staff_chat', JSON.stringify(messages));
+            } catch (err) {
+                console.error("Storage error", err);
+                if (err.name === 'QuotaExceededError' || err.code === 22) {
+                    alert('Browser Storage is full! Cannot send this image. Try sending a smaller one, or clear old data.');
+                    return;
+                }
+            }
 
             messageInput.value = '';
+            fileInput.value = '';
+            selectedFileData = null;
+            attachBtn.style.color = 'white';
+            attachBtn.style.borderColor = 'var(--border-glass)';
 
             // Re-render
             loadMessages();
@@ -478,10 +522,16 @@
                 const isMine = msg.sender === currentUser;
                 const alignmentClass = isMine ? 'mine' : 'others';
 
+                let imageHtml = '';
+                if (msg.image) {
+                    imageHtml = `<img src="${msg.image}" style="max-width: 100%; max-height: 250px; border-radius: 10px; margin-bottom: 8px; display: block; object-fit: contain;">`;
+                }
+
                 const msgHTML = `
                     <div class="msg-container ${alignmentClass}">
                         <div class="msg-sender">${msg.sender}</div>
                         <div class="msg-bubble">
+                            ${imageHtml}
                             ${msg.text}
                             <span class="msg-time">${msg.time}</span>
                         </div>
