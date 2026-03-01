@@ -539,7 +539,8 @@
             }
 
             // --- Realtime Sync System --- //
-            const mqttClient = new Paho.MQTT.Client("broker.emqx.io", 8084, "client_" + parseInt(Math.random() * 1000000, 10));
+            const mqttClientId = "staff_chat_" + Math.random().toString(16).substr(2, 8);
+            const mqttClient = new Paho.MQTT.Client("broker.emqx.io", 8084, mqttClientId);
             const liveTopic = "69studio_live_sync_room_23581";
 
             mqttClient.onMessageArrived = function (message) {
@@ -557,19 +558,39 @@
                 } catch (e) { console.error(e); }
             };
 
-            mqttClient.connect({
-                useSSL: true,
-                onSuccess: function () {
-                    console.log("Live Sync Connected!");
-                    mqttClient.subscribe(liveTopic);
+            mqttClient.onConnectionLost = function (responseObject) {
+                if (responseObject.errorCode !== 0) {
+                    console.log("Live Sync Connection Lost: " + responseObject.errorMessage);
+                    // Attempt to reconnect quietly after 3 seconds
+                    setTimeout(connectMQTT, 3000);
                 }
-            });
+            };
+
+            function connectMQTT() {
+                try {
+                    mqttClient.connect({
+                        useSSL: true,
+                        timeout: 3,
+                        onSuccess: function () {
+                            console.log("Live Sync Connected!");
+                            mqttClient.subscribe(liveTopic);
+                        }
+                    });
+                } catch (e) { }
+            }
+
+            // Initial connection
+            connectMQTT();
 
             function broadcastMessage(msgObj) {
-                if (mqttClient.isConnected()) {
-                    const message = new Paho.MQTT.Message(JSON.stringify(msgObj));
-                    message.destinationName = liveTopic;
-                    mqttClient.send(message);
+                try {
+                    if (mqttClient.isConnected()) {
+                        const message = new Paho.MQTT.Message(JSON.stringify(msgObj));
+                        message.destinationName = liveTopic;
+                        mqttClient.send(message);
+                    }
+                } catch (e) {
+                    console.log("Could not broadcast - offline");
                 }
             }
             // --- End Realtime Sync System --- //
