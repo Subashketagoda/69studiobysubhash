@@ -1230,9 +1230,20 @@
         function deleteReview(index) {
             if (confirm('Delete this review? This action cannot be undone.')) {
                 const reviews = JSON.parse(localStorage.getItem('studio_reviews') || '[]');
-                reviews.splice(index, 1);
-                localStorage.setItem('studio_reviews', JSON.stringify(reviews));
-                loadDashboardData();
+                const reviewToDelete = reviews[index];
+
+                if (window.firebaseDB && window.firebaseRemove && window.firebaseRef && reviewToDelete.firebaseKey) {
+                    const reviewRef = window.firebaseRef(window.firebaseDB, 'reviews/' + reviewToDelete.firebaseKey);
+                    window.firebaseRemove(reviewRef).then(() => {
+                        console.log("Firebase deletion successful");
+                    }).catch((error) => {
+                        console.error("Firebase deletion failed: ", error);
+                    });
+                } else {
+                    reviews.splice(index, 1);
+                    localStorage.setItem('studio_reviews', JSON.stringify(reviews));
+                    loadDashboardData();
+                }
             }
         }
 
@@ -1411,6 +1422,54 @@
                 loadDashboardData();
             }
         };
+    </script>
+
+    <!-- Firebase Web SDK Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDp7G3C1mMeK1Htfsxharb05wtf0VTw88",
+            authDomain: "studio-7cdf1.firebaseapp.com",
+            databaseURL: "https://studio-7cdf1-default-rtdb.firebaseio.com",
+            projectId: "studio-7cdf1",
+            storageBucket: "studio-7cdf1.firebasestorage.app",
+            messagingSenderId: "460661592780",
+            appId: "1:460661592780:web:dc8fd00cad5541141e6869",
+            measurementId: "G-Q8YJHFC1H1"
+        };
+
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        window.firebaseDB = database;
+        window.firebaseRef = ref;
+        window.firebaseOnValue = onValue;
+        window.firebaseRemove = remove;
+
+        // Sync Reviews Table Live
+        const syncAdminFirebase = () => {
+            const reviewsRef = ref(database, 'reviews');
+            onValue(reviewsRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    const reviewsArray = Object.entries(data).map(([key, val]) => {
+                        return { firebaseKey: key, ...val };
+                    }).sort((a, b) => parseInt(b.id) - parseInt(a.id));
+
+                    localStorage.setItem('studio_reviews', JSON.stringify(reviewsArray));
+                } else {
+                    localStorage.setItem('studio_reviews', '[]');
+                }
+                if (localStorage.getItem('adminAccess') === 'true') {
+                    loadDashboardData();
+                }
+            });
+        };
+
+        syncAdminFirebase();
     </script>
 </body>
 

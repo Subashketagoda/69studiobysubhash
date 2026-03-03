@@ -308,20 +308,24 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.disabled = true;
 
             setTimeout(() => {
-                const reviews = JSON.parse(localStorage.getItem('studio_reviews') || '[]');
-
-                reviews.unshift({
+                const newReview = {
                     id: Date.now().toString(),
                     name,
                     rating,
                     message,
                     date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-                });
+                };
 
-                localStorage.setItem('studio_reviews', JSON.stringify(reviews));
-
-                // Trigger storage event so other open tabs update
-                window.dispatchEvent(new Event('storage'));
+                // Push to Firebase if available, else local storage
+                if (window.firebaseDB && window.firebasePush && window.firebaseRef) {
+                    window.firebasePush(window.firebaseRef(window.firebaseDB, 'reviews'), newReview);
+                } else {
+                    const reviews = JSON.parse(localStorage.getItem('studio_reviews') || '[]');
+                    reviews.unshift(newReview);
+                    localStorage.setItem('studio_reviews', JSON.stringify(reviews));
+                    // Trigger storage event so other open tabs update
+                    window.dispatchEvent(new Event('storage'));
+                }
 
                 // Re-render immediately
                 loadReviews();
@@ -342,12 +346,35 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 600);
         });
 
-        // Listen for updates from other tabs
+        // Listen for updates from other tabs (local storage fallback)
         window.addEventListener('storage', (e) => {
             if (!e || e.key === 'studio_reviews' || !e.key) {
                 loadReviews();
             }
         });
+
+        // Sync with Firebase
+        const syncWithFirebase = () => {
+            if (window.firebaseDB && window.firebaseOnValue && window.firebaseRef) {
+                const reviewsRef = window.firebaseRef(window.firebaseDB, 'reviews');
+                window.firebaseOnValue(reviewsRef, (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        // Convert object to array and reverse sort by ID (newest first)
+                        const reviewsArray = Object.values(data).sort((a, b) => parseInt(b.id) - parseInt(a.id));
+                        localStorage.setItem('studio_reviews', JSON.stringify(reviewsArray));
+                        loadReviews();
+                    }
+                });
+            }
+        };
+
+        // Call sync if firebase loaded, or wait for it
+        if (window.firebaseDB) {
+            syncWithFirebase();
+        } else {
+            window.addEventListener('firebaseLoaded', syncWithFirebase);
+        }
 
         // Initial Load
         loadReviews();
