@@ -121,9 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(contactForm);
             const data = Object.fromEntries(formData.entries());
 
-            // Save lead to localStorage for Admin Panel
-            const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
-            leads.unshift({
+            const newLead = {
                 name: data.name,
                 email: data.email,
                 interest: data.interest || 'Not Specified',
@@ -131,10 +129,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
                 status: 'New',
                 timestamp: new Date().getTime()
-            });
-            localStorage.setItem('studio_leads', JSON.stringify(leads));
+            };
 
-            // Also track total inquiries
+            // Push lead to Firebase if available, else local storage
+            if (window.firebaseDB && window.firebasePush && window.firebaseRef) {
+                window.firebasePush(window.firebaseRef(window.firebaseDB, 'leads'), newLead);
+            } else {
+                const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
+                leads.unshift(newLead);
+                localStorage.setItem('studio_leads', JSON.stringify(leads));
+            }
+
+            // Also track total inquiries locally
             let stats;
             try { stats = JSON.parse(localStorage.getItem('studio_stats')); } catch (e) { }
             if (!stats) stats = { inquiries: 0, visits: 0, dailyVisits: {} };

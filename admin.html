@@ -1200,9 +1200,14 @@
 
             // Mark as viewed if it was new
             if (lead.status === 'New') {
-                leads[index].status = 'Pending';
-                localStorage.setItem('studio_leads', JSON.stringify(leads));
-                loadDashboardData();
+                if (window.firebaseDB && window.firebaseUpdate && window.firebaseRef && lead.firebaseKey) {
+                    const leadRef = window.firebaseRef(window.firebaseDB, 'leads/' + lead.firebaseKey);
+                    window.firebaseUpdate(leadRef, { status: 'Pending' });
+                } else {
+                    leads[index].status = 'Pending';
+                    localStorage.setItem('studio_leads', JSON.stringify(leads));
+                    loadDashboardData();
+                }
             }
         }
 
@@ -1221,9 +1226,20 @@
         function deleteLead(index) {
             if (confirm('Delete this lead?')) {
                 const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
-                leads.splice(index, 1);
-                localStorage.setItem('studio_leads', JSON.stringify(leads));
-                loadDashboardData();
+                const leadToDelete = leads[index];
+
+                if (window.firebaseDB && window.firebaseRemove && window.firebaseRef && leadToDelete.firebaseKey) {
+                    const leadRef = window.firebaseRef(window.firebaseDB, 'leads/' + leadToDelete.firebaseKey);
+                    window.firebaseRemove(leadRef).then(() => {
+                        console.log("Lead Firebase deletion successful");
+                    }).catch((error) => {
+                        console.error("Lead Firebase deletion failed: ", error);
+                    });
+                } else {
+                    leads.splice(index, 1);
+                    localStorage.setItem('studio_leads', JSON.stringify(leads));
+                    loadDashboardData();
+                }
             }
         }
 
@@ -1427,7 +1443,7 @@
     <!-- Firebase Web SDK Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-        import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+        import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDp7G3C1mMeK1Htfsxharb05wtf0VTw88",
@@ -1448,9 +1464,11 @@
         window.firebaseRef = ref;
         window.firebaseOnValue = onValue;
         window.firebaseRemove = remove;
+        window.firebaseUpdate = update;
 
-        // Sync Reviews Table Live
+        // Sync Reviews and Leads Table Live
         const syncAdminFirebase = () => {
+            // Reviews Sync
             const reviewsRef = ref(database, 'reviews');
             onValue(reviewsRef, (snapshot) => {
                 const data = snapshot.val();
@@ -1462,6 +1480,24 @@
                     localStorage.setItem('studio_reviews', JSON.stringify(reviewsArray));
                 } else {
                     localStorage.setItem('studio_reviews', '[]');
+                }
+                if (localStorage.getItem('adminAccess') === 'true') {
+                    loadDashboardData();
+                }
+            });
+
+            // Leads Sync
+            const leadsRef = ref(database, 'leads');
+            onValue(leadsRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    const leadsArray = Object.entries(data).map(([key, val]) => {
+                        return { firebaseKey: key, ...val };
+                    }).sort((a, b) => b.timestamp - a.timestamp); // newest first
+
+                    localStorage.setItem('studio_leads', JSON.stringify(leadsArray));
+                } else {
+                    localStorage.setItem('studio_leads', '[]');
                 }
                 if (localStorage.getItem('adminAccess') === 'true') {
                     loadDashboardData();
