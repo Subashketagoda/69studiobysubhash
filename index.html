@@ -472,7 +472,7 @@
     <!-- Firebase Web SDK Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+        import { getDatabase, ref, push, onValue, set, update } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -495,6 +495,8 @@
         window.firebaseRef = ref;
         window.firebasePush = push;
         window.firebaseOnValue = onValue;
+        window.firebaseSet = set;
+        window.firebaseUpdate = update;
 
         // Dispatch an event to let script.js know Firebase is ready
         window.dispatchEvent(new Event('firebaseLoaded'));

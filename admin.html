@@ -1155,6 +1155,11 @@
                 let valueToSave = newVal.replace('%', '').trim();
                 currentStats[key] = isNaN(valueToSave) ? valueToSave : Number(valueToSave);
                 localStorage.setItem('studio_stats', JSON.stringify(currentStats));
+
+                if (window.firebaseDB && window.firebaseUpdate && window.firebaseRef) {
+                    window.firebaseUpdate(window.firebaseRef(window.firebaseDB, 'stats'), currentStats);
+                }
+
                 loadDashboardData();
                 closeStatModal();
             }
@@ -1266,7 +1271,16 @@
         function clearLeads() {
             if (confirm('Delete ALL leads and stats?')) {
                 localStorage.removeItem('studio_leads');
-                localStorage.setItem('studio_stats', '{"inquiries": 0, "visits": 0}');
+                const defaultStats = { "inquiries": 0, "visits": 0 };
+                localStorage.setItem('studio_stats', JSON.stringify(defaultStats));
+
+                if (window.firebaseDB && window.firebaseUpdate && window.firebaseRef) {
+                    window.firebaseUpdate(window.firebaseRef(window.firebaseDB, '/'), {
+                        leads: null,
+                        stats: defaultStats
+                    });
+                }
+
                 loadDashboardData();
             }
         }
@@ -1468,6 +1482,18 @@
 
         // Sync Reviews and Leads Table Live
         const syncAdminFirebase = () => {
+            // Stats Sync
+            const statsRef = ref(database, 'stats');
+            onValue(statsRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    localStorage.setItem('studio_stats', JSON.stringify(data));
+                }
+                if (localStorage.getItem('adminAccess') === 'true') {
+                    loadDashboardData();
+                }
+            });
+
             // Reviews Sync
             const reviewsRef = ref(database, 'reviews');
             onValue(reviewsRef, (snapshot) => {

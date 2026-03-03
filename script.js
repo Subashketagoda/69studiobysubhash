@@ -147,6 +147,10 @@ document.addEventListener('DOMContentLoaded', () => {
             stats.inquiries++;
             localStorage.setItem('studio_stats', JSON.stringify(stats));
 
+            if (window.firebaseDB && window.firebaseUpdate && window.firebaseRef) {
+                window.firebaseUpdate(window.firebaseRef(window.firebaseDB, 'stats'), stats);
+            }
+
             try {
                 const response = await fetch(contactForm.action, {
                     method: 'POST',
@@ -205,6 +209,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             localStorage.setItem('studio_stats', JSON.stringify(stats));
             localStorage.setItem('last_visit', now.toString());
+
+            if (window.firebaseDB && window.firebaseUpdate && window.firebaseRef) {
+                window.firebaseUpdate(window.firebaseRef(window.firebaseDB, 'stats'), stats);
+            }
         }
     };
     trackVisit();
@@ -362,14 +370,23 @@ document.addEventListener('DOMContentLoaded', () => {
         // Sync with Firebase
         const syncWithFirebase = () => {
             if (window.firebaseDB && window.firebaseOnValue && window.firebaseRef) {
+                // Reviews sync
                 const reviewsRef = window.firebaseRef(window.firebaseDB, 'reviews');
                 window.firebaseOnValue(reviewsRef, (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
-                        // Convert object to array and reverse sort by ID (newest first)
                         const reviewsArray = Object.values(data).sort((a, b) => parseInt(b.id) - parseInt(a.id));
                         localStorage.setItem('studio_reviews', JSON.stringify(reviewsArray));
                         loadReviews();
+                    }
+                });
+
+                // Stats sync setup
+                const statsRef = window.firebaseRef(window.firebaseDB, 'stats');
+                window.firebaseOnValue(statsRef, (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        localStorage.setItem('studio_stats', JSON.stringify(data));
                     }
                 });
             }
