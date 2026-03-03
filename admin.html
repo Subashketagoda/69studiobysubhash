@@ -764,10 +764,44 @@
         .gemini-messages::-webkit-scrollbar-track {
             background: transparent;
         }
+
+        /* Go back to web page */
+        .go-back {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            z-index: 100;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+
+        .go-back:hover {
+            opacity: 1;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .go-back {
+                top: 15px;
+                left: 20px;
+                background: rgba(0, 0, 0, 0.5);
+                padding: 5px 12px;
+                border-radius: 20px;
+                backdrop-filter: blur(5px);
+            }
+        }
     </style>
 </head>
 
 <body>
+    <a href="index.html" class="go-back"><i class="fas fa-arrow-left"></i> Back to Web Page</a>
+
     <!-- Background Decor -->
     <div class="bg-decoration">
         <div class="circle circle-1"></div>
