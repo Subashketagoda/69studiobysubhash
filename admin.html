@@ -889,6 +889,21 @@
                         <!-- Data will be loaded here -->
                     </tbody>
                 </table>
+
+                <h3 style="margin-top: 40px;">Manage Reviews</h3>
+                <table id="reviews-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Rating</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reviews-body">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
             </div>
 
             <div class="data-table-card">
@@ -1046,6 +1061,7 @@
         function loadDashboardData() {
             const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
             const stats = JSON.parse(localStorage.getItem('studio_stats') || '{"inquiries": 0, "visits": 0, "activeProjects": 24, "successRate": 85}');
+            const reviews = JSON.parse(localStorage.getItem('studio_reviews') || '[]');
 
             // Update Stats
             document.querySelector('.stat-card-admin:nth-child(1) .number').innerText = leads.length;
@@ -1085,6 +1101,32 @@
                         </td>
                     `;
                     leadsBody.appendChild(row);
+                });
+            }
+
+            // Update Reviews Table
+            const reviewsBody = document.getElementById('reviews-body');
+            reviewsBody.innerHTML = '';
+
+            if (reviews.length === 0) {
+                reviewsBody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--text-grey);">No reviews found yet.</td></tr>';
+            } else {
+                reviews.forEach((review, index) => {
+                    const row = document.createElement('tr');
+
+                    const stars = Array(5).fill(0).map((_, i) =>
+                        `<i class="fa${i < review.rating ? 's' : 'r'} fa-star" style="color: #ffb400; font-size: 0.8rem;"></i>`
+                    ).join('');
+
+                    row.innerHTML = `
+                        <td>${review.name}</td>
+                        <td>${stars}</td>
+                        <td>${review.date}</td>
+                        <td>
+                            <button title="Delete Review" onclick="deleteReview(${index})" class="action-btn delete"><i class="fas fa-trash"></i></button>
+                        </td>
+                    `;
+                    reviewsBody.appendChild(row);
                 });
             }
         }
@@ -1181,6 +1223,15 @@
                 const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
                 leads.splice(index, 1);
                 localStorage.setItem('studio_leads', JSON.stringify(leads));
+                loadDashboardData();
+            }
+        }
+
+        function deleteReview(index) {
+            if (confirm('Delete this review? This action cannot be undone.')) {
+                const reviews = JSON.parse(localStorage.getItem('studio_reviews') || '[]');
+                reviews.splice(index, 1);
+                localStorage.setItem('studio_reviews', JSON.stringify(reviews));
                 loadDashboardData();
             }
         }
