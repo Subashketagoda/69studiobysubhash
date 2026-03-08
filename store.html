@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Digital Store | 69 Studio</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png.PNG">
+    <style>
+        .store-header {
+            padding: 150px 8% 60px;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(255, 77, 77, 0.05), transparent);
+        }
+
+        .back-home {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 1001;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-glass);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-home:hover {
+            background: var(--primary-color);
+            transform: translateX(-5px);
+        }
+
+        #store {
+            padding-bottom: 150px;
+        }
+
+        @media (max-width: 768px) {
+            .back-home {
+                top: 20px;
+                left: 20px;
+                padding: 8px 15px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader-circle"></div>
+            <span>69</span>
+        </div>
+    </div>
+
+    <!-- Custom Cursor Glow -->
+    <div class="cursor-glow"></div>
+
+    <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Back to Home</a>
+
+    <header class="scrolled">
+        <div class="logo">
+            <div class="logo-text"><span>69</span>STUDIO</div>
+            <div class="tagline">DIGITAL SOLUTIONS</div>
+        </div>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <nav id="navMenu">
+            <ul>
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="#" class="active">Store</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="index.html#contact" class="cta-button">Get Started</a>
+    </header>
+
+    <div class="store-header">
+        <div class="badge">Exclusive Assets 2026</div>
+        <h1 style="font-size: 4rem; font-family: var(--font-heading); margin-bottom: 20px;">
+            Our <span class="gradient-text">Premium</span> Store
+        </h1>
+        <p style="color: var(--text-grey); max-width: 600px; margin: 0 auto; font-size: 1.1rem;">
+            Discover professional-grade digital assets, templates, and high-performance services curated for excellence.
+        </p>
+    </div>
+
+    <section id="store" class="store">
+        <div class="store-container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div class="store-grid" id="storeGrid">
+                <!-- Products will be rendered here dynamically -->
+                <div class="loader-container" style="text-align: center; padding: 100px;">
+                    <div class="loader-circle" style="margin: 0 auto;"></div>
+                    <p style="margin-top: 20px; color: var(--text-grey);">Loading premium products...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div class="footer-logo">
+                <span>69</span><span class="highlight">STUDIO</span>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-behance"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 69 Studio by Subhash. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase Web SDK Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDp7G3C1mMeK1Htfsxharb05wtf0VTw88",
+            authDomain: "studio-7cdf1.firebaseapp.com",
+            databaseURL: "https://studio-7cdf1-default-rtdb.firebaseio.com",
+            projectId: "studio-7cdf1",
+            storageBucket: "studio-7cdf1.firebasestorage.app",
+            messagingSenderId: "460661592780",
+            appId: "1:460661592780:web:dc8fd00cad5541141e6869",
+            measurementId: "G-Q8YJHFC1H1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        window.firebaseDB = database;
+        window.firebaseRef = ref;
+        window.firebaseOnValue = onValue;
+
+        window.dispatchEvent(new Event('firebaseStoreLoaded'));
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -518,12 +518,9 @@
                 padding: 30px 20px;
             }
 
-            .modal-content {
-                padding: 25px;
-            }
-
             .data-table-card {
                 padding: 20px 15px;
+                overflow-x: auto;
             }
 
             th:nth-child(2),
@@ -531,7 +528,6 @@
             th:nth-child(3),
             td:nth-child(3) {
                 display: none;
-                /* Hide date/interest on small mobile tables to fit actions */
             }
 
             /* Mobile styling for Gemini */
@@ -547,6 +543,31 @@
                 bottom: 20px;
                 width: 55px;
                 height: 55px;
+            }
+
+            /* Product Modal & Admin Table Mobile Fixes */
+            .modal-content {
+                width: 95% !important;
+                padding: 20px !important;
+                margin: 0 auto;
+            }
+
+            .data-table-card table th,
+            .data-table-card table td {
+                padding: 12px 8px !important;
+                font-size: 0.8rem !important;
+            }
+
+            .data-table-card table td img {
+                width: 32px !important;
+                height: 32px !important;
+            }
+
+            .action-btn {
+                width: 32px !important;
+                height: 32px !important;
+                font-size: 0.75rem !important;
+                margin: 2px;
             }
         }
 
@@ -904,6 +925,25 @@
                         <!-- Data will be loaded here -->
                     </tbody>
                 </table>
+
+                <h3 style="margin-top: 40px; display: flex; justify-content: space-between; align-items: center;">
+                    Manage Products
+                    <button onclick="openProductModal()" class="btn primary"
+                        style="padding: 8px 15px; font-size: 0.85rem; border-radius: 10px;">+ Add Product</button>
+                </h3>
+                <table id="products-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-body">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
             </div>
 
             <div class="data-table-card">
@@ -1011,6 +1051,48 @@
                 <button onclick="saveStat()" class="btn primary submit-btn" style="width: 100%;">Save Changes <i
                         class="fas fa-check"></i></button>
             </div>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="productModalTitle">Add <span class="gradient-text">Product</span></h2>
+                <button class="close-modal" onclick="closeProductModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="productForm" onsubmit="saveProduct(event)">
+                <input type="hidden" id="productId">
+                <div class="lead-detail-item">
+                    <label>Product Name</label>
+                    <input type="text" id="productName" required
+                        style="width: 100%; padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); color: white;">
+                </div>
+                <div class="lead-detail-item">
+                    <label>Price (LKR or AED)</label>
+                    <input type="text" id="productPrice" required
+                        style="width: 100%; padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); color: white;">
+                </div>
+                <div class="lead-detail-item">
+                    <label>Select Product Photo</label>
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <input type="file" id="productImageFile" accept="image/*"
+                            style="width: 100%; padding: 10px; border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); color: white; cursor: pointer;">
+                        <div id="imagePreviewContainer"
+                            style="display: none; width: 100%; height: 150px; border-radius: 15px; overflow: hidden; border: 1px solid var(--border-glass); background: rgba(0,0,0,0.2);">
+                            <img id="imagePreview" src="" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <input type="hidden" id="productImageDataBase64">
+                    </div>
+                </div>
+                <div class="lead-detail-item">
+                    <label>Description</label>
+                    <textarea id="productDescription" rows="3"
+                        style="width: 100%; padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); color: white;"></textarea>
+                </div>
+                <button type="submit" class="btn primary submit-btn" style="width: 100%; margin-top: 10px;">Save Product
+                    <i class="fas fa-save"></i></button>
+            </form>
         </div>
     </div>
 
@@ -1128,6 +1210,139 @@
                     `;
                     reviewsBody.appendChild(row);
                 });
+            }
+
+            // Update Products Table
+            const products = JSON.parse(localStorage.getItem('studio_products') || '[]');
+            const productsBody = document.getElementById('products-body');
+            productsBody.innerHTML = '';
+
+            if (products.length === 0) {
+                productsBody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--text-grey);">No products found yet.</td></tr>';
+            } else {
+                products.forEach((product, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><img src="${product.image}" style="width: 40px; height: 40px; border-radius: 8px; object-fit: cover;"></td>
+                        <td>${product.name}</td>
+                        <td>${product.price}</td>
+                        <td>
+                            <button title="Edit Product" onclick="editProduct(${index})" class="action-btn view"><i class="fas fa-edit"></i></button>
+                            <button title="Delete Product" onclick="deleteProduct(${index})" class="action-btn delete"><i class="fas fa-trash"></i></button>
+                        </td>
+                    `;
+                    productsBody.appendChild(row);
+                });
+            }
+        }
+
+        // Product Management Functions
+        function openProductModal() {
+            document.getElementById('productModalTitle').innerHTML = 'Add <span class="gradient-text">Product</span>';
+            document.getElementById('productForm').reset();
+            document.getElementById('productId').value = '';
+            document.getElementById('imagePreviewContainer').style.display = 'none';
+            document.getElementById('productImageDataBase64').value = '';
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        // Handle Image Upload Preview
+        const imageFileInput = document.getElementById('productImageFile');
+        imageFileInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const base64String = event.target.result;
+                    document.getElementById('imagePreview').src = base64String;
+                    document.getElementById('imagePreviewContainer').style.display = 'block';
+                    document.getElementById('productImageDataBase64').value = base64String;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function saveProduct(event) {
+            event.preventDefault();
+            const id = document.getElementById('productId').value;
+            const imageData = document.getElementById('productImageDataBase64').value;
+
+            if (!imageData) {
+                alert("Please select a photo for the product!");
+                return;
+            }
+
+            const product = {
+                name: document.getElementById('productName').value,
+                price: document.getElementById('productPrice').value,
+                image: imageData,
+                description: document.getElementById('productDescription').value,
+                id: id || Date.now().toString()
+            };
+
+            const btn = event.submitter;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Saving... <i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+
+            if (window.firebaseDB && window.firebaseUpdate && window.firebaseRef) {
+                const productRef = window.firebaseRef(window.firebaseDB, 'products/' + product.id);
+                window.firebaseUpdate(productRef, product).then(() => {
+                    closeProductModal();
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                });
+            } else {
+                const products = JSON.parse(localStorage.getItem('studio_products') || '[]');
+                if (id) {
+                    const idx = products.findIndex(p => p.id === id);
+                    products[idx] = product;
+                } else {
+                    products.push(product);
+                }
+                localStorage.setItem('studio_products', JSON.stringify(products));
+                loadDashboardData();
+                closeProductModal();
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        function editProduct(index) {
+            const products = JSON.parse(localStorage.getItem('studio_products') || '[]');
+            const product = products[index];
+
+            document.getElementById('productModalTitle').innerHTML = 'Edit <span class="gradient-text">Product</span>';
+            document.getElementById('productId').value = product.id;
+            document.getElementById('productName').value = product.name;
+            document.getElementById('productPrice').value = product.price;
+            document.getElementById('productDescription').value = product.description || '';
+
+            // Set image preview
+            document.getElementById('imagePreview').src = product.image;
+            document.getElementById('imagePreviewContainer').style.display = 'block';
+            document.getElementById('productImageDataBase64').value = product.image;
+
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function deleteProduct(index) {
+            if (confirm('Delete this product?')) {
+                const products = JSON.parse(localStorage.getItem('studio_products') || '[]');
+                const product = products[index];
+
+                if (window.firebaseDB && window.firebaseRemove && window.firebaseRef && product.id) {
+                    const productRef = window.firebaseRef(window.firebaseDB, 'products/' + product.id);
+                    window.firebaseRemove(productRef);
+                } else {
+                    products.splice(index, 1);
+                    localStorage.setItem('studio_products', JSON.stringify(products));
+                    loadDashboardData();
+                }
             }
         }
 
@@ -1524,6 +1739,21 @@
                     localStorage.setItem('studio_leads', JSON.stringify(leadsArray));
                 } else {
                     localStorage.setItem('studio_leads', '[]');
+                }
+                if (localStorage.getItem('adminAccess') === 'true') {
+                    loadDashboardData();
+                }
+            });
+
+            // Products Sync
+            const productsRef = ref(database, 'products');
+            onValue(productsRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    const productsArray = Object.values(data);
+                    localStorage.setItem('studio_products', JSON.stringify(productsArray));
+                } else {
+                    localStorage.setItem('studio_products', '[]');
                 }
                 if (localStorage.getItem('adminAccess') === 'true') {
                     loadDashboardData();

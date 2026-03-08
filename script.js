@@ -403,6 +403,129 @@ document.addEventListener('DOMContentLoaded', () => {
         loadReviews();
     }
 
+    // Store Handling
+    const storeGrid = document.getElementById('storeGrid');
+
+    const loadProducts = () => {
+        if (!storeGrid) return;
+
+        const products = JSON.parse(localStorage.getItem('studio_products') || '[]');
+
+        if (products.length === 0) {
+            storeGrid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; color: var(--text-grey); padding: 50px 20px; border: 1px dashed rgba(255,255,255,0.1); border-radius: 20px; background: rgba(255,255,255,0.02);">
+                    <i class="fas fa-shopping-bag" style="font-size: 2.5rem; margin-bottom: 15px; color: rgba(255,255,255,0.1);"></i>
+                    <p style="font-size: 1.1rem;">Our store is currently being restocked. Check back soon!</p>
+                </div>`;
+            return;
+        }
+
+        storeGrid.innerHTML = products.map(product => `
+            <div class="product-card">
+                <div class="product-img-container">
+                    <img src="${product.image}" alt="${product.name}" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">${product.name}</h3>
+                    <span class="product-price">${product.price}</span>
+                    <p class="product-description">${product.description || 'Premium digital product from 69 Studio.'}</p>
+                    <button class="buy-now-btn" onclick="initiatePayment('${product.id}', '${product.name}', '${product.price}')">
+                        Buy Now <i class="fas fa-bolt"></i>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    };
+
+    // Payment Gateway Simulation
+    window.initiatePayment = (id, name, price) => {
+        const btn = event.currentTarget;
+        const originalContent = btn.innerHTML;
+
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Securely Redirecting...';
+        btn.disabled = true;
+
+        // Simulate Gateway Redirect
+        setTimeout(() => {
+            const overlay = document.createElement('div');
+            overlay.className = 'payment-overlay';
+            overlay.style = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.95); backdrop-filter: blur(10px);
+                z-index: 10000; display: flex; flex-direction: column;
+                justify-content: center; align-items: center; color: white;
+                font-family: 'Outfit', sans-serif;
+            `;
+
+            overlay.innerHTML = `
+                <div style="text-align: center; max-width: 400px; padding: 40px; background: #121212; border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; box-shadow: 0 25px 50px rgba(0,0,0,0.5);">
+                    <div style="font-size: 3rem; color: #ff4d4d; margin-bottom: 20px;"><i class="fas fa-shield-halved"></i></div>
+                    <h2 style="margin-bottom: 10px;">Secure Checkout</h2>
+                    <p style="color: #a0a0a0; margin-bottom: 30px;">You are paying <strong>${price}</strong> for <strong>${name}</strong>.</p>
+                    
+                    <div id="payment-steps" style="text-align: left; margin-bottom: 30px;">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; color: #4dff8c;">
+                            <i class="fas fa-check-circle"></i> <span>Initializing Gateway</span>
+                        </div>
+                        <div id="step-2" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; color: #a0a0a0;">
+                            <i class="fas fa-circle-notch fa-spin"></i> <span>Processing Payment...</span>
+                        </div>
+                    </div>
+                    
+                    <div id="payment-success" style="display: none;">
+                        <div style="font-size: 4rem; color: #4dff8c; margin-bottom: 20px;"><i class="fas fa-check-circle"></i></div>
+                        <h2 style="color: #4dff8c;">Success!</h2>
+                        <p style="margin-top: 10px;">Your transaction was completed successfully.</p>
+                        <button onclick="this.closest('.payment-overlay').remove()" class="btn primary" style="margin-top: 30px; width: 100%;">Return to Site</button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(overlay);
+
+            // Simulate steps
+            setTimeout(() => {
+                document.getElementById('step-2').style.color = '#4dff8c';
+                document.getElementById('step-2').innerHTML = '<i class="fas fa-check-circle"></i> <span>Payment Authorized</span>';
+
+                setTimeout(() => {
+                    document.getElementById('payment-steps').style.display = 'none';
+                    document.getElementById('payment-success').style.display = 'block';
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                }, 1500);
+            }, 2000);
+        }, 1000);
+    };
+
+
+    // Firebase Sync for Products
+    const syncProducts = () => {
+        if (window.firebaseDB && window.firebaseOnValue && window.firebaseRef) {
+            const productsRef = window.firebaseRef(window.firebaseDB, 'products');
+            window.firebaseOnValue(productsRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    const productsArray = Object.values(data);
+                    localStorage.setItem('studio_products', JSON.stringify(productsArray));
+                    loadProducts();
+                } else {
+                    localStorage.setItem('studio_products', '[]');
+                    loadProducts();
+                }
+            });
+        }
+    };
+
+    if (window.firebaseDB) {
+        syncProducts();
+    } else {
+        window.addEventListener('firebaseLoaded', syncProducts);
+        window.addEventListener('firebaseStoreLoaded', syncProducts);
+    }
+
+    loadProducts();
+
     // Secret Admin Access (Triple click logo)
     const logo = document.querySelector('.logo');
     let clickCount = 0;
