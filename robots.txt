@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /staff-chat.html
+
+Sitemap: https://69studiobysubhash.com/sitemap.xml

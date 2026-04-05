@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Admin | 69 Studio</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="manifest" href="admin-manifest.json">
+    <link rel="apple-touch-icon" href="logo.png.PNG">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="admin-app.css">
+</head>
+
+<body>
+    <!-- Login Screen -->
+    <section id="login-section">
+        <div class="login-card">
+            <div class="login-logo"><span>69</span>STUDIO</div>
+            <div class="login-subtitle">Admin Portal</div>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label>Admin Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="adminPassword" placeholder="Enter password" required>
+                    </div>
+                </div>
+                <button type="submit" class="login-btn">Access Portal <i class="fas fa-arrow-right"></i></button>
+                <div id="errorMsg" class="error-msg">Incorrect password. Please try again.</div>
+            </form>
+
+            <div id="bio-login-container" style="display:none; margin-top: 20px;">
+                <div class="divider"><span>OR</span></div>
+                <button type="button" id="bio-login-btn" class="bio-btn">
+                    <i class="fas fa-face-smile"></i> <span>Unlock with FaceID</span>
+                </button>
+            </div>
+
+            <p class="pwa-hint"><i class="fas fa-mobile-alt"></i> Add to Home Screen for app experience</p>
+        </div>
+    </section>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay"><div class="loader-circle"></div></div>
+
+    <!-- Main App Shell -->
+    <main id="admin-app" class="admin-app">
+        <!-- Top Bar -->
+        <header class="app-topbar">
+            <div class="topbar-left">
+                <span class="topbar-logo"><span>69</span>Admin</span>
+            </div>
+            <div class="topbar-right">
+                <div class="connection-status" id="db-status">
+                    <div class="status-dot"></div><span>Connected</span>
+                </div>
+                <button class="topbar-icon-btn" id="notif-btn" title="Notifications" style="position:relative;">
+                    <i class="fas fa-bell"></i>
+                    <span id="notif-badge" style="display:none; position:absolute; top:-2px; right:-2px; background:#ff4d4d; width:10px; height:10px; border-radius:50%; border:2px solid #000;"></span>
+                </button>
+                <button class="topbar-icon-btn" id="refresh-btn" title="Refresh"><i class="fas fa-sync-alt"></i></button>
+                <button class="topbar-icon-btn" id="logout-btn" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </header>
+
+        <!-- Tab Views -->
+        <div class="app-views">
+            <!-- Dashboard Tab -->
+            <div class="app-view active" id="view-dashboard">
+                <div class="view-scroll">
+                    <h2 class="view-title">Dashboard</h2>
+                    <p class="view-subtitle" id="greeting-text">Welcome back, Subhash</p>
+
+                    <div class="stats-row">
+                        <div class="mini-stat-card">
+                            <i class="fas fa-users"></i>
+                            <span class="mini-stat-num" id="stat-leads">0</span>
+                            <span class="mini-stat-label">Leads</span>
+                        </div>
+                        <div class="mini-stat-card" onclick="updateStat('activeProjects','Active Projects')">
+                            <i class="fas fa-briefcase"></i>
+                            <span class="mini-stat-num" id="stat-projects">24</span>
+                            <span class="mini-stat-label">Projects</span>
+                        </div>
+                        <div class="mini-stat-card" onclick="updateStat('successRate','Success Rate (%)')">
+                            <i class="fas fa-check-circle"></i>
+                            <span class="mini-stat-num" id="stat-success">85%</span>
+                            <span class="mini-stat-label">Success</span>
+                        </div>
+                    </div>
+
+                    <!-- Traffic Card -->
+                    <div class="app-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-area"></i> Site Traffic</h3>
+                            <span class="badge-active"><i class="fas fa-circle"></i> Live</span>
+                        </div>
+                        <div class="traffic-num-row">
+                            <span class="traffic-big-num" id="visit-count">0</span>
+                            <span class="traffic-label">Total Visits</span>
+                        </div>
+                        <div class="chart-container"><canvas id="trafficChart"></canvas></div>
+                    </div>
+
+                    <!-- Announcement Manager -->
+                    <div class="app-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bullhorn"></i> Site Announcement</h3>
+                            <button onclick="saveAnnouncement()" class="fab-inline" style="width:30px; height:30px; font-size:0.7rem;"><i class="fas fa-save"></i></button>
+                        </div>
+                        <input type="text" id="announcement-text" class="modal-input" placeholder="e.g. 20% discount on web projects!" style="margin-top:5px;">
+                        <p style="font-size:0.65rem; color:#444; margin-top:8px;">Live update the top bar on your main website.</p>
+                    </div>
+
+                    <!-- Project Planner -->
+                    <div class="app-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-tasks"></i> Project Planner</h3>
+                            <button onclick="addProjectTask()" class="fab-inline" style="width:30px; height:30px; font-size:0.7rem;"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <div id="project-tasks" class="card-list" style="margin-top:10px; gap:8px;">
+                            <!-- Project tasks injected here -->
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="app-card">
+                        <h3 class="card-title"><i class="fas fa-bolt"></i> Quick Actions</h3>
+                        <div class="quick-actions-grid">
+                            <button onclick="switchTab('leads')" class="qa-btn"><i class="fas fa-user-plus"></i><span>View Leads</span></button>
+                            <button onclick="switchTab('products')" class="qa-btn"><i class="fas fa-box"></i><span>Products</span></button>
+                            <button onclick="exportLeads()" class="qa-btn"><i class="fas fa-download"></i><span>Export</span></button>
+                            <a href="index.html" class="qa-btn"><i class="fas fa-globe"></i><span>Live Site</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leads Tab -->
+            <div class="app-view" id="view-leads">
+                <div class="view-scroll">
+                    <h2 class="view-title">Leads & Appointments</h2>
+                    <p class="view-subtitle" id="leads-count-text">0 total leads</p>
+                    <div id="leads-list" class="card-list">
+                        <!-- Lead cards injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Tab -->
+            <div class="app-view" id="view-products">
+                <div class="view-scroll">
+                    <div class="view-title-row">
+                        <h2 class="view-title">Products</h2>
+                        <button onclick="openProductModal()" class="fab-inline"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div id="products-list" class="card-list">
+                        <!-- Product cards injected here -->
+                    </div>
+
+                    <h2 class="view-title" style="margin-top:30px;">Reviews</h2>
+                    <div id="reviews-list" class="card-list">
+                        <!-- Review cards injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Staff Tab -->
+            <div class="app-view" id="view-staff">
+                <div class="view-scroll">
+                    <h2 class="view-title">Staff Hub</h2>
+                    <p class="view-subtitle">Manage job applications & careers</p>
+                    <div id="applications-list" class="card-list">
+                        <!-- Applications injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="app-view" id="view-settings">
+                <div class="view-scroll">
+                    <h2 class="view-title">Settings</h2>
+                    <div class="settings-group">
+                    <h3>App Settings</h3>
+                    <div class="settings-item" id="request-notif-btn" onclick="requestNotifPermission()" style="cursor:pointer;">
+                        <i class="fas fa-bell"></i>
+                        <span>Enable Mobile Notifications</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="settings-item" onclick="testNotification()" style="cursor:pointer; border-top: 1px solid rgba(255,255,255,0.05);">
+                        <i class="fas fa-vial"></i>
+                        <span>Test Notification (Check if working)</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="settings-item" id="setup-face-lock" onclick="setupBiometric()">
+                            <i class="fas fa-bell"></i><span>Enable Mobile Alerts</span><i class="fas fa-chevron-right"></i>
+                        </div>
+                        <div class="settings-item" id="setup-face-lock">
+                            <i class="fas fa-face-viewfinder"></i><span>Setup Face Lock</span><i class="fas fa-chevron-right"></i>
+                        </div>
+                        <div class="settings-item" onclick="window.open('index.html','_blank')">
+                            <i class="fas fa-globe"></i><span>View Live Website</span><i class="fas fa-chevron-right"></i>
+                        </div>
+                        <div class="settings-item" onclick="exportLeads()">
+                            <i class="fas fa-file-export"></i><span>Export Leads (JSON)</span><i class="fas fa-chevron-right"></i>
+                        </div>
+                        <div class="settings-item danger" onclick="clearLeads()">
+                            <i class="fas fa-trash-alt"></i><span>Clear All Data</span><i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="app-card" style="text-align:center; padding:30px;">
+                        <p style="color:#666; font-size:0.8rem;">69 Studio Admin v2.0</p>
+                        <p style="color:#444; font-size:0.75rem; margin-top:5px;">Add to Home Screen for best experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Tab Bar -->
+        <nav class="bottom-tabs">
+            <button class="tab-btn active" data-tab="dashboard"><i class="fas fa-home"></i><span>Home</span></button>
+            <button class="tab-btn" data-tab="leads"><i class="fas fa-inbox"></i><span>Leads</span></button>
+            <button class="tab-btn" data-tab="staff"><i class="fas fa-user-tie"></i><span>Staff</span></button>
+            <button class="tab-btn" data-tab="products"><i class="fas fa-box"></i><span>Store</span></button>
+            <button class="tab-btn" data-tab="settings"><i class="fas fa-cog"></i><span>Settings</span></button>
+        </nav>
+    </main>
+
+    <!-- Lead Details Modal -->
+    <div id="leadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Lead <span class="gradient-text">Details</span></h2>
+                <button class="close-modal" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Stat Edit Modal -->
+    <div id="statEditModal" class="modal">
+        <div class="modal-content" style="max-width:400px;">
+            <div class="modal-header">
+                <h2>Update <span class="gradient-text">Stat</span></h2>
+                <button class="close-modal" onclick="closeStatModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="stat-edit-body" style="margin-top:20px;">
+                <label id="stat-edit-label" class="edit-label">Enter new value:</label>
+                <input type="text" id="stat-edit-input" class="modal-input" placeholder="e.g. 25">
+                <input type="hidden" id="stat-edit-key">
+                <button onclick="saveStat()" class="modal-save-btn">Save Changes <i class="fas fa-check"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="productModalTitle">Add <span class="gradient-text">Product</span></h2>
+                <button class="close-modal" onclick="closeProductModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="productForm" onsubmit="saveProduct(event)">
+                <input type="hidden" id="productId">
+                <div class="form-group"><label>Product Name</label><input type="text" id="productName" class="modal-input" required></div>
+                <div class="form-group"><label>Price (LKR or AED)</label><input type="text" id="productPrice" class="modal-input" required></div>
+                <div class="form-group">
+                    <label>Product Photo</label>
+                    <input type="file" id="productImageFile" accept="image/*" class="modal-input file-input">
+                    <div id="imagePreviewContainer" class="img-preview-box" style="display:none;">
+                        <img id="imagePreview" src="">
+                    </div>
+                    <input type="hidden" id="productImageDataBase64">
+                </div>
+                <div class="form-group"><label>Description</label><textarea id="productDescription" rows="3" class="modal-input"></textarea></div>
+                <button type="submit" class="modal-save-btn">Save Product <i class="fas fa-save"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin-app.js"></script>
+
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDp7G3C1mMeK1Htfsxharb05wtf0VTw88",
+            authDomain: "studio-7cdf1.firebaseapp.com",
+            databaseURL: "https://studio-7cdf1-default-rtdb.firebaseio.com",
+            projectId: "studio-7cdf1",
+            storageBucket: "studio-7cdf1.firebasestorage.app",
+            messagingSenderId: "460661592780",
+            appId: "1:460661592780:web:dc8fd00cad5541141e6869",
+            measurementId: "G-Q8YJHFC1H1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        window.firebaseDB = database;
+        window.firebaseRef = ref;
+        window.firebaseOnValue = onValue;
+        window.firebaseRemove = remove;
+        window.firebaseUpdate = update;
+
+        const syncAdminFirebase = () => {
+            const statsRef = ref(database, 'stats');
+            onValue(statsRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) localStorage.setItem('studio_stats', JSON.stringify(data));
+                if (localStorage.getItem('adminAccess') === 'true') loadDashboardData();
+            });
+
+            const reviewsRef = ref(database, 'reviews');
+            onValue(reviewsRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    const arr = Object.entries(data).map(([key, val]) => ({ firebaseKey: key, ...val })).sort((a, b) => parseInt(b.id) - parseInt(a.id));
+                    localStorage.setItem('studio_reviews', JSON.stringify(arr));
+                } else { localStorage.setItem('studio_reviews', '[]'); }
+                if (localStorage.getItem('adminAccess') === 'true') loadDashboardData();
+            });
+
+            const leadsRef = ref(database, 'leads');
+            onValue(leadsRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    const arr = Object.entries(data).map(([key, val]) => ({ firebaseKey: key, ...val })).sort((a, b) => b.timestamp - a.timestamp);
+                    localStorage.setItem('studio_leads', JSON.stringify(arr));
+                } else { localStorage.setItem('studio_leads', '[]'); }
+                if (localStorage.getItem('adminAccess') === 'true') loadDashboardData();
+            });
+
+            const productsRef = ref(database, 'products');
+            onValue(productsRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) { localStorage.setItem('studio_products', JSON.stringify(Object.values(data))); }
+                else { localStorage.setItem('studio_products', '[]'); }
+                if (localStorage.getItem('adminAccess') === 'true') loadDashboardData();
+            });
+        };
+        syncAdminFirebase();
+    </script>
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('SW Registered', reg))
+            .catch(err => console.log('SW Error', err));
+        }
+    </script>
+</body>
+</html>

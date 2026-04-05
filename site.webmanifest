@@ -1,0 +1,21 @@
+{
+    "name": "69 Studio by Subhash",
+    "short_name": "69 Studio",
+    "description": "Premium Digital Solutions Agency",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#080808",
+    "theme_color": "#ff4d4d",
+    "icons": [
+        {
+            "src": "logo.png.PNG",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "logo.png.PNG",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

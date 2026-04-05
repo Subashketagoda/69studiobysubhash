@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers at 69 Studio | Web Development Jobs Sri Lanka</title>
+    <meta name="description" content="Join the 69 Studio team in Sri Lanka. We are looking for talented web developers, designers, and digital strategists to build the future of digital solutions.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png.PNG">
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader-circle"></div>
+            <span>69</span>
+        </div>
+    </div>
+
+    <!-- Custom Cursor Glow -->
+    <div class="cursor-glow"></div>
+
+    <!-- Background Decoration Overlay -->
+    <div class="bg-decoration">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <!-- Background Decoration Overlay -->
+    <div class="bg-decoration">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <header class="scrolled">
+        <div class="logo">
+            <div class="logo-text"><span>69</span>STUDIO</div>
+            <div class="tagline">DIGITAL SOLUTIONS</div>
+        </div>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <nav id="navMenu">
+            <ul>
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#portfolio">Work</a></li>
+                <li><a href="careers.html" class="active">Careers</a></li>
+                <li><a href="store.html">Store</a></li>
+                <li><a href="appointments.html" target="_blank" class="active-badge">Appointments <i class="fas fa-external-link-alt" style="font-size: 0.6rem; vertical-align: super; margin-left: 2px;"></i></a></li>
+            </ul>
+        </nav>
+        <a href="index.html#contact" class="cta-button">Get Started</a>
+    </header>
+
+    <section class="careers-hero reveal" id="home">
+        <div class="badge">Team & Culture</div>
+        <h1>Join the <span class="gradient-text">Future</span> of Digital</h1>
+        <p>We're building a world-class team of creatives and engineers. Are you ready to make an impact?</p>
+    </section>
+
+    <section class="job-section reveal" id="jobs">
+        <div class="section-header centered">
+            <span class="dash"></span>
+            <h2>Open <span class="gradient-text">Positions</span></h2>
+            <p>Explore our current openings and find your dream role.</p>
+        </div>
+
+        <div class="job-grid">
+            <!-- Job 1 -->
+            <div class="job-card">
+                <div>
+                    <div class="job-badge"><i class="fas fa-briefcase"></i> Full Time</div>
+                    <h3>Senior Full Stack Developer</h3>
+                    <p>Lead the development of high-performance web applications using React, Next.js, and Node.js. Minimum 5 years experience required.</p>
+                </div>
+                <button class="apply-btn-card" onclick="openModal('Senior Full Stack Developer')">Apply Now <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Job 2 -->
+            <div class="job-card">
+                <div>
+                    <div class="job-badge"><i class="fas fa-magic"></i> Internship</div>
+                    <h3>UI/UX Design Intern</h3>
+                    <p>Work alongside our creative leads to design stunning interfaces and user journeys for global brands.</p>
+                </div>
+                <button class="apply-btn-card" onclick="openModal('UI/UX Design Intern')">Apply Now <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Job 3 -->
+            <div class="job-card">
+                <div>
+                    <div class="job-badge"><i class="fas fa-code"></i> Full Time</div>
+                    <h3>React Native Developer</h3>
+                    <p>Build cross-platform mobile experiences that feel native. Strong expertise in mobile UI and performance optimization is a must.</p>
+                </div>
+                <button class="apply-btn-card" onclick="openModal('React Native Developer')">Apply Now <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Job 4 -->
+            <div class="job-card">
+                <div>
+                    <div class="job-badge"><i class="fas fa-bullhorn"></i> Part Time</div>
+                    <h3>Digital Growth Strategist</h3>
+                    <p>Help our clients scale their digital presence through data-driven marketing, SEO, and strategic content planning.</p>
+                </div>
+                <button class="apply-btn-card" onclick="openModal('Digital Growth Strategist')">Apply Now <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Modal -->
+    <div id="applyModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalJobTitle">Apply Now</h2>
+            <p>Fill out the form below and our team will get back to you soon.</p>
+            
+            <form id="careerForm">
+                <input type="hidden" id="appliedJob" name="job_title">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="name" placeholder="Subhash Ketagoda" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="example@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" name="phone" placeholder="+971 50 000 0000" required>
+                </div>
+                <div class="form-group">
+                    <label>Resume / Portfolio Link</label>
+                    <input type="url" name="resume_link" placeholder="https://linkedin.com/in/yourprofile" required>
+                </div>
+                <div class="form-group">
+                    <label>Tell use about your major skills</label>
+                    <textarea name="skills" rows="4" placeholder="Mention your core expertise..."></textarea>
+                </div>
+                <button type="submit" class="btn primary" style="width: 100%;">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-top">
+            <div class="footer-logo">
+                <span>69</span><span class="highlight">STUDIO</span>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-behance"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 69 Studio by Subhash. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function openModal(jobTitle) {
+            document.getElementById('modalJobTitle').innerText = 'Apply for ' + jobTitle;
+            document.getElementById('appliedJob').value = jobTitle;
+            document.getElementById('applyModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('applyModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('applyModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Handle Career Form Submission
+        document.getElementById('careerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = 'Submitting... <i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            const newApp = {
+                ...data,
+                id: Date.now().toString(),
+                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                status: 'New',
+                timestamp: new Date().getTime()
+            };
+
+            // Save to Firebase/Local
+            if (window.firebaseDB && window.firebasePush && window.firebaseRef) {
+                window.firebasePush(window.firebaseRef(window.firebaseDB, 'applications'), newApp);
+            } else {
+                const apps = JSON.parse(localStorage.getItem('studio_apps') || '[]');
+                apps.unshift(newApp);
+                localStorage.setItem('studio_apps', JSON.stringify(apps));
+            }
+
+            // Update stats
+            let stats = JSON.parse(localStorage.getItem('studio_stats') || '{"inquiries":0,"visits":0}');
+            stats.inquiries = (stats.inquiries || 0) + 1;
+            localStorage.setItem('studio_stats', JSON.stringify(stats));
+
+            setTimeout(() => {
+                btn.innerHTML = 'Application Sent! <i class="fas fa-check"></i>';
+                btn.style.backgroundColor = '#27ae60';
+                
+                setTimeout(() => {
+                    closeModal();
+                    this.reset();
+                    btn.innerHTML = originalText;
+                    btn.style.backgroundColor = '';
+                    btn.disabled = false;
+                }, 2000);
+            }, 800);
+        });
+    </script>
+
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getDatabase, ref, push, update } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDp7G3C1mMeK1Htfsxharb05wtf0VTw88",
+            authDomain: "studio-7cdf1.firebaseapp.com",
+            databaseURL: "https://studio-7cdf1-default-rtdb.firebaseio.com",
+            projectId: "studio-7cdf1",
+            storageBucket: "studio-7cdf1.firebasestorage.app",
+            messagingSenderId: "460661592780",
+            appId: "1:460661592780:web:dc8fd00cad5541141e6869",
+            measurementId: "G-Q8YJHFC1H1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        window.firebaseDB = database;
+        window.firebaseRef = ref;
+        window.firebasePush = push;
+        window.firebaseUpdate = update;
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>69 Studio | Premium Web Development & Digital Solutions Sri Lanka</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Favicon & SEO Metadata -->
+    <link rel="icon" type="image/png" sizes="32x32" href="logo.png.PNG">
+    <link rel="icon" type="image/png" sizes="16x16" href="logo.png.PNG">
+    <link rel="shortcut icon" href="logo.png.PNG" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="logo.png.PNG">
+    <link rel="manifest" href="site.webmanifest">
+
+    <!-- Meta tags for Google Search -->
+    <meta name="description"
+        content="69 Studio by Subhash Ketagoda is a premier digital solutions company in Sri Lanka, specializing in high-performance web development and premium digital branding.">
+    <meta name="keywords" content="69 Studio, 69 Studio by Subhash, Web Development Sri Lanka, Subhash Ketagoda, Digital solutions Sri Lanka, Sri Lanka Web Design, Colombo Web Developer, Best Web Agency Sri Lanka, UI/UX Design Sri Lanka, Digital Branding Colombo">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Subhash Ketagoda">
+    <link rel="canonical" href="https://69studiobysubhash.com">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://69studiobysubhash.com">
+    <meta property="og:title" content="Web Development Sri Lanka | 69 Studio by Subhash Ketagoda">
+    <meta property="og:description" content="Innovation-Driven Digital Excellence in Sri Lanka. We build future-ready digital experiences specializing in high-performance web development.">
+    <meta property="og:image" content="https://69studiobysubhash.com/logo.png.PNG">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://69studiobysubhash.com">
+    <meta property="twitter:title" content="69 Studio by Subhash | Digital Solutions Company">
+    <meta property="twitter:description" content="Innovation-Driven Digital Excellence. We build future-ready digital experiences.">
+    <meta property="twitter:image" content="https://69studiobysubhash.com/logo.png.PNG">
+
+    <!-- Structured Data (JSON-LD) for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "69 Studio by Subhash Ketagoda",
+      "alternateName": "69 Studio Digital Solutions",
+      "url": "https://69studiobysubhash.com",
+      "logo": "https://69studiobysubhash.com/logo.png.PNG",
+      "image": "https://69studiobysubhash.com/me.jpg",
+      "description": "69 Studio by Subhash Ketagoda is a premier digital solutions company in Sri Lanka, specializing in high-performance web development and premium digital branding.",
+      "telephone": "+94711865946",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Colombo",
+        "addressLocality": "Colombo",
+        "addressCountry": "LK"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 6.9271,
+        "longitude": 79.8612
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Subhash Ketagoda",
+        "jobTitle": "Lead Web Developer & Founder",
+        "url": "https://69studiobysubhash.com"
+      },
+      "sameAs": [
+        "https://www.facebook.com/69studiobysubhash",
+        "https://www.instagram.com/69studiobysubhash",
+        "https://www.linkedin.com/in/subhash-ketagoda"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "50"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "What services does 69 Studio offer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "69 Studio specializes in high-performance web development, premium UI/UX design, digital branding, and strategic growth marketing for businesses in Sri Lanka and globally."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Where is 69 Studio located?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "69 Studio is based in Colombo, Sri Lanka, and serves clients both locally and internationally with digital solutions."
+        }
+      }, {
+        "@type": "Question",
+        "name": "How can I contact Subhash Ketagoda for a project?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can contact Subhash Ketagoda via email at 69studiobysubhash@gmail.com or via WhatsApp/Phone at +94 71 186 5946 to discuss your web development needs."
+        }
+      }]
+    }
+    </script>
+</head>
+
+<body>
+    <!-- Announcement Bar -->
+    <div id="announcement-bar" class="announcement-bar" style="display:none;">
+        <div class="announcement-content">
+            <i class="fas fa-bullhorn"></i> <span id="announcement-text-display">Special Offer: Elite Web Development starting from 25,000 LKR!</span>
+        </div>
+        <button class="close-announcement" onclick="this.parentElement.style.display='none'"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader-circle"></div>
+            <span>69</span>
+        </div>
+    </div>
+
+    <!-- Custom Cursor Glow -->
+    <div class="cursor-glow"></div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-text"><span>69</span>STUDIO</div>
+            <div class="tagline">DIGITAL SOLUTIONS</div>
+        </div>
+        <nav id="navMenu">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="careers.html">Careers</a></li>
+                <li><a href="store.html">Store</a></li>
+                <li><a href="appointments.html" target="_blank" class="active-badge">Appointments <i class="fas fa-external-link-alt" style="font-size: 0.6rem; vertical-align: super; margin-left: 2px;"></i></a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="header-right">
+             <a href="#contact" class="cta-button">Get Started</a>
+             <div class="menu-toggle" id="menuToggle">
+                 <i class="fas fa-bars"></i>
+             </div>
+        </div>
+    </header>
+
+    <section id="home" class="hero reveal">
+        <div class="hero-content">
+            <div class="badge">Innovation • Excellence • Growth</div>
+            <h1>Premium <span class="gradient-text">Web Development</span> & Digital Solutions</h1>
+            <p class="hero-description">We are a leading digital solutions company in Sri Lanka, specializing in high-performance web development and future-ready branding.</p>
+            <div class="hero-btns">
+                <a href="#contact" class="btn primary">Start Your Project</a>
+                <a href="#portfolio" class="btn secondary">Expertise <i class="fas fa-arrow-right" style="margin-left: 10px; font-size: 0.8rem;"></i></a>
+            </div>
+            <div class="locations-compact">
+                <div class="loc-item"><i class="fas fa-location-dot"></i> <span>Dubai, UAE</span></div>
+                <div class="loc-item"><i class="fas fa-location-dot"></i> <span>Colombo, SL</span></div>
+                <a href="tel:+971561865946" class="loc-item clickable">
+                    <i class="fas fa-phone"></i>
+                    <span>+971 56 186 5946</span>
+                </a>
+                <a href="mailto:69studiobysubhash@gmail.com" class="loc-item clickable">
+                    <i class="fas fa-envelope"></i>
+                    <span>69studiobysubhash@gmail.com</span>
+                </a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="glass-card main-card">
+                <img src="me.jpg" alt="Subhash Ketagoda - Web Developer Sri Lanka" class="founder-img">
+                <div class="card-badge">
+                    <div class="badge-icon"><i class="fas fa-check"></i></div>
+                    <div class="badge-text">Verified Founder</div>
+                </div>
+            </div>
+            <div class="floating-box box-1">
+                <i class="fas fa-code"></i>
+                <span>Expert Developer</span>
+            </div>
+            <div class="floating-box box-2">
+                <i class="fas fa-pencil-alt"></i>
+                <span>Creative Designer</span>
+            </div>
+            <div class="floating-box box-3">
+                <i class="fas fa-rocket"></i>
+                <span>Project Manager</span>
+            </div>
+
+            <!-- Decorative Blobs -->
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+        </div>
+    </section>
+
+    <!-- Global Decoration -->
+    <div class="bg-decoration">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+    </div>
+
+    <section id="partners" class="partners reveal">
+        <div class="partners-container">
+            <div class="section-header centered">
+                <span class="dash"></span>
+                <h2>Strategic Partners</h2>
+                <p>Collaborating with industry leaders to deliver excellence.</p>
+            </div>
+            <div class="partners-wrapper">
+                <div class="partner-card">
+                    <img src="./p1.jpg" alt="Rocco's Sri Lanka Partner" loading="lazy">
+                    <span class="partner-name">Rocco's</span>
+                </div>
+                <div class="partner-card">
+                    <img src="./p2.jpg" alt="Real Ceylon Gems Partner" loading="lazy">
+                    <span class="partner-name">Real Ceylon Gems</span>
+                </div>
+                <div class="partner-card">
+                    <img src="./p3.jpg" alt="69 Studio Digital Solution" loading="lazy">
+                    <span class="partner-name">69 Studio</span>
+                </div>
+                <div class="partner-card">
+                    <img src="./p4.jpg" alt="Special Beats Music Partner" loading="lazy">
+                    <span class="partner-name">Special Beats</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about reveal">
+        <div class="about-grid">
+            <div class="stats-container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="150">0</span>
+                        <span class="stat-label">Projects Completed</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="50">0</span>
+                        <span class="stat-label">Happy Clients</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="12">0</span>
+                        <span class="stat-label">Global Awards</span>
+                    </div>
+                </div>
+            </div>
+            <div class="about-text-content">
+                <div class="section-header">
+                    <span class="dash"></span>
+                    <h2 style="font-size: clamp(1.5rem, 4vw, 3rem);">Digital Innovation in <span class="gradient-text">Sri Lanka</span></h2>
+                </div>
+                <p>Founded by <strong>Subhash Ketagoda</strong>, 69 Studio is dedicated to amplifying your brand's presence through specialized web development and creative strategy. Based in Sri Lanka, we combine global standards with local expertise to deliver digital solutions that drive results.</p>
+                <div class="skills-showcase">
+                    <div class="skill-bar-item">
+                        <div class="skill-info">
+                            <span class="skill-title">Social Media Strategy</span>
+                            <span class="skill-percentage">95%</span>
+                        </div>
+                        <div class="progress-line" data-progress="95%"><span style="width: 95%;"></span></div>
+                    </div>
+                    <div class="skill-bar-item">
+                        <div class="skill-info">
+                            <span class="skill-title">Content Creation</span>
+                            <span class="skill-percentage">98%</span>
+                        </div>
+                        <div class="progress-line" data-progress="98%"><span style="width: 98%;"></span></div>
+                    </div>
+                    <div class="skill-bar-item">
+                        <div class="skill-info">
+                            <span class="skill-title">Brand Growth</span>
+                            <span class="skill-percentage">92%</span>
+                        </div>
+                        <div class="progress-line" data-progress="92%"><span style="width: 92%;"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services reveal">
+        <div class="section-header centered">
+            <span class="dash"></span>
+            <h2>Our Specialized Services</h2>
+            <p>From conceptualization to deployment, we provide end-to-end digital services.</p>
+        </div>
+        <div class="services-grid">
+            <a href="appointments.html" class="service-card large">
+                <div class="service-icon"><i class="fas fa-code"></i></div>
+                <div class="service-content">
+                    <h3>High-Performance Web Development</h3>
+                    <p>Building lightning-fast, future-ready web applications using React, Next.js, and modern headless CMS solutions.</p>
+                    <ul class="service-list">
+                        <li><i class="fas fa-check"></i> Enterprise Scalability</li>
+                        <li><i class="fas fa-check"></i> SEO Optimized Architecture</li>
+                        <li><i class="fas fa-check"></i> Custom E-commerce Engines</li>
+                    </ul>
+                </div>
+            </a>
+
+            <a href="appointments.html" class="service-card">
+                <div class="service-icon"><i class="fas fa-palette"></i></div>
+                <div class="service-content">
+                    <h3>Premium UI/UX Design</h3>
+                    <p>Where functionality meets high-end aesthetics. We design for the future.</p>
+                </div>
+            </a>
+
+            <a href="appointments.html" class="service-card">
+                <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="service-content">
+                    <h3>Digital Growth & Ads</h3>
+                    <p>Data-driven strategies to amplify your brand's reach and ROI.</p>
+                </div>
+            </a>
+
+            <a href="appointments.html" class="service-card medium">
+                <div class="service-icon"><i class="fas fa-video"></i></div>
+                <div class="service-content">
+                    <h3>Brand Storytelling</h3>
+                    <p>Crafting compelling narratives through high-end content production and media.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section id="portfolio" class="portfolio reveal">
+        <div class="section-header">
+            <span class="dash"></span>
+            <h2>Selected Works</h2>
+        </div>
+        <div class="portfolio-grid">
+            <div class="portfolio-item large">
+                <div class="portfolio-img-container">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                        alt="Digital Strategy Portfolio Item" loading="lazy">
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <span class="category">Brand Strategy</span>
+                            <h3>Content Planning</h3>
+                            <a href="#" class="view-link">View Case Study <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="portfolio-img-container">
+                    <img src="https://images.unsplash.com/photo-1557838923-2985c318be48?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Ad Campaign Marketing Project" loading="lazy">
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <span class="category">Social Ads</span>
+                            <h3>Targeted Reach</h3>
+                            <a href="#" class="view-link">View Project <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="portfolio-img-container">
+                    <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Growth Marketing and Influencer Engagement" loading="lazy">
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <span class="category">Growth</span>
+                            <h3>Influencer Collab</h3>
+                            <a href="#" class="view-link">View Project <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="portfolio-img-container">
+                    <img src="https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Visual Branding and Identity Design" loading="lazy">
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <span class="category">Identity</span>
+                            <h3>Visual Branding</h3>
+                            <a href="#" class="view-link">View Project <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="portfolio-img-container">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Analytics Dashboard Results" loading="lazy">
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <span class="category">Data</span>
+                            <h3>Growth Analytics</h3>
+                            <a href="#" class="view-link">View Project <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="portfolio-img-container">
+                    <img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                        alt="Fan Engagement Community Project" loading="lazy">
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <span class="category">Community</span>
+                            <h3>Fan Engagement</h3>
+                            <a href="#" class="view-link">View Project <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="store" class="store reveal">
+        <div class="store-container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div class="section-header centered">
+                <span class="dash"></span>
+                <h2>Discover Our <span class="gradient-text">Assets</span></h2>
+                <p>Visit our premium digital store for exclusive assets and templates.</p>
+                <div style="margin-top: 30px;">
+                    <a href="store.html" class="btn primary">Visit Full Store <i
+                            class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="store-grid" id="storeGrid"
+                style="opacity: 0.6; pointer-events: none; max-height: 400px; overflow: hidden;">
+                <!-- Preview products -->
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="reviews reveal">
+        <div class="reviews-container" style="max-width: 1200px; margin: 0 auto;">
+            <div class="section-header centered">
+                <span class="dash"></span>
+                <h2>Client <span class="gradient-text">Reviews</span></h2>
+                <p>See what our clients say about us or leave your own experience. Your review will be instantly visible
+                    to others.</p>
+            </div>
+            <div class="reviews-wrapper">
+                <div class="reviews-list-container">
+                    <div class="reviews-grid" id="reviewsGrid">
+                        <!-- Reviews will be rendered here dynamically -->
+                    </div>
+                </div>
+                <div class="review-form-container">
+                    <h3>Share Your Experience</h3>
+                    <form id="reviewForm">
+                        <div class="form-group">
+                            <input type="text" id="reviewName" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <select id="reviewRating" required>
+                                <option value="" disabled selected>Select Rating</option>
+                                <option value="5">⭐⭐⭐⭐⭐ (5/5) - Excellent</option>
+                                <option value="4">⭐⭐⭐⭐ (4/5) - Very Good</option>
+                                <option value="3">⭐⭐⭐ (3/5) - Average</option>
+                                <option value="2">⭐⭐ (2/5) - Poor</option>
+                                <option value="1">⭐ (1/5) - Terrible</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="reviewMessage"
+                                placeholder="Write your review here... How was your experience?" rows="5"
+                                required></textarea>
+                        </div>
+                        <button type="submit" class="btn primary submit-btn">Submit Review <i
+                                class="fas fa-paper-plane"></i></button>
+                        <div id="reviewStatus"
+                            style="margin-top: 15px; font-size: 0.95rem; text-align: center; font-weight: 600;"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact reveal">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Let's Craft Something <span class="gradient-text">Exceptional</span></h2>
+                <p>Have a project in mind? Let's talk about how we can help you achieve your digital goals.</p>
+                <div class="contact-details">
+                    <a href="tel:+971561865946" class="detail-item clickable">
+                        <div class="icon-box"><i class="fas fa-phone"></i></div>
+                        <div>
+                            <h4>Call Us</h4>
+                            <p>+971 56 186 5946</p>
+                        </div>
+                    </a>
+                    <a href="mailto:69studiobysubhash@gmail.com" class="detail-item clickable">
+                        <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h4>Email Us</h4>
+                            <p>69studiobysubhash@gmail.com</p>
+                        </div>
+                    </a>
+                    <div class="detail-item">
+                        <div class="icon-box"><i class="fas fa-location-dot"></i></div>
+                        <div>
+                            <h4>Visit Us</h4>
+                            <p>Colombo, Sri Lanka</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form-container">
+                <form id="contactForm" action="https://formsubmit.co/69studiobysubhash@gmail.com" method="POST">
+                    <!-- Hidden fields for better deliverability -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_subject" value="New Inquiry from 69 Studio Website!">
+                    <input type="hidden" name="_honey" style="display:none">
+
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <select name="interest">
+                            <option value="">Interested In</option>
+                            <option value="web">Web Development</option>
+
+                            <option value="design">UI/UX Design</option>
+                            <option value="marketing">Social Media Headline</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Your Message" rows="5"></textarea>
+                    </div>
+                    <button type="submit" class="btn primary submit-btn">Send Message <i
+                            class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div class="footer-logo">
+                <span>69</span><span class="highlight">STUDIO</span>
+            </div>
+            <div class="footer-social">
+                <a href="https://www.facebook.com/69studiobysubhash" target="_blank" aria-label="Follow 69 Studio on Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/69studiobysubhash" target="_blank" aria-label="Follow 69 Studio on Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/subhash-ketagoda" target="_blank" aria-label="Connect with Subhash Ketagoda on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="Follow 69 Studio on Behance"><i class="fab fa-behance"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 69 Studio by Subhash. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="careers.html">Careers</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="staff-chat.html" style="opacity: 0.3; font-size: 0.7rem; margin-left: 20px;">Staff Hub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Chat Button -->
+    <a href="https://wa.me/971561865946?text=Hi%20Subhash!%20I'm%20interested%20in%20your%20services." target="_blank"
+        class="floating-chat" title="Chat with me on WhatsApp">
+        <div class="chat-tooltip">Chat with us</div>
+        <div class="chat-icon">
+            <i class="fab fa-whatsapp"></i>
+            <span class="notification-dot"></span>
+        </div>
+    </a>
+
+    <!-- Firebase Web SDK Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getDatabase, ref, push, onValue, set, update } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDp7G3C1mMeK1Htfsxharb05wtf0VTw88",
+            authDomain: "studio-7cdf1.firebaseapp.com",
+            databaseURL: "https://studio-7cdf1-default-rtdb.firebaseio.com",
+            projectId: "studio-7cdf1",
+            storageBucket: "studio-7cdf1.firebasestorage.app",
+            messagingSenderId: "460661592780",
+            appId: "1:460661592780:web:dc8fd00cad5541141e6869",
+            measurementId: "G-Q8YJHFC1H1"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
+
+        // Attach database to window object so other scripts can interact with it
+        window.firebaseDB = database;
+        window.firebaseRef = ref;
+        window.firebasePush = push;
+        window.firebaseOnValue = onValue;
+        window.firebaseSet = set;
+        window.firebaseUpdate = update;
+
+        // Dispatch an event to let script.js know Firebase is ready
+        window.dispatchEvent(new Event('firebaseLoaded'));
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
