@@ -1,0 +1,25 @@
+{
+    "name": "Sheroo AI Assistant",
+    "short_name": "Sheroo",
+    "description": "Premium AI Digital Assistant by 69 Studio",
+    "start_url": "./sheroo.html",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#080808",
+    "theme_color": "#ff4d4d",
+    "icons": [
+        {
+            "src": "logo.png.PNG",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "logo.png.PNG",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
