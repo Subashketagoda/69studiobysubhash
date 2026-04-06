@@ -154,7 +154,7 @@
                 <div id="errorMsg" class="error-msg">Incorrect Access Key.</div>
             </form>
 
-            <div id="bio-container">
+            <div id="bio-container" style="display:none;">
                 <div class="divider"><span>OR QUICK ACCESS</span></div>
                 <button type="button" class="bio-btn" id="bioBtn"><i class="fas fa-fingerprint"></i></button>
                 <span class="bio-btn-text">Touch ID / Face ID</span>
@@ -166,6 +166,7 @@
         <header class="app-header">
             <div class="header-brand"><div class="status-dot"></div><div class="logo-text"><span>69</span>Sheroo</div></div>
             <div class="header-actions">
+                <button class="header-btn" id="setupBioBtn" title="Setup Biometric"><i class="fas fa-fingerprint"></i></button>
                 <button class="header-btn" id="refreshBtn"><i class="fas fa-sync-alt"></i></button>
                 <button class="header-btn" id="logoutBtn"><i class="fas fa-power-off"></i></button>
             </div>
@@ -209,6 +210,12 @@
                         loginSection.style.opacity = '1';
                         loginSection.style.visibility = 'visible';
                     }
+                    
+                    // Show bio login button only if enrolled
+                    if (localStorage.getItem('auth_id')) {
+                        document.getElementById('bio-container').style.display = 'block';
+                    }
+
                     if (pwInput) {
                         setTimeout(() => pwInput.focus(), 100);
                     }
@@ -282,6 +289,38 @@
             }
         });
         document.getElementById('bioBtn').addEventListener('click', bioAuth);
+        document.getElementById('setupBioBtn').addEventListener('click', setupBiometric);
+
+        async function setupBiometric() {
+            if (!window.PublicKeyCredential) {
+                alert("Biometric device not detected on this browser.");
+                return;
+            }
+            try {
+                const challengeArr = new Uint8Array(32);
+                window.crypto.getRandomValues(challengeArr);
+                const publicKey = {
+                    challenge: challengeArr,
+                    rp: { name: "Sheroo AI" },
+                    user: {
+                        id: Uint8Array.from("SHEROOUSERID", c => c.charCodeAt(0)),
+                        name: "admin@sheroo.com",
+                        displayName: "Sheroo Admin"
+                    },
+                    pubKeyCredParams: [{ alg: -7, type: "public-key" }],
+                    timeout: 60000,
+                    attestation: "direct",
+                    authenticatorSelection: { authenticatorAttachment: "platform" }
+                };
+                const credential = await navigator.credentials.create({ publicKey });
+                if (credential) {
+                    localStorage.setItem('auth_id', btoa(String.fromCharCode(...new Uint8Array(credential.rawId))));
+                    alert("Fingerprint / Face ID setup complete!");
+                }
+            } catch (err) {
+                alert("Setup failed: " + err.message);
+            }
+        }
 
         async function bioAuth() {
             if (location.protocol === 'file:') {
