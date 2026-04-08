@@ -792,15 +792,40 @@
                 return false;
             };
 
-            const saved = await saveToFirebase();
-            if (!saved) {
-                // Fallback to local storage if Firebase fails or is not ready
-                const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
-                leads.unshift(newAppointment);
-                localStorage.setItem('studio_leads', JSON.stringify(leads));
-            }
+            // Trigger all sync operations in parallel
+            Promise.all([
+                saveToFirebase(),
+                (async () => {
+                    try {
+                        const notificationData = new FormData();
+                        notificationData.append('name', data.name);
+                        notificationData.append('phone', data.phone);
+                        notificationData.append('email', data.email);
+                        notificationData.append('Appointment Date', data.date);
+                        notificationData.append('Appointment Time', data.time);
+                        notificationData.append('Service interested', data.service);
+                        notificationData.append('Project Info', data.message);
+                        notificationData.append('_subject', '🔥 NEW APPOINTMENT: ' + data.name);
+                        notificationData.append('_template', 'table');
+                        notificationData.append('_captcha', 'false');
 
-            // 2. Track stats
+                        await fetch('https://formsubmit.co/69studiobysubhash@gmail.com', {
+                            method: 'POST',
+                            body: notificationData,
+                            headers: { 'Accept': 'application/json' }
+                        });
+                    } catch (err) { console.error('Notification error:', err); }
+                })(),
+                sendToOlivia({
+                    name: data.name,
+                    phone: data.phone,
+                    date: data.date,
+                    time: data.time,
+                    service: data.service
+                })
+            ]);
+
+            // Track stats in background
             try {
                 let stats = JSON.parse(localStorage.getItem('studio_stats') || '{"inquiries": 0, "visits": 0}');
                 stats.inquiries++;
@@ -809,38 +834,6 @@
                     window.firebaseUpdate(window.firebaseRef(window.firebaseDB, 'stats'), stats);
                 }
             } catch(e) {}
-
-            // 3. Send notification via FormSubmit
-            try {
-                const notificationData = new FormData();
-                notificationData.append('name', data.name);
-                notificationData.append('phone', data.phone);
-                notificationData.append('email', data.email);
-                notificationData.append('Appointment Date', data.date);
-                notificationData.append('Appointment Time', data.time);
-                notificationData.append('Service interested', data.service);
-                notificationData.append('Project Info', data.message);
-                notificationData.append('_subject', '🔥 NEW APPOINTMENT: ' + data.name);
-                notificationData.append('_template', 'table');
-                notificationData.append('_captcha', 'false');
-
-                await fetch('https://formsubmit.co/69studiobysubhash@gmail.com', {
-                    method: 'POST',
-                    body: notificationData,
-                    headers: { 'Accept': 'application/json' }
-                });
-            } catch (err) {
-                console.error('Notification error:', err);
-            }
-
-            // 4. Send to Olivia AI Bot
-            await sendToOlivia({
-                name: data.name,
-                phone: data.phone,
-                date: data.date,
-                time: data.time,
-                service: data.service
-            });
 
             // Success feedback
             btn.innerHTML = '<i class="fas fa-check-circle"></i> Booking Confirmed!';

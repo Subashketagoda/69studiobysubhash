@@ -18,6 +18,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     
+    <script
+        type="module"
+        src="https://gradio.s3-us-west-2.amazonaws.com/6.5.1/gradio.js"
+    ></script>
+    
     <style>
         :root {
             --bg-dark: #080808;
@@ -32,10 +37,16 @@
             --safe-bottom: env(safe-area-inset-bottom, 0px);
         }
 
-        body, html {
-            margin: 0; padding: 0; width: 100%; height: 100dvh;
-            background-color: var(--bg-dark); overflow: hidden;
-            font-family: 'Plus Jakarta Sans', sans-serif; position: fixed; touch-action: none; color: #fff;
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--bg-dark);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            position: relative; /* Changed from fixed to avoid layout issues */
         }
 
         .orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 1; }
@@ -106,10 +117,14 @@
         /* ===== APP UI ===== */
         #main-app { display: none; height: 100%; position: relative; }
         .app-header {
-            position: absolute; top: 0; left: 0; width: 100%; height: calc(65px + var(--safe-top));
-            padding: var(--safe-top) 20px 0; display: flex; justify-content: space-between; align-items: center;
-            z-index: 100; background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border-bottom: 1px solid rgba(255, 77, 77, 0.15); box-sizing: border-box;
+            position: fixed !important; 
+            top: 0 !important; 
+            left: 0 !important; 
+            width: 100%; 
+            height: 50px;
+            padding: 0 15px; display: flex; justify-content: space-between; align-items: center;
+            z-index: 9999; background: rgba(8, 8, 8, 0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 77, 77, 0.1); box-sizing: border-box;
         }
         .header-brand { display: flex; align-items: center; gap: 10px; }
         .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); box-shadow: 0 0 10px var(--success); animation: blink 2s infinite; }
@@ -122,7 +137,82 @@
             color: #ccc; display: flex; justify-content: center; align-items: center; cursor: pointer;
         }
 
-        #botWidgetArea { width: 100%; height: 100%; padding-top: calc(65px + var(--safe-top)); box-sizing: border-box; }
+        #botWidgetArea { 
+            width: 100%; 
+            height: calc(100% - 50px); 
+            margin-top: 50px; 
+            box-sizing: border-box; 
+            position: relative; 
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: radial-gradient(circle at center, rgba(255, 77, 77, 0.03) 0%, transparent 70%);
+            padding: 0; /* Remove padding to avoid gaps */
+        }
+        
+        .bot-container {
+            width: 100%;
+            max-width: 1100px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #0b0f19;
+            box-shadow: 0px 10px 40px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255, 77, 77, 0.1);
+            animation: containerIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            min-height: 950px; /* Added 950px height as requested previously */
+        }
+
+        @keyframes containerIn { from { transform: translateY(20px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+        gradio-app { 
+            width: 100%;
+            height: 950px !important;
+            display: block;
+            border: none;
+        }
+
+        .header-brand .logo-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.1rem;
+            animation: textGlow 3s ease-in-out infinite alternate;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: none; /* Allow normal case as requested */
+        }
+        
+        .header-brand .logo-text span {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            font-weight: 500;
+            -webkit-text-fill-color: #888; /* Grey for 'by 69 studio' */
+            margin-left: 5px;
+        }
+
+        .header-brand .logo-img {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--primary-color);
+            margin-right: 8px;
+            object-fit: cover;
+            animation: logoPulse 2s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 77, 77, 0.3); }
+            50% { transform: scale(1.1); box-shadow: 0 0 15px rgba(255, 77, 77, 0.5); }
+        }
+
+        @keyframes textGlow {
+            from { filter: drop-shadow(0 0 2px rgba(255, 77, 77, 0.3)); }
+            to { filter: drop-shadow(0 0 8px rgba(255, 77, 77, 0.6)); }
+        }
 
         #ready-overlay {
             position: fixed; inset: 0; background: var(--bg-dark); z-index: 9999; 
@@ -134,24 +224,27 @@
 </head>
 <body>
 
-    <div id="login-bg"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
+    <div id="app-bg" style="position: fixed; inset: 0; z-index: 0; pointer-events: none;">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
 
     <section id="login-section">
         <div class="login-card">
-            <div class="login-logo-container"><img src="sheroo-logo.png"></div>
+            <div class="login-logo-container"><img src="sheroo-logo.png" alt="Sheroo Logo"></div>
             <div class="login-logo-text"><span>69</span>STUDIO</div>
             <div class="login-subtitle">Sheroo Assistant App</div>
             
             <form id="loginForm">
                 <div class="input-group">
-                    <label>Access Key</label>
+                    <label>Internal Access Key</label>
                     <div class="input-wrapper">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="pwInput" placeholder="Enter password" required>
+                        <input type="password" id="pwInput" placeholder="••••••••" required>
                     </div>
                 </div>
-                <button type="submit" class="login-btn">Access Sheroo AI <i class="fas fa-arrow-right"></i></button>
-                <div id="errorMsg" class="error-msg">Incorrect Access Key.</div>
+                <button type="submit" class="login-btn">Launch Sheroo AI <i class="fas fa-bolt"></i></button>
+                <div id="errorMsg" class="error-msg">Access Denied. Pin Incorrect.</div>
             </form>
 
             <div id="bio-container" style="display:none;">
@@ -164,7 +257,10 @@
 
     <main id="main-app">
         <header class="app-header">
-            <div class="header-brand"><div class="status-dot"></div><div class="logo-text"><span>69</span>Sheroo</div></div>
+            <div class="header-brand">
+                <img src="sheroo-logo.png" class="logo-img" alt="Logo">
+                <div class="logo-text">Sheroo AI <span>by 69 studio</span></div>
+            </div>
             <div class="header-actions">
                 <button class="header-btn" id="setupBioBtn" title="Setup Biometric"><i class="fas fa-fingerprint"></i></button>
                 <button class="header-btn" id="refreshBtn"><i class="fas fa-sync-alt"></i></button>
@@ -194,7 +290,7 @@
 
         // Initialize
         function initApp() {
-            console.log("Sheroo: Initializing...");
+            console.log("Sheroo: Initializing System...");
             
             // Safety timeout to transition from loader to app or login
             setTimeout(() => {
@@ -263,21 +359,19 @@
         }
 
         function loadBot() {
-            if (window.voiceflow) return;
-            const script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
-            script.onload = () => {
-                window.voiceflow.chat.load({
-                    verify: { projectID: '69d38db2d46abb5cf5651387' },
-                    url: 'https://general-runtime.voiceflow.com',
-                    versionID: 'production',
-                    voice: { url: "https://runtime-api.voiceflow.com" },
-                    autostart: true,
-                    render: { mode: 'embedded', target: document.getElementById('botWidgetArea') }
-                });
-            };
-            document.body.appendChild(script);
+            const botArea = document.getElementById('botWidgetArea');
+            if (botArea.querySelector('gradio-app')) return;
+            
+            const container = document.createElement('div');
+            container.className = 'bot-container';
+            
+            const gradioApp = document.createElement('gradio-app');
+            gradioApp.setAttribute('src', 'https://subashketagoda2k3gmailcom-sheroo-ai.hf.space');
+            gradioApp.setAttribute('theme_mode', 'dark');
+            gradioApp.style.height = "950px";
+            
+            container.appendChild(gradioApp);
+            botArea.appendChild(container);
         }
 
         // Action Buttons
