@@ -713,32 +713,39 @@
     </script>
     <script src="script.js"></script>
     <script>
-        // Booking එකක් සිදුවන අවස්ථාවේදී මේ function එක call කරන්න
+        // Professional Sync with Olivia AI Bot
         async function sendToOlivia(bookingData) {
-            const url = 'https://whatsapp-ai-bot-3-gin3.onrender.com/api/appointments/add';
+            const url = 'https://olivia-ai-bot-1.onrender.com/api/appointments/add';
+            console.log('📡 Attempting to sync booking with Olivia AI...');
             
             try {
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        pass: '69studio123', // Admin Password එක
-                        name: bookingData.name, // පාරිභෝගිකයාගේ නම
-                        phone: bookingData.phone, // දුරකථන අංකය
-                        date: bookingData.date, // දිනය
-                        time: bookingData.time, // වේලාව
-                        service: bookingData.service // සේවාව (උදා: Photography)
+                        pass: '69studio123', 
+                        name: bookingData.name,
+                        phone: bookingData.phone,
+                        date: bookingData.date,
+                        time: bookingData.time,
+                        service: bookingData.service
                     })
                 });
                 
                 if (response.ok) {
-                    console.log('✅ Appointment successfully sent to Olivia!');
+                    const result = await response.json();
+                    console.log('✅ Success: Booking synced with Olivia Bot.', result);
                 } else {
                     const errorText = await response.text();
-                    console.error('❌ Olivia API Error:', response.status, errorText);
+                    console.error('❌ Sync Failed:', response.status, errorText);
+                    // Log more info if it's an auth error
+                    if (response.status === 403) {
+                        console.warn('⚠️ Authentication error: Check if ADMIN_PASSWORD matches in bot .env');
+                    }
                 }
             } catch (err) {
-                console.error('❌ Network Error while sending to Olivia:', err);
+                console.error('❌ Network Connection Error (Olivia):', err);
+                console.log('💡 Tip: Ensure the bot is running on Render and the URL is correct.');
             }
         }
 
