@@ -44,8 +44,8 @@
             50% { transform: translateY(-18px) rotate(3deg); }
         }
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 77, 77, 0.15); }
-            50% { box-shadow: 0 0 40px rgba(255, 77, 77, 0.35); }
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 127, 0.15); }
+            50% { box-shadow: 0 0 40px rgba(255, 0, 127, 0.35); }
         }
         @keyframes shimmer {
             0% { background-position: -200% center; }
@@ -95,7 +95,7 @@
         /* --- Hero Floating Icons --- */
         .floating-icon {
             position: absolute;
-            color: rgba(255, 77, 77, 0.12);
+            color: rgba(255, 0, 127, 0.12);
             z-index: 1;
             animation: float 7s ease-in-out infinite;
             pointer-events: none;
@@ -148,7 +148,7 @@
         /* --- Info Panel --- */
         .booking-info {
             background: rgba(12, 12, 14, 0.7);
-            border: 1px solid rgba(255, 77, 77, 0.12);
+            border: 1px solid rgba(255, 0, 127, 0.12);
             padding: 50px 40px;
             border-radius: 35px;
             position: sticky;
@@ -180,15 +180,15 @@
         }
 
         .benefit-item:hover {
-            background: rgba(255, 77, 77, 0.04);
-            border-color: rgba(255, 77, 77, 0.1);
+            background: rgba(255, 0, 127, 0.04);
+            border-color: rgba(255, 0, 127, 0.1);
         }
 
         .benefit-icon {
             width: 52px;
             height: 52px;
             min-width: 52px;
-            background: rgba(255, 77, 77, 0.08);
+            background: rgba(255, 0, 127, 0.08);
             border-radius: 16px;
             display: flex;
             justify-content: center;
@@ -202,7 +202,7 @@
             background: var(--primary-color);
             color: white;
             transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 8px 25px rgba(255, 77, 77, 0.35);
+            box-shadow: 0 8px 25px rgba(255, 0, 127, 0.35);
         }
 
         .benefit-content h4 {
@@ -279,7 +279,7 @@
             right: -30%;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(255, 77, 77, 0.06) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 0, 127, 0.06) 0%, transparent 70%);
             pointer-events: none;
         }
 
@@ -343,8 +343,8 @@
         .form-group select:focus,
         .form-group textarea:focus {
             border-color: var(--primary-color);
-            background: rgba(255, 77, 77, 0.04);
-            box-shadow: 0 0 0 3px rgba(255, 77, 77, 0.1), 0 12px 30px rgba(255, 77, 77, 0.08);
+            background: rgba(255, 0, 127, 0.04);
+            box-shadow: 0 0 0 3px rgba(255, 0, 127, 0.1), 0 12px 30px rgba(255, 0, 127, 0.08);
         }
 
         .form-group textarea {
@@ -376,7 +376,7 @@
             align-items: center;
             gap: 12px;
             margin-top: 10px;
-            box-shadow: 0 12px 30px rgba(255, 77, 77, 0.3);
+            box-shadow: 0 12px 30px rgba(255, 0, 127, 0.3);
             text-transform: uppercase;
             letter-spacing: 1.5px;
             position: relative;
@@ -396,7 +396,7 @@
 
         .booking-btn:hover {
             transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 20px 45px rgba(255, 77, 77, 0.45);
+            box-shadow: 0 20px 45px rgba(255, 0, 127, 0.45);
         }
 
         .booking-btn:active {
@@ -487,11 +487,15 @@
     <div class="preloader">
         <div class="loader">
             <div class="loader-circle"></div>
+            <div class="loader-circle-inner"></div>
             <span>69</span>
         </div>
+        <div class="preloader-text">Loading Excellence</div>
     </div>
 
-    <!-- Custom Cursor Glow -->
+    <!-- Premium Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
     <div class="cursor-glow"></div>
 
     <!-- Background Decoration Overlay -->
@@ -504,8 +508,7 @@
 
     <header class="scrolled">
         <div class="logo">
-            <div class="logo-text"><span>69</span>STUDIO</div>
-            <div class="tagline">DIGITAL SOLUTIONS</div>
+            <img src="main-logo.png" alt="69 Studio Logo" class="header-logo">
         </div>
         <div class="menu-toggle" id="menuToggle">
             <i class="fas fa-bars"></i>
@@ -531,7 +534,10 @@
         <i class="fas fa-wand-magic-sparkles floating-icon fi-4"></i>
 
         <div class="badge anim-up delay-1">✦ Consultation Booking</div>
-        <h1 class="anim-up delay-2">Let's Build Something <span class="gradient-text">Extraordinary</span></h1>
+        <h1 class="anim-up delay-2" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;">
+            <span class="reveal-text">Let's Build Something</span> 
+            <span class="gradient-text">Extraordinary</span>
+        </h1>
         <p class="anim-up delay-3">Book a one-on-one session with our founder to discuss your vision, strategy, and the digital roadmap to get you there.</p>
     </section>
 
@@ -556,10 +562,10 @@
     </div>
 
     <!-- ========== BOOKING SECTION ========== -->
-    <section class="booking-section" id="booking">
+    <section class="booking-section reveal" id="booking">
 
         <!-- Left: Info Panel -->
-        <div class="booking-info anim-left delay-3">
+        <div class="booking-info anim-left delay-3 spotlight-card tilt-card" data-tilt-intensity="5">
             <h3>Why Book with Us?</h3>
 
             <div class="benefit-item">
@@ -596,14 +602,14 @@
 
             <div class="wa-section">
                 <p>Prefer to chat instead?</p>
-                <a href="https://wa.me/971561865946" class="wa-link" target="_blank" rel="noopener">
+                <a href="https://wa.me/94789656969" class="wa-link" target="_blank" rel="noopener">
                     <i class="fab fa-whatsapp"></i> Chat on WhatsApp
                 </a>
             </div>
         </div>
 
         <!-- Right: Form Panel -->
-        <div class="booking-form-container anim-right delay-3">
+        <div class="booking-form-container anim-right delay-3 spotlight-card tilt-card" data-tilt-intensity="5">
             <h2 class="form-title">Book Your Session</h2>
             <p class="form-subtitle">Fill in the details below and we'll get back to you within 24 hours to confirm.</p>
 
@@ -633,7 +639,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="appt-phone">Phone Number</label>
-                        <input type="tel" id="appt-phone" name="phone" placeholder="+94 7X XXX XXXX" required>
+                        <input type="tel" id="appt-phone" name="phone" placeholder="+94 78 965 6969" required>
                     </div>
                     <div class="form-group">
                         <label for="appt-service">Service Interest</label>
@@ -667,7 +673,7 @@
     <footer>
         <div class="footer-top">
             <div class="footer-logo">
-                <span>69</span><span class="highlight">STUDIO</span>
+                <img src="main-logo.png" alt="69 Studio Logo" style="height: 40px; width: auto; object-fit: contain;">
             </div>
             <div class="footer-social">
                 <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -680,6 +686,16 @@
             <p>&copy; 2026 69 Studio by Subhash. All Rights Reserved.</p>
         </div>
     </footer>
+
+    <!-- Floating Chat Button -->
+    <a href="https://wa.me/94789656969?text=Hi%20Subhash!%20I'm%20interested%20in%20your%20services." target="_blank"
+        class="floating-chat" title="Chat with me on WhatsApp">
+        <div class="chat-tooltip">Chat with us</div>
+        <div class="chat-icon">
+            <i class="fab fa-whatsapp"></i>
+            <span class="notification-dot"></span>
+        </div>
+    </a>
 
     <!-- Firebase Web SDK Integration -->
     <script type="module">

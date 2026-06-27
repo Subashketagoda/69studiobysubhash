@@ -24,20 +24,16 @@
     <div class="preloader">
         <div class="loader">
             <div class="loader-circle"></div>
+            <div class="loader-circle-inner"></div>
             <span>69</span>
         </div>
+        <div class="preloader-text">Loading Excellence</div>
     </div>
 
-    <!-- Custom Cursor Glow -->
+    <!-- Premium Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
     <div class="cursor-glow"></div>
-
-    <!-- Background Decoration Overlay -->
-    <div class="bg-decoration">
-        <div class="circle circle-1"></div>
-        <div class="circle circle-2"></div>
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-    </div>
 
     <!-- Background Decoration Overlay -->
     <div class="bg-decoration">
@@ -49,8 +45,7 @@
 
     <header class="scrolled">
         <div class="logo">
-            <div class="logo-text"><span>69</span>STUDIO</div>
-            <div class="tagline">DIGITAL SOLUTIONS</div>
+            <img src="main-logo.png" alt="69 Studio Logo" class="header-logo">
         </div>
         <div class="menu-toggle" id="menuToggle">
             <i class="fas fa-bars"></i>
@@ -70,56 +65,67 @@
 
     <section class="careers-hero reveal" id="home">
         <div class="badge">Team & Culture</div>
-        <h1>Join the <span class="gradient-text">Future</span> of Digital</h1>
+        <h1 style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;">
+            <span class="reveal-text">Join the</span> 
+            <span class="gradient-text">Future</span> 
+            <span class="reveal-text">of Digital</span>
+        </h1>
         <p>We're building a world-class team of creatives and engineers. Are you ready to make an impact?</p>
     </section>
 
     <section class="job-section reveal" id="jobs">
         <div class="section-header centered">
             <span class="dash"></span>
-            <h2>Open <span class="gradient-text">Positions</span></h2>
+            <h2 style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;">
+                <span class="reveal-text">Open</span> 
+                <span class="gradient-text">Positions</span>
+            </h2>
             <p>Explore our current openings and find your dream role.</p>
         </div>
 
         <div class="job-grid">
             <!-- Job 1 -->
-            <div class="job-card">
+            <div class="job-card spotlight-card tilt-card" data-tilt-intensity="8">
+                <div class="shine-streak"></div>
                 <div>
                     <div class="job-badge"><i class="fas fa-briefcase"></i> Full Time</div>
                     <h3>Senior Full Stack Developer</h3>
                     <p>Lead the development of high-performance web applications using React, Next.js, and Node.js. Minimum 5 years experience required.</p>
                 </div>
-                <button class="apply-btn-card" onclick="openModal('Senior Full Stack Developer')">Apply Now <i class="fas fa-arrow-right"></i></button>
+                <button class="apply-btn-card btn" onclick="openModal('Senior Full Stack Developer')">Apply Now <i class="fas fa-arrow-right"></i></button>
             </div>
 
             <!-- Job 2 -->
-            <div class="job-card">
+            <div class="job-card spotlight-card tilt-card" data-tilt-intensity="8">
+                <div class="shine-streak"></div>
                 <div>
                     <div class="job-badge"><i class="fas fa-magic"></i> Internship</div>
                     <h3>UI/UX Design Intern</h3>
                     <p>Work alongside our creative leads to design stunning interfaces and user journeys for global brands.</p>
                 </div>
-                <button class="apply-btn-card" onclick="openModal('UI/UX Design Intern')">Apply Now <i class="fas fa-arrow-right"></i></button>
+                <button class="apply-btn-card btn" onclick="openModal('UI/UX Design Intern')">Apply Now <i class="fas fa-arrow-right"></i></button>
             </div>
 
             <!-- Job 3 -->
-            <div class="job-card">
+            <div class="job-card spotlight-card tilt-card" data-tilt-intensity="8">
+                <div class="shine-streak"></div>
                 <div>
                     <div class="job-badge"><i class="fas fa-code"></i> Full Time</div>
                     <h3>React Native Developer</h3>
                     <p>Build cross-platform mobile experiences that feel native. Strong expertise in mobile UI and performance optimization is a must.</p>
                 </div>
-                <button class="apply-btn-card" onclick="openModal('React Native Developer')">Apply Now <i class="fas fa-arrow-right"></i></button>
+                <button class="apply-btn-card btn" onclick="openModal('React Native Developer')">Apply Now <i class="fas fa-arrow-right"></i></button>
             </div>
 
             <!-- Job 4 -->
-            <div class="job-card">
+            <div class="job-card spotlight-card tilt-card" data-tilt-intensity="8">
+                <div class="shine-streak"></div>
                 <div>
                     <div class="job-badge"><i class="fas fa-bullhorn"></i> Part Time</div>
                     <h3>Digital Growth Strategist</h3>
                     <p>Help our clients scale their digital presence through data-driven marketing, SEO, and strategic content planning.</p>
                 </div>
-                <button class="apply-btn-card" onclick="openModal('Digital Growth Strategist')">Apply Now <i class="fas fa-arrow-right"></i></button>
+                <button class="apply-btn-card btn" onclick="openModal('Digital Growth Strategist')">Apply Now <i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
     </section>
@@ -143,7 +149,7 @@
                 </div>
                 <div class="form-group">
                     <label>Phone Number</label>
-                    <input type="tel" name="phone" placeholder="+971 50 000 0000" required>
+                    <input type="tel" name="phone" placeholder="+94 78 965 6969" required>
                 </div>
                 <div class="form-group">
                     <label>Resume / Portfolio Link</label>
@@ -161,7 +167,7 @@
     <footer>
         <div class="footer-top">
             <div class="footer-logo">
-                <span>69</span><span class="highlight">STUDIO</span>
+                <img src="main-logo.png" alt="69 Studio Logo" style="height: 40px; width: auto; object-fit: contain;">
             </div>
             <div class="footer-social">
                 <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -174,6 +180,16 @@
             <p>&copy; 2026 69 Studio by Subhash. All Rights Reserved.</p>
         </div>
     </footer>
+
+    <!-- Floating Chat Button -->
+    <a href="https://wa.me/94789656969?text=Hi%20Subhash!%20I'm%20interested%20in%20your%20services." target="_blank"
+        class="floating-chat" title="Chat with me on WhatsApp">
+        <div class="chat-tooltip">Chat with us</div>
+        <div class="chat-icon">
+            <i class="fab fa-whatsapp"></i>
+            <span class="notification-dot"></span>
+        </div>
+    </a>
 
     <script src="script.js"></script>
     <script>

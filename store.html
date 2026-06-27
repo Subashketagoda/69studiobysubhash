@@ -70,7 +70,7 @@
         .store-header {
             padding: 150px 8% 60px;
             text-align: center;
-            background: linear-gradient(to bottom, rgba(255, 77, 77, 0.05), transparent);
+            background: linear-gradient(to bottom, rgba(255, 0, 127, 0.05), transparent);
         }
 
         #store {
@@ -112,11 +112,15 @@
     <div class="preloader">
         <div class="loader">
             <div class="loader-circle"></div>
+            <div class="loader-circle-inner"></div>
             <span>69</span>
         </div>
+        <div class="preloader-text">Loading Excellence</div>
     </div>
 
-    <!-- Custom Cursor Glow -->
+    <!-- Premium Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
     <div class="cursor-glow"></div>
 
     <header class="scrolled">
@@ -126,7 +130,7 @@
                 <span>Back to Home</span>
             </a>
             <div class="logo">
-                <img src="main-logo.png" alt="69 Studio Logo" style="height: 50px; width: auto; object-fit: contain;">
+                <img src="main-logo.png" alt="69 Studio Logo" class="header-logo">
             </div>
         </div>
         <div class="menu-toggle" id="menuToggle">
@@ -188,6 +192,16 @@
             </div>
         </div>
     </footer>
+
+    <!-- Floating Chat Button -->
+    <a href="https://wa.me/94789656969?text=Hi%20Subhash!%20I'm%20interested%20in%20your%20services." target="_blank"
+        class="floating-chat" title="Chat with me on WhatsApp">
+        <div class="chat-tooltip">Chat with us</div>
+        <div class="chat-icon">
+            <i class="fab fa-whatsapp"></i>
+            <span class="notification-dot"></span>
+        </div>
+    </a>
 
     <!-- Firebase Web SDK Integration -->
     <script type="module">
