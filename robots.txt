@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin.html
 Disallow: /staff-chat.html
 
-Sitemap: https://69studiobysubhash.com/sitemap.xml
+Sitemap: https://69studiobysubash.online/sitemap.xml

@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark-theme">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>69 Studio | Premium Web Development & Digital Solutions Sri Lanka</title>
-    <!-- Google Fonts -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>69 Studio | Creative Digital Studio</title>
+    
+    <!-- Google Fonts: Space Grotesk, Syne, Outfit, Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+    
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=20260819-4">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=2026-v2.0">
+    
     <!-- Favicon & SEO Metadata -->
     <link rel="icon" type="image/png" sizes="32x32" href="logo.png.PNG">
     <link rel="icon" type="image/png" sizes="16x16" href="logo.png.PNG">
@@ -21,687 +24,1633 @@
     <link rel="apple-touch-icon" sizes="180x180" href="logo.png.PNG">
     <link rel="manifest" href="site.webmanifest">
 
-    <!-- Meta tags for Google Search -->
-    <meta name="description"
-        content="69 Studio by Subhash Ketagoda is a premier digital solutions company in Sri Lanka, specializing in high-performance web development and premium digital branding.">
-    <meta name="keywords" content="69 Studio, 69 Studio by Subhash, Web Development Sri Lanka, Subhash Ketagoda, Digital solutions Sri Lanka, Sri Lanka Web Design, Colombo Web Developer, Best Web Agency Sri Lanka, UI/UX Design Sri Lanka, Digital Branding Colombo">
+    <!-- Meta Tags for Search Engines & Social -->
+    <meta name="description" content="69 Studio creates modern digital experiences, websites, branding and creative digital solutions that help brands stand out.">
+    <meta name="keywords" content="69 Studio, 69 Studio by Subhash, Creative Technology Studio, Web Development Sri Lanka, Subhash Ketagoda, Colombo Web Developer, Awwwards Agency, Next.js Developer, UI/UX Design Sri Lanka, Digital Branding Dubai">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Subhash Ketagoda">
-    <link rel="canonical" href="https://69studiobysubhash.com">
+    <link rel="canonical" href="https://69studiobysubash.online/">
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://69studiobysubhash.com">
-    <meta property="og:title" content="Web Development Sri Lanka | 69 Studio by Subhash Ketagoda">
-    <meta property="og:description" content="Innovation-Driven Digital Excellence in Sri Lanka. We build future-ready digital experiences specializing in high-performance web development.">
-    <meta property="og:image" content="https://69studiobysubhash.com/logo.png.PNG">
+    <meta property="og:url" content="https://69studiobysubhash.online/">
+    <meta property="og:title" content="69 Studio | Creative Digital Studio">
+    <meta property="og:description" content="We create digital experiences that stand out. Modern websites, branding, and creative technology.">
+    <meta property="og:image" content="https://69studiobysubhash.online/logo.png.PNG">
 
-    <!-- Twitter -->
+    <!-- Twitter / X -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://69studiobysubhash.com">
-    <meta property="twitter:title" content="69 Studio by Subhash | Digital Solutions Company">
-    <meta property="twitter:description" content="Innovation-Driven Digital Excellence. We build future-ready digital experiences.">
-    <meta property="twitter:image" content="https://69studiobysubhash.com/logo.png.PNG">
+    <meta property="twitter:url" content="https://69studiobysubhash.online/">
+    <meta property="twitter:title" content="69 Studio | Creative Digital Studio">
+    <meta property="twitter:description" content="We create digital experiences that stand out. Modern websites, branding, and creative technology.">
+    <meta property="twitter:image" content="https://69studiobysubhash.online/logo.png.PNG">
 
-    <!-- Structured Data (JSON-LD) for Google -->
+    <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "69 Studio by Subhash Ketagoda",
-      "alternateName": "69 Studio Digital Solutions",
-      "url": "https://69studiobysubhash.com",
-      "logo": "https://69studiobysubhash.com/logo.png.PNG",
-      "image": "https://69studiobysubhash.com/me.jpg",
-      "description": "69 Studio by Subhash Ketagoda is a premier digital solutions company in Sri Lanka, specializing in high-performance web development and premium digital branding.",
-      "telephone": "+94789656969",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Colombo",
-        "addressLocality": "Colombo",
-        "addressCountry": "LK"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 6.9271,
-        "longitude": 79.8612
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        "opens": "09:00",
-        "closes": "18:00"
-      },
-      "founder": {
-        "@type": "Person",
-        "name": "Subhash Ketagoda",
-        "jobTitle": "Lead Web Developer & Founder",
-        "url": "https://69studiobysubhash.com"
-      },
-      "sameAs": [
-        "https://www.facebook.com/69studiobysubhash",
-        "https://www.instagram.com/69studiobysubhash",
-        "https://www.linkedin.com/in/subhash-ketagoda"
-      ],
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "5",
-        "reviewCount": "50"
-      }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "What services does 69 Studio offer?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "69 Studio specializes in high-performance web development, premium UI/UX design, digital branding, and strategic growth marketing for businesses in Sri Lanka and globally."
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://69studiobysubash.online/#website",
+          "url": "https://69studiobysubash.online/",
+          "name": "69 Studio",
+          "description": "69 Studio creates modern digital experiences, websites, branding and creative digital solutions.",
+          "publisher": {
+            "@id": "https://69studiobysubash.online/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://69studiobysubash.online/#organization",
+          "name": "69 Studio by Subhash Ketagoda",
+          "url": "https://69studiobysubash.online/",
+          "logo": "https://69studiobysubash.online/logo.png.PNG",
+          "image": "https://69studiobysubash.online/me.jpg",
+          "description": "69 Studio is a high-end digital creative technology studio specializing in bespoke web development, spatial UI/UX, and branding.",
+          "telephone": "+94789656969",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Colombo",
+            "addressLocality": "Colombo",
+            "addressCountry": "LK"
+          },
+          "founder": {
+            "@type": "Person",
+            "name": "Subhash Ketagoda",
+            "jobTitle": "Lead Creative Developer & Founder",
+            "url": "https://69studiobysubash.online/"
+          },
+          "sameAs": [
+            "https://www.facebook.com/69studiobysubhash",
+            "https://www.instagram.com/69studiobysubhash",
+            "https://www.linkedin.com/in/subhash-ketagoda"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://69studiobysubash.online/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What services does 69 Studio offer?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "69 Studio creates high-performance custom websites, interactive 3D WebGL experiences, UI/UX systems, brand identity, and bespoke digital software architectures."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Where is 69 Studio located?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "69 Studio operates between Colombo, Sri Lanka and Dubai, UAE, serving forward-thinking clients worldwide."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How can I start a project with 69 Studio?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You can use the interactive Project Builder on this website, schedule an appointment, email 69studiobysubhash@gmail.com, or WhatsApp +94 78 965 6969."
+              }
+            }
+          ]
         }
-      }, {
-        "@type": "Question",
-        "name": "Where is 69 Studio located?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "69 Studio is based in Colombo, Sri Lanka, and serves clients both locally and internationally with digital solutions."
-        }
-      }, {
-        "@type": "Question",
-        "name": "How can I contact Subhash Ketagoda for a project?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "You can contact Subhash Ketagoda via email at 69studiobysubhash@gmail.com or via WhatsApp/Phone at +94 78 965 6969 to discuss your web development needs."
-        }
-      }]
+      ]
     }
     </script>
 </head>
 
-<body>
-    <!-- Scroll Progress Bar -->
-    <div class="scroll-progress-bar" id="scrollProgress"></div>
+<body class="is-loading">
 
-    <!-- Particle Canvas -->
-    <canvas id="particleCanvas" class="particle-canvas"></canvas>
+    <!-- 28 — Ultra-Fine Scroll Progress Indicator -->
+    <div class="scroll-progress-line" id="scrollProgressLine">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+    <div class="scroll-percentage-badge" id="scrollPercentage">00%</div>
 
-    <!-- Noise Grain Overlay -->
-    <div class="noise-overlay"></div>
-
-    <!-- Premium Grid Background -->
-    <div class="bg-grid"></div>
-
-    <!-- Premium Custom Cursor -->
-    <div class="cursor-dot" id="cursorDot"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
-    <div class="cursor-glow"></div>
-
-    <!-- Announcement Bar -->
-    <div id="announcement-bar" class="announcement-bar" style="display:none;">
-        <div class="announcement-content">
-            <i class="fas fa-bullhorn"></i> <span id="announcement-text-display">Special Offer: Elite Web Development starting from 25,000 LKR!</span>
-        </div>
-        <button class="close-announcement" onclick="this.parentElement.style.display='none'"><i class="fas fa-times"></i></button>
+    <!-- 44 — Ambient Visual Noise & Atmospheric Canvas -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <div class="ambient-glow-mesh" aria-hidden="true">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
     </div>
 
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="loader">
-            <div class="loader-circle"></div>
-            <div class="loader-circle-inner"></div>
-            <span>69</span>
-        </div>
-        <div class="preloader-text">Loading Excellence</div>
+    <!-- 26, 27 — Premium Custom Cursor & Trail System (Desktop Only) -->
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursorRing" aria-hidden="true">
+        <span class="cursor-label" id="cursorLabel"></span>
     </div>
+    <div class="cursor-trail-container" id="cursorTrailContainer" aria-hidden="true"></div>
 
-    <header data-morph="true">
-        <div class="logo">
-            <img src="main-logo.png" alt="69 Studio Logo" class="header-logo">
-        </div>
-        <nav id="navMenu" aria-label="Primary navigation">
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="careers.html">Careers</a></li>
-                <li><a href="store.html">Store</a></li>
-                <li><a href="appointments.html" target="_blank" class="active-badge">Appointments <i class="fas fa-external-link-alt" style="font-size: 0.6rem; vertical-align: super; margin-left: 2px;"></i></a></li>
-                <li><a href="#reviews">Reviews</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-        <div class="header-right">
-             <a href="#contact" class="cta-button">Get Started</a>
-             <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navMenu">
-                 <i class="fas fa-bars"></i>
-             </button>
-        </div>
-    </header>
-
-    <section id="home" class="hero reveal">
-        <div class="hero-content">
-            <div class="badge">Innovation • Excellence • Growth</div>
-            <h1 style="display: flex; flex-direction: column; gap: 5px;">
-                <span class="reveal-text">Premium</span>
-                <span class="gradient-text">Web Development</span>
-                <span class="reveal-text" style="font-size: clamp(2rem, 3.5vw, 4rem); font-weight: 700; letter-spacing: -1.5px; opacity: 0.95;">& Digital Solutions</span>
-            </h1>
-            <p class="hero-description">We are a leading digital solutions company in Sri Lanka, specializing in high-performance web development and future-ready branding.</p>
-            <div class="hero-btns">
-                <a href="appointments.html" target="_blank" class="btn primary border-beam-container">Start Your Project <div class="border-beam"></div></a>
-                <a href="#portfolio" class="btn secondary">Expertise <i class="fas fa-arrow-right" style="margin-left: 10px; font-size: 0.8rem;"></i></a>
-            </div>
-            <div class="locations-compact">
-                <div class="loc-item"><i class="fas fa-location-dot"></i> <span>Dubai, UAE</span></div>
-                <div class="loc-item"><i class="fas fa-location-dot"></i> <span>Colombo, SL</span></div>
-                <a href="tel:+94789656969" class="loc-item clickable">
-                    <i class="fas fa-phone"></i>
-                    <span>+94 78 965 6969</span>
-                </a>
-                <a href="mailto:69studiobysubhash@gmail.com" class="loc-item clickable">
-                    <i class="fas fa-envelope"></i>
-                    <span>69studiobysubhash@gmail.com</span>
-                </a>
-            </div>
-            <div class="hero-proof" aria-label="Studio highlights">
-                <div class="proof-status"><span class="status-dot"></span>Accepting select projects</div>
-                <div class="proof-divider"></div>
-                <div class="proof-stat"><strong>150+</strong><span>projects shipped</span></div>
-                <div class="proof-stat"><strong>24h</strong><span>reply time</span></div>
-            </div>
-        </div>
-        <div class="hero-visual">
-            <div id="canvas3d" class="canvas-3d-container"></div>
-            <div class="glass-card main-card tilt-card" data-tilt-intensity="15">
-                <img src="me.jpg" alt="Subhash Ketagoda - Web Developer Sri Lanka" class="founder-img">
-                <div class="card-badge">
-                    <div class="badge-icon"><i class="fas fa-check"></i></div>
-                    <div class="badge-text">Verified Founder</div>
-                </div>
-                <div class="floating-box box-1">
-                    <i class="fas fa-code"></i>
-                    <span>Expert Developer</span>
-                </div>
-                <div class="floating-box box-2">
-                    <i class="fas fa-pencil-alt"></i>
-                    <span>Creative Designer</span>
-                </div>
-                <div class="floating-box box-3">
-                    <i class="fas fa-rocket"></i>
-                    <span>Project Manager</span>
-                </div>
-            </div>
-
-            <!-- Decorative Blobs -->
-            <div class="blob blob-1"></div>
-            <div class="blob blob-2"></div>
-            <div class="blob blob-3"></div>
-        </div>
-    </section>
-
-    <!-- Global Decoration -->
-    <div class="bg-decoration">
-        <div class="circle circle-1"></div>
-        <div class="circle circle-2"></div>
-    </div>
-
-    <section id="partners" class="partners reveal">
-        <div class="partners-container">
-            <div class="section-header centered">
-                <span class="dash"></span>
-                <h2>Strategic Partners</h2>
-                <p>Collaborating with industry leaders to deliver excellence.</p>
-            </div>
-            <div class="partners-ticker-container">
-                <div class="partners-ticker-track">
-                    <div class="ticker-set">
-                        <div class="partner-card">
-                            <img src="./p1.jpg" alt="Rocco's Sri Lanka Partner" loading="lazy">
-                            <span class="partner-name">Rocco's</span>
-                        </div>
-                        <div class="partner-card">
-                            <img src="./p2.jpg" alt="Real Ceylon Gems Partner" loading="lazy">
-                            <span class="partner-name">Real Ceylon Gems</span>
-                        </div>
-                        <div class="partner-card">
-                            <img src="./p3.jpg" alt="69 Studio Digital Solution" loading="lazy">
-                            <span class="partner-name">69 Studio</span>
-                        </div>
-                        <div class="partner-card">
-                            <img src="./p4.jpg" alt="Special Beats Music Partner" loading="lazy">
-                            <span class="partner-name">Special Beats</span>
-                        </div>
-                    </div>
-                    <div class="ticker-set">
-                        <div class="partner-card">
-                            <img src="./p1.jpg" alt="Rocco's Sri Lanka Partner" loading="lazy">
-                            <span class="partner-name">Rocco's</span>
-                        </div>
-                        <div class="partner-card">
-                            <img src="./p2.jpg" alt="Real Ceylon Gems Partner" loading="lazy">
-                            <span class="partner-name">Real Ceylon Gems</span>
-                        </div>
-                        <div class="partner-card">
-                            <img src="./p3.jpg" alt="69 Studio Digital Solution" loading="lazy">
-                            <span class="partner-name">69 Studio</span>
-                        </div>
-                        <div class="partner-card">
-                            <img src="./p4.jpg" alt="Special Beats Music Partner" loading="lazy">
-                            <span class="partner-name">Special Beats</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="about" class="about reveal">
-        <div class="about-grid">
-            <div class="about-text-content">
-                <div class="section-header">
-                    <span class="dash"></span>
-                    <h2 class="reveal-text" style="font-size: clamp(1.5rem, 4vw, 3rem);">Digital Innovation in <span class="gradient-text">Sri Lanka</span></h2>
-                </div>
-                <p>Founded by <strong>Subhash Ketagoda</strong>, 69 Studio is dedicated to amplifying your brand's presence through specialized web development and creative strategy. Based in Sri Lanka, we combine global standards with local expertise to deliver digital solutions that drive results.</p>
-                <div style="margin-top: 30px;">
-                    <a href="appointments.html" target="_blank" class="btn primary border-beam-container">Start Your Project <div class="border-beam"></div></a>
+    <!-- 03 — Cinematic Website Intro & Preloader -->
+    <div class="cinematic-intro" id="cinematicIntro" aria-label="Loading 69 Studio" role="dialog" aria-modal="true">
+        <div class="intro-split-panel panel-top"></div>
+        <div class="intro-split-panel panel-bottom"></div>
+        
+        <div class="intro-grain"></div>
+        <div class="intro-glow-backdrop"></div>
+        
+        <div class="intro-content">
+            <!-- Center 69 and Glow Ring -->
+            <div class="intro-logo-wrapper">
+                <div class="intro-glow-ring"></div>
+                <div class="intro-ripple" id="introRipple"></div>
+                <div class="intro-number-wrap">
+                    <span class="intro-number" id="introNumber">69</span>
                 </div>
             </div>
             
-            <div class="bento-grid">
-                <!-- Stat 1 -->
-                <div class="bento-card spotlight-card tilt-card" data-tilt-intensity="5">
-                    <div class="shine-streak"></div>
-                    <div>
-                        <span class="stat-number" data-target="150">0</span>
-                        <span class="stat-label">Projects Completed</span>
-                    </div>
+            <!-- Masked Text Titles -->
+            <div class="intro-text-wrapper">
+                <div class="intro-title-mask">
+                    <div class="intro-tag" id="introTag">69 STUDIO</div>
                 </div>
-                <!-- Stat 2 -->
-                <div class="bento-card spotlight-card tilt-card" data-tilt-intensity="5">
-                    <div class="shine-streak"></div>
-                    <div>
-                        <span class="stat-number" data-target="50">0</span>
-                        <span class="stat-label">Happy Clients</span>
-                    </div>
-                </div>
-                <!-- Stat 3 -->
-                <div class="bento-card spotlight-card tilt-card" data-tilt-intensity="5">
-                    <div class="shine-streak"></div>
-                    <div>
-                        <span class="stat-number" data-target="8">0</span>
-                        <span class="stat-label">Years of Experience</span>
-                    </div>
-                </div>
-                <!-- Chart Container (spans 3 columns) -->
-                <div class="bento-card col-span-3 spotlight-card tilt-card" data-tilt-intensity="5" style="padding: 35px 30px;">
-                    <div class="shine-streak"></div>
-                    <div class="chart-container" style="border: none; background: transparent; padding: 0; margin-top: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none;">
-                        <h3 class="chart-title" style="margin-bottom: 25px;">Visual Performance & Brand Metrics</h3>
-                        <div class="metrics-grid">
-                            <div class="metric-row">
-                                <div class="metric-info">
-                                    <span class="metric-name">Social Strategy</span>
-                                    <span class="metric-value">95%</span>
-                                </div>
-                                <div class="metric-bar-container">
-                                    <div class="metric-bar-fill" data-value="95"></div>
-                                </div>
-                            </div>
-                            <div class="metric-row">
-                                <div class="metric-info">
-                                    <span class="metric-name">Content Creation</span>
-                                    <span class="metric-value">98%</span>
-                                </div>
-                                <div class="metric-bar-container">
-                                    <div class="metric-bar-fill" data-value="98"></div>
-                                </div>
-                            </div>
-                            <div class="metric-row">
-                                <div class="metric-info">
-                                    <span class="metric-name">Brand Growth</span>
-                                    <span class="metric-value">92%</span>
-                                </div>
-                                <div class="metric-bar-container">
-                                    <div class="metric-bar-fill" data-value="92"></div>
-                                </div>
-                            </div>
-                            <div class="metric-row">
-                                <div class="metric-info">
-                                    <span class="metric-name">UI/UX Design</span>
-                                    <span class="metric-value">96%</span>
-                                </div>
-                                <div class="metric-bar-container">
-                                    <div class="metric-bar-fill" data-value="96"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="intro-subline" id="introSubline">
+                    <span class="intro-tag-desc">CREATIVE IDEAS. DIGITAL EXPERIENCES.</span>
                 </div>
             </div>
         </div>
-    </section>
-
-    <section id="services" class="services reveal">
-        <div class="section-header centered">
-            <span class="dash"></span>
-            <h2>Our Specialized Services</h2>
-            <p>From conceptualization to deployment, we provide end-to-end digital services.</p>
+        
+        <!-- Bottom Progress Indicator -->
+        <div class="intro-progress-wrapper">
+            <div class="intro-percentage" id="introPercentage">LOADING 00%</div>
+            <div class="intro-loader-ring">
+                <div class="intro-loader-bar" id="introLoaderBar"></div>
+            </div>
         </div>
-        <div class="bento-grid">
-            <a href="appointments.html" class="bento-card col-span-2 spotlight-card tilt-card" data-tilt-intensity="8">
-                <div class="shine-streak"></div>
-                <div class="service-icon"><i class="fas fa-code"></i></div>
-                <div class="service-content">
-                    <h3>High-Performance Web Development</h3>
-                    <p>Building lightning-fast, future-ready web applications using React, Next.js, and modern headless CMS solutions.</p>
-                    <ul class="service-list">
-                        <li><i class="fas fa-check"></i> Enterprise Scalability</li>
-                        <li><i class="fas fa-check"></i> SEO Optimized Architecture</li>
-                        <li><i class="fas fa-check"></i> Custom E-commerce Engines</li>
-                    </ul>
-                </div>
+        
+        <button class="intro-skip-btn" id="introSkipBtn" aria-label="Skip intro animation">ENTER EXPERIENCE ↗</button>
+    </div>
+
+    <!-- 04 — Premium Floating Morphing Navigation -->
+    <header class="floating-nav-container" id="mainHeader">
+        <div class="nav-pill" id="navPill">
+            <a href="#home" class="brand-logo" aria-label="69 Studio Home">
+                <span class="logo-mark">69</span>
+                <span class="logo-text">STUDIO</span>
             </a>
 
-            <a href="appointments.html" class="bento-card spotlight-card tilt-card" data-tilt-intensity="10">
-                <div class="shine-streak"></div>
-                <div class="service-icon"><i class="fas fa-palette"></i></div>
-                <div class="service-content">
-                    <h3>Premium UI/UX Design</h3>
-                    <p>Where functionality meets high-end aesthetics. We design for the future, prioritizing conversion rates and clean animations.</p>
-                </div>
-            </a>
+            <nav class="desktop-nav-menu" aria-label="Primary Navigation">
+                <ul class="nav-links-list">
+                    <li><a href="#about" class="nav-link" data-cursor="CLICK">ABOUT</a></li>
+                    <li><a href="#services" class="nav-link" data-cursor="CLICK">SERVICES</a></li>
+                    <li><a href="#portfolio" class="nav-link" data-cursor="CLICK">WORK</a></li>
+                    <li><a href="#playground" class="nav-link" data-cursor="CLICK">PLAYGROUND</a></li>
+                    <li><a href="#lab" class="nav-link" data-cursor="CLICK">LAB</a></li>
+                    <li><a href="#builder" class="nav-link" data-cursor="CLICK">BUILDER</a></li>
+                    <li><a href="store.html" class="nav-link" data-cursor="CLICK">STORE</a></li>
+                    <li><a href="careers.html" class="nav-link" data-cursor="CLICK">CAREERS</a></li>
+                    <li><a href="#contact" class="nav-link" data-cursor="CLICK">CONTACT</a></li>
+                </ul>
+            </nav>
 
-            <a href="appointments.html" class="bento-card spotlight-card tilt-card" data-tilt-intensity="10">
-                <div class="shine-streak"></div>
-                <div class="service-icon"><i class="fas fa-chart-line"></i></div>
-                <div class="service-content">
-                    <h3>Digital Growth & Ads</h3>
-                    <p>Data-driven strategies to amplify your brand's reach, conversion tracking, and maximum advertising return on investment.</p>
-                </div>
-            </a>
+            <div class="nav-actions">
+                <!-- 36 — Light / Dark Theme Switcher -->
+                <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle theme mode" title="Toggle Theme" data-cursor="CLICK">
+                    <i class="fas fa-sun light-icon" aria-hidden="true"></i>
+                    <i class="fas fa-moon dark-icon" aria-hidden="true"></i>
+                </button>
 
-            <a href="appointments.html" class="bento-card spotlight-card tilt-card" data-tilt-intensity="10">
-                <div class="shine-streak"></div>
-                <div class="service-icon"><i class="fas fa-video"></i></div>
-                <div class="service-content">
-                    <h3>Brand Storytelling</h3>
-                    <p>Crafting compelling narratives through high-end content production, dynamic visual assets, and social strategy.</p>
-                </div>
-            </a>
+                <a href="#builder" class="nav-cta-btn magnetic-btn" data-cursor="CLICK">
+                    <span>START A PROJECT</span>
+                    <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </a>
 
-            <div class="bento-card col-span-3 spotlight-card tilt-card" data-tilt-intensity="8">
-                <div class="shine-streak"></div>
-                <div class="service-content">
-                    <span class="active-badge" style="margin-bottom: 15px; font-size: 0.7rem;"><i class="fas fa-microchip"></i> Engine & Frameworks</span>
-                    <h3 style="margin-top: 15px;">Modern Tech Infrastructure</h3>
-                    <p>We leverage top-tier frameworks and cloud technologies to build lightning-fast web applications that scale effortlessly.</p>
-                    <div class="bento-tech-list">
-                        <div class="bento-tech-item"><i class="fab fa-react"></i> <span>React & Next.js</span></div>
-                        <div class="bento-tech-item"><i class="fab fa-node-js"></i> <span>Node.js</span></div>
-                        <div class="bento-tech-item"><i class="fas fa-cubes"></i> <span>Three.js (WebGL)</span></div>
-                        <div class="bento-tech-item"><i class="fas fa-fire"></i> <span>Firebase Realtime</span></div>
-                        <div class="bento-tech-item"><i class="fas fa-search"></i> <span>SEO Max Architecture</span></div>
-                        <div class="bento-tech-item"><i class="fas fa-shield-halved"></i> <span>Secure HTTPS</span></div>
+                <button class="mobile-toggle-btn" id="mobileMenuToggle" aria-label="Open mobile menu" aria-expanded="false" aria-controls="mobileDrawer">
+                    <span class="burger-bar bar-1"></span>
+                    <span class="burger-bar bar-2"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Fullscreen Navigation Drawer -->
+    <div class="mobile-nav-drawer" id="mobileDrawer" aria-hidden="true">
+        <div class="mobile-drawer-bg"></div>
+        <div class="mobile-drawer-inner">
+            <div class="mobile-meta-top">
+                <span class="status-pill"><span class="status-dot"></span> AVAILABLE FOR 2026</span>
+                <span class="location-pill">COLOMBO • DUBAI</span>
+            </div>
+            <ul class="mobile-links">
+                <li><a href="#about" class="mob-link"><span>01</span> ABOUT</a></li>
+                <li><a href="#services" class="mob-link"><span>02</span> SERVICES</a></li>
+                <li><a href="#portfolio" class="mob-link"><span>03</span> WORK</a></li>
+                <li><a href="#playground" class="mob-link"><span>04</span> PLAYGROUND</a></li>
+                <li><a href="#lab" class="mob-link"><span>05</span> LAB</a></li>
+                <li><a href="#builder" class="mob-link"><span>06</span> PROJECT BUILDER</a></li>
+                <li><a href="store.html" class="mob-link"><span>07</span> STORE ↗</a></li>
+                <li><a href="careers.html" class="mob-link"><span>08</span> CAREERS ↗</a></li>
+                <li><a href="appointments.html" class="mob-link"><span>09</span> APPOINTMENTS ↗</a></li>
+                <li><a href="#contact" class="mob-link"><span>10</span> CONTACT</a></li>
+            </ul>
+            <div class="mobile-drawer-footer">
+                <a href="https://wa.me/94789656969" target="_blank" rel="noopener" class="mob-footer-cta">
+                    <i class="fab fa-whatsapp"></i> WhatsApp Direct
+                </a>
+                <p class="mob-copy">&copy; 2026 69 STUDIO BY SUBHASH</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <main id="smoothWrapper">
+        <div id="smoothContent">
+
+            <!-- 05, 06, 07 — HERO SECTION (MASSIVE + SCROLL TRANSFORMATION + 3D VISUAL) -->
+            <section id="home" class="hero-section" aria-label="Hero">
+                <!-- 07 — Interactive Three.js 3D WebGL Canvas Container -->
+                <div class="hero-webgl-container" id="heroWebGLContainer">
+                    <canvas id="threeHeroCanvas"></canvas>
+                    <div class="webgl-gradient-fade"></div>
+                </div>
+
+                <div class="hero-container">
+                    <div class="hero-top-meta">
+                        <div class="meta-tag"><span class="neon-bullet"></span> 69 STUDIO / DIGITAL CREATIVE STUDIO</div>
+                        <div class="meta-coords">COLOMBO [6.9271° N] • DUBAI [25.2048° N]</div>
                     </div>
+
+                    <!-- 05, 06 — Huge Monumental Headline with Scroll Transformation Elements -->
+                    <div class="hero-headline-wrapper" id="heroHeadlineWrap">
+                        <h1 class="hero-monumental-title" id="heroTitle">
+                            <span class="hero-line hero-line-1"><span class="word-split">WE</span> <span class="word-split">CREATE</span></span>
+                            <span class="hero-line hero-line-2"><span class="accent-outline word-split">DIGITAL</span> <span class="gradient-word word-split">EXPERIENCES</span></span>
+                            <span class="hero-line hero-line-3"><span class="word-split">THAT</span> <span class="word-split">STAND</span> <span class="lime-glow-word word-split">OUT.</span></span>
+                        </h1>
+                    </div>
+
+                    <div class="hero-bottom-grid">
+                        <div class="hero-statement-lead">
+                            <p class="hero-lead-text">
+                                We engineer high-octane websites, immersive 3D digital spaces, and brand identities engineered to turn casual visitors into loyal brand advocates.
+                            </p>
+                            <div class="hero-cta-cluster">
+                                <a href="#portfolio" class="hero-btn primary-btn magnetic-btn" data-cursor="VIEW">
+                                    <span>VIEW SELECTED WORK</span>
+                                    <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                                </a>
+                                <a href="#builder" class="hero-btn secondary-btn magnetic-btn" data-cursor="CLICK">
+                                    <span>START A PROJECT</span>
+                                    <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="hero-proof-stats" aria-label="Studio Live Metrics">
+                            <div class="proof-card">
+                                <div class="proof-dot-pulse"></div>
+                                <div class="proof-data">
+                                    <span class="proof-num">150+</span>
+                                    <span class="proof-desc">Projects Shipped Globally</span>
+                                </div>
+                            </div>
+                            <div class="proof-card">
+                                <div class="proof-data">
+                                    <span class="proof-num">24H</span>
+                                    <span class="proof-desc">Rapid Response Time</span>
+                                </div>
+                            </div>
+                            <div class="proof-card">
+                                <div class="proof-data">
+                                    <span class="proof-num">100%</span>
+                                    <span class="proof-desc">Bespoke Architecture</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scroll Down Cue -->
+                    <div class="hero-scroll-cue" id="heroScrollCue">
+                        <span class="cue-text">SCROLL TO EXPLORE</span>
+                        <div class="cue-pill">
+                            <div class="cue-wheel"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 23 — Scrolling Marquee Banner 01 (Left to Right) -->
+            <section class="marquee-section" aria-hidden="true">
+                <div class="marquee-track marquee-forward" id="marqueeTrack1">
+                    <div class="marquee-content">
+                        <span>CREATIVE DIRECTION</span> <span class="marquee-star">✦</span>
+                        <span>INTERACTIVE WEBGL</span> <span class="marquee-star">✦</span>
+                        <span>NEXT.JS & REACT</span> <span class="marquee-star">✦</span>
+                        <span>SPATIAL UI/UX</span> <span class="marquee-star">✦</span>
+                        <span>BRAND IDENTITIES</span> <span class="marquee-star">✦</span>
+                        <span>DIGITAL TRANSFORMATION</span> <span class="marquee-star">✦</span>
+                        <span>69 STUDIO 2026</span> <span class="marquee-star">✦</span>
+                    </div>
+                    <div class="marquee-content" aria-hidden="true">
+                        <span>CREATIVE DIRECTION</span> <span class="marquee-star">✦</span>
+                        <span>INTERACTIVE WEBGL</span> <span class="marquee-star">✦</span>
+                        <span>NEXT.JS & REACT</span> <span class="marquee-star">✦</span>
+                        <span>SPATIAL UI/UX</span> <span class="marquee-star">✦</span>
+                        <span>BRAND IDENTITIES</span> <span class="marquee-star">✦</span>
+                        <span>DIGITAL TRANSFORMATION</span> <span class="marquee-star">✦</span>
+                        <span>69 STUDIO 2026</span> <span class="marquee-star">✦</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Strategic Partners Bar -->
+            <section class="partners-strip" aria-label="Strategic Partners">
+                <div class="partners-inner">
+                    <span class="partners-label">TRUSTED COLLABORATORS & PARTNERS</span>
+                    <div class="partners-grid">
+                        <div class="partner-item" data-cursor="EXPLORE">
+                            <img src="p1.jpg" alt="Rocco's Sri Lanka Partner" loading="lazy">
+                            <span>Rocco's</span>
+                        </div>
+                        <div class="partner-item" data-cursor="EXPLORE">
+                            <img src="p2.jpg" alt="Real Ceylon Gems Partner" loading="lazy">
+                            <span>Real Ceylon Gems</span>
+                        </div>
+                        <div class="partner-item" data-cursor="EXPLORE">
+                            <img src="p3.jpg" alt="69 Studio Digital Solution" loading="lazy">
+                            <span>69 Studio</span>
+                        </div>
+                        <div class="partner-item" data-cursor="EXPLORE">
+                            <img src="p4.jpg" alt="Special Beats Music Partner" loading="lazy">
+                            <span>Special Beats</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 10 — ABOUT SECTION (READING-WHILE-SCROLLING OPACITY EFFECT) -->
+            <section id="about" class="editorial-about-section" aria-label="About 69 Studio">
+                <div class="section-container">
+                    <div class="section-meta-header">
+                        <span class="section-num">01 // PHILOSOPHY</span>
+                        <span class="section-tagline">TURNING CONCEPTS INTO LIVING DIGITAL ARTIFACTS</span>
+                    </div>
+
+                    <div class="about-headline-block">
+                        <h2 class="about-monumental-heading">
+                            WE TURN IDEAS<br>
+                            <span class="lime-text">INTO EXPERIENCES.</span>
+                        </h2>
+                    </div>
+
+                    <!-- Scroll Scrubbed Paragraph: Each word lights up from low opacity to full opacity -->
+                    <div class="about-reading-block" id="aboutScrubParagraph">
+                        <p class="reading-scrub-text">
+                            <span class="scrub-word">At</span>
+                            <span class="scrub-word">69</span>
+                            <span class="scrub-word">Studio,</span>
+                            <span class="scrub-word">we</span>
+                            <span class="scrub-word">believe</span>
+                            <span class="scrub-word">websites</span>
+                            <span class="scrub-word">should</span>
+                            <span class="scrub-word">never</span>
+                            <span class="scrub-word">be</span>
+                            <span class="scrub-word">passive</span>
+                            <span class="scrub-word">brochures.</span>
+                            <span class="scrub-word">Founded</span>
+                            <span class="scrub-word">by</span>
+                            <span class="scrub-word highlight">Subhash</span>
+                            <span class="scrub-word highlight">Ketagoda,</span>
+                            <span class="scrub-word">our</span>
+                            <span class="scrub-word">studio</span>
+                            <span class="scrub-word">combines</span>
+                            <span class="scrub-word">cinematic</span>
+                            <span class="scrub-word">art</span>
+                            <span class="scrub-word">direction</span>
+                            <span class="scrub-word">with</span>
+                            <span class="scrub-word">bleeding-edge</span>
+                            <span class="scrub-word">web</span>
+                            <span class="scrub-word">engineering.</span>
+                            <span class="scrub-word">We</span>
+                            <span class="scrub-word">craft</span>
+                            <span class="scrub-word">bespoke</span>
+                            <span class="scrub-word">digital</span>
+                            <span class="scrub-word">realities</span>
+                            <span class="scrub-word">that</span>
+                            <span class="scrub-word">captivate,</span>
+                            <span class="scrub-word">convert,</span>
+                            <span class="scrub-word">and</span>
+                            <span class="scrub-word">endure.</span>
+                        </p>
+                    </div>
+
+                    <!-- Metrics Grid -->
+                    <div class="about-metrics-grid">
+                        <div class="metric-box">
+                            <div class="metric-number-wrapper">
+                                <span class="metric-value counter-trigger" data-target="8">0</span><span class="metric-plus">+</span>
+                            </div>
+                            <span class="metric-title">Years Crafting Experiences</span>
+                            <p class="metric-caption">Pioneering interactive design & full-stack development.</p>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-number-wrapper">
+                                <span class="metric-value counter-trigger" data-target="150">0</span><span class="metric-plus">+</span>
+                            </div>
+                            <span class="metric-title">Shipped Digital Products</span>
+                            <p class="metric-caption">From bespoke ecommerce engines to viral WebGL sites.</p>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-number-wrapper">
+                                <span class="metric-value counter-trigger" data-target="50">0</span><span class="metric-plus">+</span>
+                            </div>
+                            <span class="metric-title">Global Enterprise & Startup Clients</span>
+                            <p class="metric-caption">Sri Lanka, UAE, UK, Australia, and USA.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 11 — PINNED ABOUT SECTION (STORY SEQUENCE: IDEA -> DESIGN -> BUILD -> EXPERIENCE) -->
+            <section class="pinned-sequence-section" id="pinnedStorySection" aria-label="Studio Methodology Sequence">
+                <div class="pinned-sequence-stage" id="pinnedStoryStage">
+                    <div class="sequence-counter-pill">
+                        <span class="seq-current" id="seqCurrentStep">01</span> / 04
+                    </div>
+                    
+                    <div class="sequence-slide active" data-step="1">
+                        <div class="slide-bg-glow glow-idea"></div>
+                        <span class="slide-stage-label">STAGE 01 // DISCOVERY</span>
+                        <h2 class="slide-huge-word">IDEA.</h2>
+                        <p class="slide-body-desc">Every monumental project begins with unconstrained curiosity. We dissect your brand narrative, audience psychology, and competitive landscape to isolate your unique unfair advantage.</p>
+                    </div>
+
+                    <div class="sequence-slide" data-step="2">
+                        <div class="slide-bg-glow glow-design"></div>
+                        <span class="slide-stage-label">STAGE 02 // VISUAL IDENTITY & UI</span>
+                        <h2 class="slide-huge-word">DESIGN.</h2>
+                        <p class="slide-body-desc">Translating strategy into an unmistakable visual signature. We sculpt high-contrast editorial typography, fluid spatial layouts, micro-interactions, and 3D spatial concepts.</p>
+                    </div>
+
+                    <div class="sequence-slide" data-step="3">
+                        <div class="slide-bg-glow glow-build"></div>
+                        <span class="slide-stage-label">STAGE 03 // TECHNICAL ARCHITECTURE</span>
+                        <h2 class="slide-huge-word">BUILD.</h2>
+                        <p class="slide-body-desc">Clean, optimized code. We build with Next.js, WebGL shaders, GSAP, and headless backend infrastructure that delivers sub-second load times and 100/100 Lighthouse scores.</p>
+                    </div>
+
+                    <div class="sequence-slide" data-step="4">
+                        <div class="slide-bg-glow glow-experience"></div>
+                        <span class="slide-stage-label">STAGE 04 // LAUNCH & MOMENTUM</span>
+                        <h2 class="slide-huge-word">EXPERIENCE.</h2>
+                        <p class="slide-body-desc">Deployment is just the beginning. We optimize conversions, test user heatmaps, and elevate your brand into an unforgettable digital presence that commands authority.</p>
+                    </div>
+
+                    <div class="sequence-progress-bar">
+                        <div class="seq-progress-fill" id="seqProgressFill"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 12, 13 — STICKY SERVICES SCROLL STORY WITH DYNAMIC VISUALS -->
+            <section id="services" class="sticky-services-section" aria-label="Services Showcase">
+                <div class="services-wrapper">
+                    
+                    <!-- Left: Sticky Service Names & Descriptions -->
+                    <div class="services-left-col">
+                        <div class="section-meta-header">
+                            <span class="section-num">02 // CAPABILITIES</span>
+                            <span class="section-tagline">END-TO-END CREATIVE TECHNOLOGY</span>
+                        </div>
+                        <h2 class="services-main-title">WHAT WE CRAFT.</h2>
+
+                        <div class="services-nav-list" id="servicesNavList">
+                            <div class="service-nav-item active" data-service="0">
+                                <div class="item-header">
+                                    <span class="service-idx">01</span>
+                                    <h3>WEB DESIGN & DEVELOPMENT</h3>
+                                </div>
+                                <p class="service-subtext">High-performance Next.js, React & WebGL applications built for unyielding speed, SEO dominance, and high conversions.</p>
+                                <div class="service-tags">
+                                    <span>Next.js</span> <span>React</span> <span>WebGL</span> <span>GSAP</span> <span>Tailwind/CSS</span>
+                                </div>
+                            </div>
+
+                            <div class="service-nav-item" data-service="1">
+                                <div class="item-header">
+                                    <span class="service-idx">02</span>
+                                    <h3>BRANDING & VISUAL IDENTITY</h3>
+                                </div>
+                                <p class="service-subtext">Distilling your core essence into bold, magnetic brand systems, bespoke typography, design guidelines, and logo marks.</p>
+                                <div class="service-tags">
+                                    <span>Brand Identity</span> <span>Typography</span> <span>Design Systems</span> <span>Guidelines</span>
+                                </div>
+                            </div>
+
+                            <div class="service-nav-item" data-service="2">
+                                <div class="item-header">
+                                    <span class="service-idx">03</span>
+                                    <h3>UI / UX PRODUCT ARCHITECTURE</h3>
+                                </div>
+                                <p class="service-subtext">Intuitive, conversion-optimized interfaces for SaaS, ecommerce, and mobile web platforms with micro-interactions.</p>
+                                <div class="service-tags">
+                                    <span>Figma</span> <span>Prototyping</span> <span>User Journeys</span> <span>Design Tokens</span>
+                                </div>
+                            </div>
+
+                            <div class="service-nav-item" data-service="3">
+                                <div class="item-header">
+                                    <span class="service-idx">04</span>
+                                    <h3>DIGITAL SYSTEMS & APIS</h3>
+                                </div>
+                                <p class="service-subtext">Robust cloud infrastructure, realtime Firebase engines, headless CMS integrations, and high-security transactional workflows.</p>
+                                <div class="service-tags">
+                                    <span>Node.js</span> <span>Firebase</span> <span>Headless CMS</span> <span>Stripe/PayHere</span>
+                                </div>
+                            </div>
+
+                            <div class="service-nav-item" data-service="4">
+                                <div class="item-header">
+                                    <span class="service-idx">05</span>
+                                    <h3>CREATIVE LAB & EXPERIMENTS</h3>
+                                </div>
+                                <p class="service-subtext">Custom 3D shaders, interactive generative canvas art, spatial storytelling, and AI-assisted digital experiences.</p>
+                                <div class="service-tags">
+                                    <span>Three.js</span> <span>GLSL Shaders</span> <span>Generative Canvas</span> <span>AI Systems</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Dynamic Sticky Interactive Visual Showcase -->
+                    <div class="services-right-col">
+                        <div class="services-visual-sticky-frame" id="servicesVisualFrame">
+                            
+                            <!-- Visual 01: Animated Interactive Browser Window -->
+                            <div class="service-visual-panel active" data-visual="0">
+                                <div class="mockup-browser-window">
+                                    <div class="browser-top-bar">
+                                        <div class="browser-dots">
+                                            <span class="dot dot-r"></span>
+                                            <span class="dot dot-y"></span>
+                                            <span class="dot dot-g"></span>
+                                        </div>
+                                        <div class="browser-url-pill">
+                                            <i class="fas fa-lock"></i> 69studio.digital/next-gen-engine
+                                        </div>
+                                        <div class="browser-badge">100 FPS</div>
+                                    </div>
+                                    <div class="browser-viewport-inner">
+                                        <div class="code-terminal-preview">
+                                            <div class="code-line"><span class="code-k">const</span> studio = <span class="code-k">new</span> <span class="code-f">CreativeEngine</span>({</div>
+                                            <div class="code-line ind"><span class="code-p">stack</span>: [<span class="code-s">'Next.js 15'</span>, <span class="code-s">'Three.js'</span>, <span class="code-s">'GSAP'</span>],</div>
+                                            <div class="code-line ind"><span class="code-p">performance</span>: <span class="code-s">'100/100 Lighthouse'</span>,</div>
+                                            <div class="code-line ind"><span class="code-p">mode</span>: <span class="code-s">'Awwwards-Grade'</span></div>
+                                            <div class="code-line">});</div>
+                                            <div class="code-line"><span class="code-k">await</span> studio.<span class="code-f">deployGlobalExperience</span>();</div>
+                                        </div>
+                                        <div class="live-visual-widget">
+                                            <div class="pulse-bars">
+                                                <span></span><span></span><span></span><span></span><span></span>
+                                            </div>
+                                            <span class="widget-label">LIVE SPEED ENGINE ACTIVE</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Visual 02: Branding Identity Morph -->
+                            <div class="service-visual-panel" data-visual="1">
+                                <div class="mockup-branding-canvas">
+                                    <div class="branding-logo-spec">
+                                        <div class="spec-grid-crosshairs"></div>
+                                        <div class="spec-logo-mark">69</div>
+                                        <div class="spec-ruler x-ruler"><span>800px</span></div>
+                                        <div class="spec-ruler y-ruler"><span>800px</span></div>
+                                    </div>
+                                    <div class="branding-palette-chips">
+                                        <div class="chip chip-1"><span>#050505</span></div>
+                                        <div class="chip chip-2"><span>#CCFF00</span></div>
+                                        <div class="chip chip-3"><span>#FFFFFF</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Visual 03: UI / UX Mobile Prototype -->
+                            <div class="service-visual-panel" data-visual="2">
+                                <div class="mockup-phone-frame">
+                                    <div class="phone-notch"></div>
+                                    <div class="phone-screen">
+                                        <div class="app-header-demo">
+                                            <span>69 STORE</span>
+                                            <i class="fas fa-bag-shopping"></i>
+                                        </div>
+                                        <div class="app-card-demo">
+                                            <div class="app-card-img-placeholder"></div>
+                                            <h4>SPATIAL UI KIT 2026</h4>
+                                            <span class="app-price">$149.00</span>
+                                        </div>
+                                        <div class="app-action-btn-demo">ADD TO BAG ↗</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Visual 04: Digital Systems & Node Mesh -->
+                            <div class="service-visual-panel" data-visual="3">
+                                <div class="mockup-systems-grid">
+                                    <div class="system-node node-a"><i class="fas fa-server"></i><span>EDGE API</span></div>
+                                    <div class="system-node node-b"><i class="fas fa-database"></i><span>REALTIME DB</span></div>
+                                    <div class="system-node node-c"><i class="fas fa-shield-halved"></i><span>ENCRYPTED</span></div>
+                                    <div class="node-connecting-line line-1"></div>
+                                    <div class="node-connecting-line line-2"></div>
+                                </div>
+                            </div>
+
+                            <!-- Visual 05: Creative Typography Art -->
+                            <div class="service-visual-panel" data-visual="4">
+                                <div class="mockup-creative-art">
+                                    <div class="glitch-typography-cluster">
+                                        <span class="art-layer l1">FUTURE</span>
+                                        <span class="art-layer l2">CREATIVE</span>
+                                        <span class="art-layer l3">MOTION</span>
+                                    </div>
+                                    <div class="audio-reactive-bars" id="servicesAudioBars">
+                                        <!-- Generated via JS -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- 14, 15, 16, 17 — PINNED HORIZONTAL PORTFOLIO REEL -->
+            <section id="portfolio" class="horizontal-portfolio-section" aria-label="Selected Projects">
+                <div class="portfolio-header-container">
+                    <div class="section-meta-header">
+                        <span class="section-num">03 // SELECTED WORK</span>
+                        <span class="section-tagline">PROOF OVER PROMISES</span>
+                    </div>
+                    <div class="portfolio-title-row">
+                        <h2 class="portfolio-title">FEATURED PROJECTS.</h2>
+                        <span class="horizontal-scroll-hint">DRAG & SCROLL HORIZONTALLY <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- Pinned Horizontal Track -->
+                <div class="horizontal-track-wrapper" id="horizontalTrackWrapper">
+                    <div class="horizontal-project-track" id="horizontalProjectTrack">
+                        
+                        <!-- Project Card 01 -->
+                        <article class="project-card" data-project="roccos" data-cursor="VIEW">
+                            <div class="project-card-inner">
+                                <div class="project-image-box">
+                                    <img src="p1.jpg" alt="Rocco's Restaurant Digital Platform" loading="lazy" class="project-img">
+                                    <div class="project-overlay-glass"></div>
+                                    <span class="project-year-badge">2026</span>
+                                </div>
+                                <div class="project-info">
+                                    <div class="project-category-tag">E-COMMERCE & HOSPITALITY</div>
+                                    <h3 class="project-name">Rocco's Italian Dining</h3>
+                                    <p class="project-desc">Full brand redesign, automated table reservation suite, and online culinary ordering system.</p>
+                                    <div class="project-footer-link">
+                                        <span class="link-label">EXPLORE CASE STUDY</span>
+                                        <i class="fas fa-arrow-up-right-from-square"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Project Card 02 -->
+                        <article class="project-card" data-project="ceylon-gems" data-cursor="VIEW">
+                            <div class="project-card-inner">
+                                <div class="project-image-box">
+                                    <img src="p2.jpg" alt="Real Ceylon Gems Luxury Showcase" loading="lazy" class="project-img">
+                                    <div class="project-overlay-glass"></div>
+                                    <span class="project-year-badge">2026</span>
+                                </div>
+                                <div class="project-info">
+                                    <div class="project-category-tag">LUXURY & 3D JEWELRY</div>
+                                    <h3 class="project-name">Real Ceylon Gems</h3>
+                                    <p class="project-desc">Bespoke luxury web experience featuring interactive 3D gem rendering, certification verification, and global concierge.</p>
+                                    <div class="project-footer-link">
+                                        <span class="link-label">EXPLORE CASE STUDY</span>
+                                        <i class="fas fa-arrow-up-right-from-square"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Project Card 03 -->
+                        <article class="project-card" data-project="special-beats" data-cursor="VIEW">
+                            <div class="project-card-inner">
+                                <div class="project-image-box">
+                                    <img src="p4.jpg" alt="Special Beats Music Media Hub" loading="lazy" class="project-img">
+                                    <div class="project-overlay-glass"></div>
+                                    <span class="project-year-badge">2026</span>
+                                </div>
+                                <div class="project-info">
+                                    <div class="project-category-tag">ENTERTAINMENT & AUDIO</div>
+                                    <h3 class="project-name">Special Beats Audio</h3>
+                                    <p class="project-desc">High-energy music production hub with web-audio visualizers, artist portfolio showcases, and instant licensing checkout.</p>
+                                    <div class="project-footer-link">
+                                        <span class="link-label">EXPLORE CASE STUDY</span>
+                                        <i class="fas fa-arrow-up-right-from-square"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Project Card 04 -->
+                        <article class="project-card" data-project="studio-os" data-cursor="VIEW">
+                            <div class="project-card-inner">
+                                <div class="project-image-box">
+                                    <img src="p3.jpg" alt="69 Studio Enterprise Operating Suite" loading="lazy" class="project-img">
+                                    <div class="project-overlay-glass"></div>
+                                    <span class="project-year-badge">2026</span>
+                                </div>
+                                <div class="project-info">
+                                    <div class="project-category-tag">SAAS & CLOUD SYSTEMS</div>
+                                    <h3 class="project-name">69 Studio Cloud OS</h3>
+                                    <p class="project-desc">Realtime appointment management, lead conversion telemetry, and collaborative team operations platform.</p>
+                                    <div class="project-footer-link">
+                                        <span class="link-label">EXPLORE CASE STUDY</span>
+                                        <i class="fas fa-arrow-up-right-from-square"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Project Card 05: View All Projects CTA -->
+                        <div class="project-card cta-card" data-cursor="CLICK">
+                            <div class="cta-card-inner">
+                                <div class="cta-circle-arrow">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                                <h3>YOUR PROJECT COULD BE NEXT</h3>
+                                <p>Let's collaborate to build something award-winning for your brand.</p>
+                                <a href="#builder" class="project-cta-button">START A PROJECT ↗</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- 18 — BEFORE / AFTER INTERACTIVE COMPARISON SLIDER -->
+            <section class="before-after-section" aria-label="Visual Transformation Showcase">
+                <div class="section-container">
+                    <div class="section-meta-header">
+                        <span class="section-num">04 // TRANSFORMATION</span>
+                        <span class="section-tagline">MEASURABLE IMPACT & REDESIGN QUALITY</span>
+                    </div>
+                    <h2 class="ba-title">THE 69 STUDIO DIFFERENCE.</h2>
+                    <p class="ba-lead">Drag the slider to witness how we transform generic, outdated layouts into high-conversion modern digital assets.</p>
+
+                    <div class="ba-slider-container" id="baSliderContainer" data-cursor="DRAG">
+                        <div class="ba-image-wrapper ba-before-wrapper">
+                            <div class="ba-visual-mock mockup-before">
+                                <div class="mock-badge">BEFORE 69 STUDIO</div>
+                                <div class="mock-content-box">
+                                    <span class="mock-generic-title">Generic Standard Template</span>
+                                    <p class="mock-generic-text">Slow load times • High bounce rate • Cluttered navigation • Zero emotional engagement • Basic bootstrap UI.</p>
+                                    <div class="mock-bar b-1"></div>
+                                    <div class="mock-bar b-2"></div>
+                                </div>
+                            </div>
+                            <span class="ba-label label-before">BEFORE</span>
+                        </div>
+
+                        <div class="ba-image-wrapper ba-after-wrapper" id="baAfterWrapper">
+                            <div class="ba-visual-mock mockup-after">
+                                <div class="mock-badge-pro">AFTER // 69 STUDIO TRANSFORMATION</div>
+                                <div class="mock-content-box-pro">
+                                    <span class="mock-pro-title">AWWWARDS-GRADE 2026 ARCHITECTURE</span>
+                                    <p class="mock-pro-text">Sub-second Next.js speed • 340% increase in conversions • Cinematic motion • High-converting typography.</p>
+                                    <div class="mock-metrics-row">
+                                        <div class="m-pill">99+ SEO</div>
+                                        <div class="m-pill">100% RESPONSIVE</div>
+                                        <div class="m-pill">3D WEBGL</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="ba-label label-after">AFTER ✦</span>
+                        </div>
+
+                        <!-- Draggable Divider -->
+                        <div class="ba-slider-handle" id="baSliderHandle">
+                            <div class="handle-line"></div>
+                            <div class="handle-button">
+                                <i class="fas fa-chevron-left"></i>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 19 — MONUMENTAL CREATIVE STATEMENT -->
+            <section class="monumental-statement-section" id="statementSection" aria-label="Creative Statement">
+                <div class="statement-backdrop-glow"></div>
+                <div class="statement-content">
+                    <p class="statement-eyebrow">THE 69 STUDIO CREED</p>
+                    <div class="statement-typography-block">
+                        <h2 class="statement-line line-a" id="statLine1">GOOD DESIGN</h2>
+                        <h2 class="statement-line line-b" id="statLine2">GETS ATTENTION.</h2>
+                        <h2 class="statement-line line-c italic-word" id="statLine3">GREAT DESIGN</h2>
+                        <h2 class="statement-line line-d lime-text" id="statLine4">GETS REMEMBERED.</h2>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 20 — EDITORIAL IMAGE PINNING & FOUNDER CRAFT -->
+            <section class="editorial-spotlight-section" aria-label="Founder and Craft">
+                <div class="section-container">
+                    <div class="editorial-grid">
+                        
+                        <div class="editorial-img-column">
+                            <div class="pinned-portrait-card" data-cursor="EXPLORE">
+                                <img src="me.jpg" alt="Subhash Ketagoda - Founder & Lead Creative Technologist" class="portrait-img">
+                                <div class="portrait-badge">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>SUBHASH KETAGODA // FOUNDER</span>
+                                </div>
+                                <div class="portrait-overlay-spec">
+                                    <span>LEAD CREATIVE TECHNOLOGIST</span>
+                                    <span>COLOMBO • DUBAI</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="editorial-text-column">
+                            <div class="section-meta-header">
+                                <span class="section-num">05 // CRAFTSMANSHIP</span>
+                                <span class="section-tagline">THE MIND BEHIND THE PIXELS</span>
+                            </div>
+                            <h2 class="editorial-heading">OBSESSED WITH PERFECTION IN EVERY FRAME.</h2>
+                            <p class="editorial-para">
+                                "We don't settle for 'good enough'. In an internet saturated with boring templates and generic AI copy, true luxury lies in bespoke craftsmanship, silky 60fps micro-interactions, and intentional storytelling."
+                            </p>
+                            <p class="editorial-para-sub">
+                                Every line of CSS, every WebGL shader, and every brand touchpoint is crafted with the exactitude of a Swiss watch and the bold attitude of modern cyberpunk minimalism.
+                            </p>
+                            
+                            <div class="founder-credentials-grid">
+                                <div class="cred-item">
+                                    <i class="fas fa-terminal"></i>
+                                    <div>
+                                        <h4>Full-Stack Creative Coding</h4>
+                                        <span>Next.js, Three.js, React, Node.js, GSAP</span>
+                                    </div>
+                                </div>
+                                <div class="cred-item">
+                                    <i class="fas fa-layer-group"></i>
+                                    <div>
+                                        <h4>Design Systems & Spatial UI</h4>
+                                        <span>Figma Design Systems, Micro-animations</span>
+                                    </div>
+                                </div>
+                                <div class="cred-item">
+                                    <i class="fas fa-bolt"></i>
+                                    <div>
+                                        <h4>Performance & Optimization</h4>
+                                        <span>100/100 Core Web Vitals Guaranteed</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="editorial-action">
+                                <a href="appointments.html" target="_blank" class="editorial-cta-btn magnetic-btn" data-cursor="CLICK">
+                                    <span>BOOK A PRIVATE CONSULTATION</span>
+                                    <i class="fas fa-calendar-check"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- 21 — 69 PLAYGROUND (EXPERIMENTS IN MOTION) -->
+            <section id="playground" class="playground-section" aria-label="Interactive Experiments">
+                <div class="section-container">
+                    <div class="section-meta-header">
+                        <span class="section-num">06 // 69 PLAYGROUND</span>
+                        <span class="section-tagline">EXPERIMENTS IN MOTION & CREATIVE CODE</span>
+                    </div>
+                    <div class="playground-header-row">
+                        <h2 class="playground-title">INTERACTIVE SANDBOX.</h2>
+                        <span class="playground-hint">TOUCH, HOVER & INTERACT WITH THE MODULES BELOW</span>
+                    </div>
+
+                    <div class="playground-grid">
+                        
+                        <!-- Experiment 01: Interactive Liquid Ripple Canvas -->
+                        <div class="playground-card" data-cursor="EXPLORE">
+                            <div class="card-top-bar">
+                                <span class="exp-num">EXP 01</span>
+                                <span class="exp-title">LIQUID WARP CANVAS</span>
+                                <span class="exp-status">LIVE</span>
+                            </div>
+                            <div class="exp-canvas-container" id="liquidCanvasContainer">
+                                <canvas id="liquidCanvas"></canvas>
+                                <span class="canvas-instruction">MOVE CURSOR OVER CANVAS</span>
+                            </div>
+                        </div>
+
+                        <!-- Experiment 02: Magnetic Physics Typography -->
+                        <div class="playground-card" data-cursor="EXPLORE">
+                            <div class="card-top-bar">
+                                <span class="exp-num">EXP 02</span>
+                                <span class="exp-title">MAGNETIC SPRING TYPOGRAPHY</span>
+                                <span class="exp-status">INTERACTIVE</span>
+                            </div>
+                            <div class="magnetic-letters-box" id="magneticLettersBox">
+                                <span class="mag-char" data-mag="true">6</span>
+                                <span class="mag-char" data-mag="true">9</span>
+                                <span class="mag-char" data-mag="true">S</span>
+                                <span class="mag-char" data-mag="true">T</span>
+                                <span class="mag-char" data-mag="true">U</span>
+                                <span class="mag-char" data-mag="true">D</span>
+                                <span class="mag-char" data-mag="true">I</span>
+                                <span class="mag-char" data-mag="true">O</span>
+                            </div>
+                            <span class="canvas-instruction">HOVER TO DISPERSE & SNAP</span>
+                        </div>
+
+                        <!-- Experiment 03: Interactive 3D Wireframe Sculpture -->
+                        <div class="playground-card" data-cursor="EXPLORE">
+                            <div class="card-top-bar">
+                                <span class="exp-num">EXP 03</span>
+                                <span class="exp-title">3D KINETIC TORUS</span>
+                                <span class="exp-status">WEBGL</span>
+                            </div>
+                            <div class="wireframe-canvas-box" id="wireframeBox">
+                                <canvas id="wireframeCanvas"></canvas>
+                            </div>
+                            <span class="canvas-instruction">DRAG TO ROTATE 3D SHAPE</span>
+                        </div>
+
+                        <!-- Experiment 04: Harmonic Audio Wave Visualizer -->
+                        <div class="playground-card" data-cursor="EXPLORE">
+                            <div class="card-top-bar">
+                                <span class="exp-num">EXP 04</span>
+                                <span class="exp-title">HARMONIC FREQUENCY SYNTH</span>
+                                <button class="synth-toggle-btn" id="synthToggleBtn"><i class="fas fa-play"></i> TEST WAVE</button>
+                            </div>
+                            <div class="wave-canvas-box" id="waveCanvasBox">
+                                <canvas id="waveCanvas"></canvas>
+                            </div>
+                            <span class="canvas-instruction">DYNAMIC SINE SYNTHESIS</span>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- 22 — 69 LAB (FUTURE R&D CARDS) -->
+            <section id="lab" class="lab-section" aria-label="69 Lab Research and Development">
+                <div class="section-container">
+                    <div class="section-meta-header">
+                        <span class="section-num">07 // 69 LAB</span>
+                        <span class="section-tagline">EXPERIMENTS. IDEAS. WHAT'S NEXT.</span>
+                    </div>
+                    <div class="lab-title-row">
+                        <h2 class="lab-title">FUTURE RESEARCH.</h2>
+                        <span class="lab-desc">Explorations in spatial computing, AI interfaces, and WebGPU pipelines.</span>
+                    </div>
+
+                    <div class="lab-cards-scroller">
+                        <div class="lab-card" data-cursor="CLICK">
+                            <div class="lab-badge-row">
+                                <span class="lab-tag ai-tag">AI SYSTEMS</span>
+                                <span class="lab-version">v0.9 BETA</span>
+                            </div>
+                            <h3 class="lab-name">Autonomous Creative Agent</h3>
+                            <p class="lab-summary">Generative brand token synthesis powered by localized small language models and real-time design tokens.</p>
+                            <div class="lab-meta-foot">
+                                <span>STATUS: IN ACTIVE R&D</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="lab-card" data-cursor="CLICK">
+                            <div class="lab-badge-row">
+                                <span class="lab-tag webgl-tag">WEBGPU</span>
+                                <span class="lab-version">PROTOTYPE</span>
+                            </div>
+                            <h3 class="lab-name">Realtime Fluid Physics</h3>
+                            <p class="lab-summary">Sub-millisecond compute shader liquid simulation directly in web browsers at 120 FPS.</p>
+                            <div class="lab-meta-foot">
+                                <span>STATUS: BENCHMARKING</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="lab-card" data-cursor="CLICK">
+                            <div class="lab-badge-row">
+                                <span class="lab-tag spatial-tag">SPATIAL UI</span>
+                                <span class="lab-version">RESEARCH</span>
+                            </div>
+                            <h3 class="lab-name">Spatial Web Canvas</h3>
+                            <p class="lab-summary">3D spatial navigation interfaces built for mixed reality headsets and depth-enabled displays.</p>
+                            <div class="lab-meta-foot">
+                                <span>STATUS: LAB PREVIEW</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="lab-card" data-cursor="CLICK">
+                            <div class="lab-badge-row">
+                                <span class="lab-tag code-tag">NEURAL UI</span>
+                                <span class="lab-version">CONCEPT</span>
+                            </div>
+                            <h3 class="lab-name">Adaptive Intent Layouts</h3>
+                            <p class="lab-summary">Dynamic page morphing based on real-time user gaze, scroll velocity, and behavioral intent.</p>
+                            <div class="lab-meta-foot">
+                                <span>STATUS: EXPERIMENTAL</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 23 — Scrolling Marquee Banner 02 (Right to Left) -->
+            <section class="marquee-section" aria-hidden="true">
+                <div class="marquee-track marquee-reverse" id="marqueeTrack2">
+                    <div class="marquee-content">
+                        <span>UNCOMPROMISING SPEED</span> <span class="marquee-star">✦</span>
+                        <span>BESPOKE ARCHITECTURE</span> <span class="marquee-star">✦</span>
+                        <span>AWWWARDS QUALITY</span> <span class="marquee-star">✦</span>
+                        <span>HIGH ROI STRATEGY</span> <span class="marquee-star">✦</span>
+                        <span>ZERO COMPROMISES</span> <span class="marquee-star">✦</span>
+                        <span>69 STUDIO GLOBAL</span> <span class="marquee-star">✦</span>
+                    </div>
+                    <div class="marquee-content" aria-hidden="true">
+                        <span>UNCOMPROMISING SPEED</span> <span class="marquee-star">✦</span>
+                        <span>BESPOKE ARCHITECTURE</span> <span class="marquee-star">✦</span>
+                        <span>AWWWARDS QUALITY</span> <span class="marquee-star">✦</span>
+                        <span>HIGH ROI STRATEGY</span> <span class="marquee-star">✦</span>
+                        <span>ZERO COMPROMISES</span> <span class="marquee-star">✦</span>
+                        <span>69 STUDIO GLOBAL</span> <span class="marquee-star">✦</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIGITAL ASSETS STORE PREVIEW -->
+            <section id="store-preview" class="store-preview-section" aria-label="Digital Store">
+                <div class="section-container">
+                    <div class="store-preview-header">
+                        <div class="header-text">
+                            <div class="section-meta-header">
+                                <span class="section-num">08 // STORE</span>
+                                <span class="section-tagline">PREMIUM ASSETS & TEMPLATES</span>
+                            </div>
+                            <h2 class="store-title">DIGITAL STORE ASSETS.</h2>
+                        </div>
+                        <a href="store.html" class="visit-store-btn magnetic-btn" data-cursor="CLICK">
+                            <span>VISIT FULL STORE</span>
+                            <i class="fas fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+
+                    <div class="store-cards-grid">
+                        <div class="store-product-card" data-cursor="CLICK">
+                            <div class="prod-badge">PREMIUM TEMPLATE</div>
+                            <div class="prod-icon-box"><i class="fas fa-cube"></i></div>
+                            <h3>Studio Darkroom UI Kit</h3>
+                            <p>Figma components, design tokens, and Next.js starter templates.</p>
+                            <div class="prod-foot">
+                                <span class="prod-price">LKR 15,000 / $49</span>
+                                <a href="store.html" class="buy-link">GET ASSET ↗</a>
+                            </div>
+                        </div>
+
+                        <div class="store-product-card" data-cursor="CLICK">
+                            <div class="prod-badge">WEBGL PACK</div>
+                            <div class="prod-icon-box"><i class="fas fa-wand-magic-sparkles"></i></div>
+                            <h3>Liquid Shader Pack 2026</h3>
+                            <p>5 customizable Three.js GLSL liquid shaders with mouse interaction.</p>
+                            <div class="prod-foot">
+                                <span class="prod-price">LKR 25,000 / $79</span>
+                                <a href="store.html" class="buy-link">GET ASSET ↗</a>
+                            </div>
+                        </div>
+
+                        <div class="store-product-card" data-cursor="CLICK">
+                            <div class="prod-badge">FULL SYSTEM</div>
+                            <div class="prod-icon-box"><i class="fas fa-bolt"></i></div>
+                            <h3>69 Ecommerce Engine</h3>
+                            <p>Stripe & PayHere integrated high-speed checkout workflow.</p>
+                            <div class="prod-foot">
+                                <span class="prod-price">LKR 65,000 / $199</span>
+                                <a href="store.html" class="buy-link">GET ASSET ↗</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 31 — BUILD YOUR PROJECT (INTERACTIVE 5-STEP CONFIGURATOR & ESTIMATOR) -->
+            <section id="builder" class="project-builder-section" aria-label="Interactive Project Builder">
+                <div class="section-container">
+                    <div class="section-meta-header">
+                        <span class="section-num">09 // PROJECT BUILDER</span>
+                        <span class="section-tagline">INTERACTIVE SCOPE & ESTIMATE GENERATOR</span>
+                    </div>
+                    <div class="builder-intro-block">
+                        <h2 class="builder-title">BUILD YOUR PROJECT.</h2>
+                        <p class="builder-subline">Select your requirements below to generate an immediate scope estimate and direct project brief.</p>
+                    </div>
+
+                    <div class="builder-stepper-box" id="projectBuilderBox">
+                        <!-- Step Progress Indicator -->
+                        <div class="stepper-nav-bar">
+                            <div class="step-indicator active" data-step="1">
+                                <span class="step-dot">1</span>
+                                <span class="step-label">SERVICES</span>
+                            </div>
+                            <div class="step-connector"></div>
+                            <div class="step-indicator" data-step="2">
+                                <span class="step-dot">2</span>
+                                <span class="step-label">GOAL</span>
+                            </div>
+                            <div class="step-connector"></div>
+                            <div class="step-indicator" data-step="3">
+                                <span class="step-dot">3</span>
+                                <span class="step-label">TIMELINE</span>
+                            </div>
+                            <div class="step-connector"></div>
+                            <div class="step-indicator" data-step="4">
+                                <span class="step-dot">4</span>
+                                <span class="step-label">DETAILS</span>
+                            </div>
+                            <div class="step-connector"></div>
+                            <div class="step-indicator" data-step="5">
+                                <span class="step-dot">5</span>
+                                <span class="step-label">DISPATCH</span>
+                            </div>
+                        </div>
+
+                        <form id="projectBuilderForm" class="builder-form">
+                            
+                            <!-- STEP 1: WHAT DO YOU NEED? -->
+                            <div class="builder-step-panel active" data-step="1">
+                                <h3 class="step-question">WHAT DO YOU NEED TO BUILD?</h3>
+                                <p class="step-subquestion">Select all that apply to your vision.</p>
+                                <div class="options-grid">
+                                    <label class="option-card">
+                                        <input type="checkbox" name="services" value="Custom Website" checked>
+                                        <div class="option-inner">
+                                            <i class="fas fa-desktop"></i>
+                                            <span class="option-name">Custom Website</span>
+                                            <span class="option-tag">Next.js / 3D</span>
+                                        </div>
+                                    </label>
+                                    <label class="option-card">
+                                        <input type="checkbox" name="services" value="Brand Identity">
+                                        <div class="option-inner">
+                                            <i class="fas fa-fingerprint"></i>
+                                            <span class="option-name">Brand Identity</span>
+                                            <span class="option-tag">Logos & Systems</span>
+                                        </div>
+                                    </label>
+                                    <label class="option-card">
+                                        <input type="checkbox" name="services" value="UI/UX Redesign">
+                                        <div class="option-inner">
+                                            <i class="fas fa-layer-group"></i>
+                                            <span class="option-name">UI / UX Redesign</span>
+                                            <span class="option-tag">App & SaaS</span>
+                                        </div>
+                                    </label>
+                                    <label class="option-card">
+                                        <input type="checkbox" name="services" value="E-Commerce Suite">
+                                        <div class="option-inner">
+                                            <i class="fas fa-cart-shopping"></i>
+                                            <span class="option-name">E-Commerce Suite</span>
+                                            <span class="option-tag">Stripe / PayHere</span>
+                                        </div>
+                                    </label>
+                                    <label class="option-card">
+                                        <input type="checkbox" name="services" value="Creative Code / 3D">
+                                        <div class="option-inner">
+                                            <i class="fas fa-cube"></i>
+                                            <span class="option-name">Creative Code / 3D</span>
+                                            <span class="option-tag">WebGL Shaders</span>
+                                        </div>
+                                    </label>
+                                    <label class="option-card">
+                                        <input type="checkbox" name="services" value="Full Digital Experience">
+                                        <div class="option-inner">
+                                            <i class="fas fa-wand-magic-sparkles"></i>
+                                            <span class="option-name">Complete Experience</span>
+                                            <span class="option-tag">Full-Stack</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="step-nav-buttons">
+                                    <div></div>
+                                    <button type="button" class="btn-next-step magnetic-btn" data-next="2">
+                                        <span>CONTINUE TO GOAL</span> <i class="fas fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- STEP 2: WHAT'S THE PRIMARY GOAL? -->
+                            <div class="builder-step-panel" data-step="2">
+                                <h3 class="step-question">WHAT'S THE PRIMARY OBJECTIVE?</h3>
+                                <p class="step-subquestion">Choose the main outcome you need to achieve.</p>
+                                <div class="options-grid">
+                                    <label class="option-card radio-card">
+                                        <input type="radio" name="goal" value="Launch New Brand" checked>
+                                        <div class="option-inner">
+                                            <i class="fas fa-rocket"></i>
+                                            <span class="option-name">Launch New Brand</span>
+                                            <span class="option-tag">From zero to hero</span>
+                                        </div>
+                                    </label>
+                                    <label class="option-card radio-card">
+                                        <input type="radio" name="goal" value="Elevate Market Perception">
+                                        <div class="option-inner">
+                                            <i class="fas fa-gem"></i>
+                                            <span class="option-name">Elevate Perception</span>
+                                            <span class="option-tag">Premium luxury tier</span>
+                                        </div>
+                                    </label>
+                                    <label class="option-card radio-card">
+                                        <input type="radio" name="goal" value="Boost Conversions & Sales">
+                                        <div class="option-inner">
+                                            <i class="fas fa-chart-line"></i>
+                                            <span class="option-name">Boost Conversions</span>
+                                            <span class="option-tag">Revenue focused</span>
+                                        </div>
+                                    </label>
+                                    <label class="option-card radio-card">
+                                        <input type="radio" name="goal" value="Complete Digital Redesign">
+                                        <div class="option-inner">
+                                            <i class="fas fa-arrows-rotate"></i>
+                                            <span class="option-name">Full Redesign</span>
+                                            <span class="option-tag">Out with the old</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="step-nav-buttons">
+                                    <button type="button" class="btn-prev-step" data-prev="1"><i class="fas fa-arrow-left"></i> BACK</button>
+                                    <button type="button" class="btn-next-step magnetic-btn" data-next="3">
+                                        <span>CONTINUE TO TIMELINE</span> <i class="fas fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- STEP 3: TIMELINE & BUDGET -->
+                            <div class="builder-step-panel" data-step="3">
+                                <h3 class="step-question">TIMELINE & ESTIMATED BUDGET</h3>
+                                <p class="step-subquestion">Helps us allocate appropriate senior engineering resources.</p>
+                                
+                                <div class="form-row-builder">
+                                    <div class="form-field-group">
+                                        <label class="field-label">TARGET TIMELINE</label>
+                                        <div class="pill-select-grid">
+                                            <label class="pill-choice">
+                                                <input type="radio" name="timeline" value="Urgent (1-2 Weeks)">
+                                                <span>⚡ Rapid Sprint (1–2 Weeks)</span>
+                                            </label>
+                                            <label class="pill-choice">
+                                                <input type="radio" name="timeline" value="Standard (3-4 Weeks)" checked>
+                                                <span>Standard (3–4 Weeks)</span>
+                                            </label>
+                                            <label class="pill-choice">
+                                                <input type="radio" name="timeline" value="Comprehensive (6+ Weeks)">
+                                                <span>Deep Project (6+ Weeks)</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-field-group">
+                                        <label class="field-label">INVESTMENT TIER</label>
+                                        <div class="pill-select-grid">
+                                            <label class="pill-choice">
+                                                <input type="radio" name="budget" value="Starter (25,000 - 50,000 LKR)">
+                                                <span>LKR 25,000 – 50,000 ($100–$200)</span>
+                                            </label>
+                                            <label class="pill-choice">
+                                                <input type="radio" name="budget" value="Growth (50,000 - 150,000 LKR)" checked>
+                                                <span>LKR 50,000 – 150,000 ($200–$500)</span>
+                                            </label>
+                                            <label class="pill-choice">
+                                                <input type="radio" name="budget" value="Enterprise (150,000+ LKR)">
+                                                <span>LKR 150,000+ ($500+)</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-nav-buttons">
+                                    <button type="button" class="btn-prev-step" data-prev="2"><i class="fas fa-arrow-left"></i> BACK</button>
+                                    <button type="button" class="btn-next-step magnetic-btn" data-next="4">
+                                        <span>CONTINUE TO DETAILS</span> <i class="fas fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- STEP 4: PROJECT DETAILS -->
+                            <div class="builder-step-panel" data-step="4">
+                                <h3 class="step-question">TELL US ABOUT THE PROJECT</h3>
+                                <p class="step-subquestion">Describe your business, vision, or existing links.</p>
+                                
+                                <div class="builder-inputs">
+                                    <div class="input-wrap">
+                                        <input type="text" name="company" placeholder="Company / Brand Name (e.g. Acme Corp)" class="builder-input-field">
+                                    </div>
+                                    <div class="input-wrap">
+                                        <input type="url" name="currentUrl" placeholder="Current Website URL (optional, e.g. https://yoursite.com)" class="builder-input-field">
+                                    </div>
+                                    <div class="input-wrap">
+                                        <textarea name="details" placeholder="Brief project description, specific features, inspirations..." rows="4" class="builder-input-field" required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="step-nav-buttons">
+                                    <button type="button" class="btn-prev-step" data-prev="3"><i class="fas fa-arrow-left"></i> BACK</button>
+                                    <button type="button" class="btn-next-step magnetic-btn" data-next="5">
+                                        <span>REVIEW & DISPATCH</span> <i class="fas fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- STEP 5: CONTACT & DISPATCH -->
+                            <div class="builder-step-panel" data-step="5">
+                                <h3 class="step-question">FINAL STEP: WHERE SHOULD WE SEND THE PROPOSAL?</h3>
+                                <p class="step-subquestion">We reply within 24 hours with a comprehensive proposal & estimate.</p>
+                                
+                                <div class="builder-inputs">
+                                    <div class="input-row-dual">
+                                        <input type="text" name="clientName" placeholder="Your Full Name" class="builder-input-field" required>
+                                        <input type="email" name="clientEmail" placeholder="Your Email Address" class="builder-input-field" required>
+                                    </div>
+                                    <div class="input-wrap">
+                                        <input type="tel" name="clientPhone" placeholder="WhatsApp / Phone Number (e.g. +94 78 965 6969)" class="builder-input-field" required>
+                                    </div>
+                                </div>
+
+                                <div class="builder-summary-preview" id="builderSummaryBox">
+                                    <!-- Populated dynamically via JS -->
+                                </div>
+
+                                <div class="step-nav-buttons">
+                                    <button type="button" class="btn-prev-step" data-prev="4"><i class="fas fa-arrow-left"></i> BACK</button>
+                                    <button type="submit" class="btn-submit-brief magnetic-btn" id="submitBriefBtn">
+                                        <span>SEND PROJECT BRIEF</span> <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                                <div id="builderStatus" class="builder-status-msg"></div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CLIENT REVIEWS & SOCIAL PROOF -->
+            <section id="reviews" class="reviews-section" aria-label="Client Feedback">
+                <div class="section-container">
+                    <div class="section-meta-header">
+                        <span class="section-num">10 // VERIFIED REVIEWS</span>
+                        <span class="section-tagline">FEEDBACK FROM REAL COLLABORATIONS</span>
+                    </div>
+                    <div class="reviews-header-block">
+                        <h2 class="reviews-title">CLIENT VOICES.</h2>
+                        <p class="reviews-desc">Live ratings and direct reviews from our clients worldwide.</p>
+                    </div>
+
+                    <div class="reviews-layout">
+                        <!-- Dynamic Reviews Grid -->
+                        <div class="reviews-grid-box" id="reviewsGrid">
+                            <!-- Populated dynamically from Firebase / local cache -->
+                        </div>
+
+                        <!-- Review Submission Form -->
+                        <div class="review-submission-box">
+                            <h3>Share Your Experience</h3>
+                            <form id="reviewForm" class="review-mini-form">
+                                <div class="mini-field">
+                                    <input type="text" id="reviewName" placeholder="Your Name or Brand" required>
+                                </div>
+                                <div class="mini-field">
+                                    <select id="reviewRating" required>
+                                        <option value="" disabled selected>Rating (1 to 5 Stars)</option>
+                                        <option value="5">⭐⭐⭐⭐⭐ (5/5) Exceptional</option>
+                                        <option value="4">⭐⭐⭐⭐ (4/5) Very Good</option>
+                                        <option value="3">⭐⭐⭐ (3/5) Good</option>
+                                    </select>
+                                </div>
+                                <div class="mini-field">
+                                    <textarea id="reviewMessage" placeholder="How was your experience working with 69 Studio?" rows="4" required></textarea>
+                                </div>
+                                <button type="submit" class="submit-review-btn magnetic-btn" data-cursor="CLICK">
+                                    <span>POST REVIEW</span> <i class="fas fa-paper-plane"></i>
+                                </button>
+                                <div id="reviewStatus" class="review-status-msg"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 33 — KINETIC CONTACT SECTION -->
+            <section id="contact" class="kinetic-contact-section" aria-label="Contact 69 Studio">
+                <div class="section-container">
+                    <div class="section-meta-header">
+                        <span class="section-num">11 // INITIATE</span>
+                        <span class="section-tagline">LET'S START THE CONVERSATION</span>
+                    </div>
+
+                    <div class="contact-kinetic-headline" id="contactHeadline">
+                        <h2 class="kinetic-title">
+                            <span>LET'S BUILD</span><br>
+                            <span class="lime-text">SOMETHING</span><br>
+                            <span class="bold-white">GREAT.</span>
+                        </h2>
+                    </div>
+
+                    <div class="contact-cards-grid">
+                        
+                        <a href="tel:+94789656969" class="contact-channel-card" data-cursor="CLICK">
+                            <div class="channel-icon"><i class="fas fa-phone"></i></div>
+                            <div class="channel-info">
+                                <span class="channel-label">PHONE / DIRECT CALL</span>
+                                <h4 class="channel-val">+94 78 965 6969</h4>
+                                <span class="channel-note">Direct Line with Subhash</span>
+                            </div>
+                            <div class="channel-arrow"><i class="fas fa-arrow-up-right-from-square"></i></div>
+                        </a>
+
+                        <a href="mailto:69studiobysubhash@gmail.com" class="contact-channel-card" data-cursor="CLICK">
+                            <div class="channel-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="channel-info">
+                                <span class="channel-label">EMAIL INQUIRIES</span>
+                                <h4 class="channel-val">69studiobysubhash@gmail.com</h4>
+                                <span class="channel-note">24h Guaranteed Turnaround</span>
+                            </div>
+                            <div class="channel-arrow"><i class="fas fa-arrow-up-right-from-square"></i></div>
+                        </a>
+
+                        <a href="https://wa.me/94789656969?text=Hi%20Subhash!%20I'm%20interested%20in%20working%20with%2069%20Studio." target="_blank" rel="noopener" class="contact-channel-card whatsapp-card" data-cursor="CLICK">
+                            <div class="channel-icon"><i class="fab fa-whatsapp"></i></div>
+                            <div class="channel-info">
+                                <span class="channel-label">WHATSAPP INSTANT</span>
+                                <h4 class="channel-val">+94 78 965 6969</h4>
+                                <span class="channel-note">Fastest for Quick Inquiries</span>
+                            </div>
+                            <div class="channel-arrow"><i class="fas fa-arrow-up-right-from-square"></i></div>
+                        </a>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- 34, 35 — MINIMAL PREMIUM FOOTER & CINEMATIC BACK TO TOP -->
+            <footer class="studio-footer" aria-label="Footer">
+                <div class="footer-huge-watermark" aria-hidden="true">69</div>
+                
+                <div class="section-container footer-content-layer">
+                    <div class="footer-top-row">
+                        <div class="footer-brand-col">
+                            <div class="footer-logo">
+                                <span class="f-mark">69</span>
+                                <span class="f-name">STUDIO</span>
+                            </div>
+                            <p class="footer-tagline">
+                                CREATIVE IDEAS.<br>
+                                DIGITAL EXPERIENCES.<br>
+                                BASED IN SRI LANKA • GLOBAL REACH.
+                            </p>
+                        </div>
+
+                        <div class="footer-nav-col">
+                            <span class="col-head">NAVIGATION</span>
+                            <ul>
+                                <li><a href="#about">About Studio</a></li>
+                                <li><a href="#services">Services</a></li>
+                                <li><a href="#portfolio">Selected Work</a></li>
+                                <li><a href="#playground">69 Playground</a></li>
+                                <li><a href="#lab">69 Lab</a></li>
+                                <li><a href="#builder">Project Builder</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="footer-nav-col">
+                            <span class="col-head">EXTENDED</span>
+                            <ul>
+                                <li><a href="store.html">Digital Store</a></li>
+                                <li><a href="careers.html">Careers & Roles</a></li>
+                                <li><a href="appointments.html" target="_blank">Book Appointment ↗</a></li>
+                                <li><a href="admin.html" class="staff-secret-link">Admin Portal</a></li>
+                                <li><a href="staff-chat.html" class="staff-secret-link">Staff Hub</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="footer-social-col">
+                            <span class="col-head">CONNECT</span>
+                            <div class="social-pills-cluster">
+                                <a href="https://www.facebook.com/69studiobysubhash" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://www.instagram.com/69studiobysubhash" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="https://www.linkedin.com/in/subhash-ketagoda" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="https://wa.me/94789656969" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="footer-bottom-row">
+                        <p class="footer-copyright">&copy; 2026 69 STUDIO BY SUBHASH KETAGODA. ALL RIGHTS RESERVED.</p>
+                        
+                        <!-- 35 — Smooth Cinematic Back To Top -->
+                        <button class="back-to-top-btn magnetic-btn" id="backToTopBtn" aria-label="Scroll back to top" data-cursor="CLICK">
+                            <span>BACK TO TOP</span>
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </main>
+
+    <!-- 17 — FULLSCREEN PROJECT CASE STUDY MODAL -->
+    <div class="case-study-modal" id="caseStudyModal" aria-hidden="true" role="dialog">
+        <div class="modal-backdrop-blur" id="modalBackdrop"></div>
+        <div class="modal-window">
+            <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close Case Study">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-scroll-body" id="modalContentBody">
+                <!-- Injected via JavaScript based on clicked project -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 32 — FLOATING AI STUDIO ASSISTANT ("ASK 69 STUDIO ✦") -->
+    <div class="ai-assistant-widget" id="aiAssistantWidget">
+        <button class="ai-trigger-bubble magnetic-btn" id="aiTriggerBtn" aria-label="Ask 69 Studio AI Assistant" data-cursor="CLICK">
+            <span class="ai-icon-sparkle">✦</span>
+            <span class="ai-btn-text">ASK 69 STUDIO</span>
+            <span class="ai-status-indicator"></span>
+        </button>
+
+        <div class="ai-chat-panel" id="aiChatPanel" aria-hidden="true">
+            <div class="ai-panel-header">
+                <div class="ai-brand-badge">
+                    <span class="ai-dot"></span>
+                    <strong>69 AI STUDIO ASSISTANT</strong>
+                </div>
+                <button class="ai-close-btn" id="aiCloseBtn" aria-label="Close AI Chat"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div class="ai-messages-container" id="aiMessagesContainer">
+                <div class="ai-msg bot-msg">
+                    <div class="ai-avatar">69</div>
+                    <div class="msg-bubble">
+                        Hello! I am <strong>69 Studio AI</strong>. How can I help with your project, estimates, or design requirements today?
+                    </div>
+                </div>
+            </div>
+
+            <div class="ai-quick-prompts" id="aiQuickPrompts">
+                <button class="prompt-chip" data-prompt="I need a modern website">I need a website ↗</button>
+                <button class="prompt-chip" data-prompt="What are your rates and pricing?">What are your rates?</button>
+                <button class="prompt-chip" data-prompt="How long does a project take?">Project timelines?</button>
+                <button class="prompt-chip" data-prompt="How do I book an appointment?">Book consultation ↗</button>
+            </div>
+
+            <form id="aiChatForm" class="ai-input-form">
+                <input type="text" id="aiUserInput" placeholder="Ask about services, pricing, tech stack..." autocomplete="off">
+                <button type="submit" aria-label="Send query"><i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 43 — 69 SECRET EASTER EGG OVERLAY -->
+    <div class="secret-matrix-overlay" id="secretEasterEggModal" aria-hidden="true">
+        <div class="matrix-terminal-window">
+            <div class="terminal-bar">
+                <span>[69 STUDIO // CYBER LAB MATRIX ACTIVATED]</span>
+                <button id="closeEasterEggBtn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="terminal-body">
+                <p class="term-green">> ACCESS GRANTED: 69 PROTOCOL INITIATED.</p>
+                <p class="term-text">> FOUNDER: SUBHASH KETAGODA // LEAD ARCHITECT</p>
+                <p class="term-text">> SYSTEM: NEXT-GEN CREATIVE CODE ENGINE 2026</p>
+                <p class="term-lime">> "WE SHAPE DIGITAL REALITIES THAT NEVER GO UNNOTICED."</p>
+                <div class="term-actions">
+                    <a href="#playground" class="term-btn" onclick="document.getElementById('secretEasterEggModal').classList.remove('active')">ENTER PLAYGROUND ↗</a>
+                    <a href="https://wa.me/94789656969?text=Found%20the%2069%20Easter%20Egg!" target="_blank" class="term-btn">CLAIM SECRET DISCOUNT ↗</a>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="portfolio" class="portfolio reveal">
-        <div class="section-header">
-            <span class="dash"></span>
-            <h2>Selected Works</h2>
-        </div>
-        <div class="portfolio-grid">
-            <div class="portfolio-item large">
-                <div class="portfolio-img-container">
-                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                        alt="Digital Strategy Portfolio Item" loading="lazy">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <span class="category">Brand Strategy</span>
-                            <h3>Content Planning</h3>
-                            <a href="#" class="view-link">View Case Study <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-item">
-                <div class="portfolio-img-container">
-                    <img src="https://images.unsplash.com/photo-1557838923-2985c318be48?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        alt="Ad Campaign Marketing Project" loading="lazy">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <span class="category">Social Ads</span>
-                            <h3>Targeted Reach</h3>
-                            <a href="#" class="view-link">View Project <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-item">
-                <div class="portfolio-img-container">
-                    <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        alt="Growth Marketing and Influencer Engagement" loading="lazy">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <span class="category">Growth</span>
-                            <h3>Influencer Collab</h3>
-                            <a href="#" class="view-link">View Project <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-item">
-                <div class="portfolio-img-container">
-                    <img src="https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        alt="Visual Branding and Identity Design" loading="lazy">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <span class="category">Identity</span>
-                            <h3>Visual Branding</h3>
-                            <a href="#" class="view-link">View Project <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-item">
-                <div class="portfolio-img-container">
-                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        alt="Analytics Dashboard Results" loading="lazy">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <span class="category">Data</span>
-                            <h3>Growth Analytics</h3>
-                            <a href="#" class="view-link">View Project <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-item">
-                <div class="portfolio-img-container">
-                    <img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                        alt="Fan Engagement Community Project" loading="lazy">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <span class="category">Community</span>
-                            <h3>Fan Engagement</h3>
-                            <a href="#" class="view-link">View Project <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="store" class="store reveal">
-        <div class="store-container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <div class="section-header centered">
-                <span class="dash"></span>
-                <h2>Discover Our <span class="gradient-text">Assets</span></h2>
-                <p>Visit our premium digital store for exclusive assets and templates.</p>
-                <div style="margin-top: 30px;">
-                    <a href="store.html" class="btn primary">Visit Full Store <i
-                            class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-            <div class="store-grid" id="storeGrid"
-                style="opacity: 0.6; pointer-events: none; max-height: 400px; overflow: hidden;">
-                <!-- Preview products -->
-            </div>
-        </div>
-    </section>
-
-    <section id="reviews" class="reviews reveal">
-        <div class="reviews-container" style="max-width: 1200px; margin: 0 auto;">
-            <div class="section-header centered">
-                <span class="dash"></span>
-                <h2>Client <span class="gradient-text">Reviews</span></h2>
-                <p>See what our clients say about us or leave your own experience. Your review will be instantly visible
-                    to others.</p>
-            </div>
-            <div class="reviews-wrapper">
-                <div class="reviews-list-container">
-                    <div class="reviews-grid" id="reviewsGrid">
-                        <!-- Reviews will be rendered here dynamically -->
-                    </div>
-                </div>
-                <div class="review-form-container">
-                    <h3>Share Your Experience</h3>
-                    <form id="reviewForm">
-                        <div class="form-group">
-                            <input type="text" id="reviewName" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <select id="reviewRating" required>
-                                <option value="" disabled selected>Select Rating</option>
-                                <option value="5">⭐⭐⭐⭐⭐ (5/5) - Excellent</option>
-                                <option value="4">⭐⭐⭐⭐ (4/5) - Very Good</option>
-                                <option value="3">⭐⭐⭐ (3/5) - Average</option>
-                                <option value="2">⭐⭐ (2/5) - Poor</option>
-                                <option value="1">⭐ (1/5) - Terrible</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="reviewMessage"
-                                placeholder="Write your review here... How was your experience?" rows="5"
-                                required></textarea>
-                        </div>
-                        <button type="submit" class="btn primary submit-btn">Submit Review <i
-                                class="fas fa-paper-plane"></i></button>
-                        <div id="reviewStatus"
-                            style="margin-top: 15px; font-size: 0.95rem; text-align: center; font-weight: 600;"></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="contact reveal">
-        <div class="contact-container">
-            <div class="contact-info">
-                <h2>Let's Craft Something <span class="gradient-text">Exceptional</span></h2>
-                <p>Have a project in mind? Let's talk about how we can help you achieve your digital goals.</p>
-                <div class="contact-details">
-                    <a href="tel:+94789656969" class="detail-item clickable">
-                        <div class="icon-box"><i class="fas fa-phone"></i></div>
-                        <div>
-                            <h4>Call Us</h4>
-                            <p>+94 78 965 6969</p>
-                        </div>
-                    </a>
-                    <a href="mailto:69studiobysubhash@gmail.com" class="detail-item clickable">
-                        <div class="icon-box"><i class="fas fa-envelope"></i></div>
-                        <div>
-                            <h4>Email Us</h4>
-                            <p>69studiobysubhash@gmail.com</p>
-                        </div>
-                    </a>
-                    <div class="detail-item">
-                        <div class="icon-box"><i class="fas fa-location-dot"></i></div>
-                        <div>
-                            <h4>Visit Us</h4>
-                            <p>Colombo, Sri Lanka</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="contact-form-container tilt-card" data-tilt-intensity="5">
-                <form id="contactForm" action="https://formsubmit.co/69studiobysubhash@gmail.com" method="POST">
-                    <!-- Hidden fields for better deliverability -->
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_template" value="table">
-                    <input type="hidden" name="_subject" value="New Inquiry from 69 Studio Website!">
-                    <input type="hidden" name="_honey" style="display:none">
-
-                    <div class="form-group">
-                        <input type="text" name="name" placeholder="Your Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" name="email" placeholder="Your Email" required>
-                    </div>
-                    <div class="form-group">
-                        <select name="interest">
-                            <option value="">Interested In</option>
-                            <option value="web">Web Development</option>
-
-                            <option value="design">UI/UX Design</option>
-                            <option value="marketing">Social Media Headline</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <textarea name="message" placeholder="Your Message" rows="5"></textarea>
-                    </div>
-                    <button type="submit" class="btn primary submit-btn">Send Message <i
-                            class="fas fa-paper-plane"></i></button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-top">
-            <div class="footer-logo">
-                <img src="main-logo.png" alt="69 Studio Logo" style="height: 40px; width: auto; object-fit: contain;">
-            </div>
-            <div class="footer-social">
-                <a href="https://www.facebook.com/69studiobysubhash" target="_blank" aria-label="Follow 69 Studio on Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/69studiobysubhash" target="_blank" aria-label="Follow 69 Studio on Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.linkedin.com/in/subhash-ketagoda" target="_blank" aria-label="Connect with Subhash Ketagoda on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" aria-label="Follow 69 Studio on Behance"><i class="fab fa-behance"></i></a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 69 Studio by Subhash. All Rights Reserved.</p>
-            <div class="footer-links">
-                <a href="careers.html">Careers</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="staff-chat.html" style="opacity: 0.3; font-size: 0.7rem; margin-left: 20px;">Staff Hub</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Floating Chat Button -->
-    <a href="https://wa.me/94789656969?text=Hi%20Subhash!%20I'm%20interested%20in%20your%20services." target="_blank"
-        class="floating-chat" title="Chat with me on WhatsApp">
-        <div class="chat-tooltip">Chat with us</div>
-        <div class="chat-icon">
-            <i class="fab fa-whatsapp"></i>
-            <span class="notification-dot"></span>
-        </div>
-    </a>
-
-    <!-- Firebase Web SDK Integration -->
+    <!-- Firebase Realtime Database Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
         import { getDatabase, ref, push, onValue, set, update } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
 
-        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDp7G3C1mMeK1Htfsxharb05wtf0VTw88",
             authDomain: "studio-7cdf1.firebaseapp.com",
@@ -713,24 +1662,31 @@
             measurementId: "G-Q8YJHFC1H1"
         };
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const database = getDatabase(app);
+        try {
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+            const database = getDatabase(app);
 
-        // Attach database to window object so other scripts can interact with it
-        window.firebaseDB = database;
-        window.firebaseRef = ref;
-        window.firebasePush = push;
-        window.firebaseOnValue = onValue;
-        window.firebaseSet = set;
-        window.firebaseUpdate = update;
-
-        // Dispatch an event to let script.js know Firebase is ready
-        window.dispatchEvent(new Event('firebaseLoaded'));
+            window.firebaseDB = database;
+            window.firebaseRef = ref;
+            window.firebasePush = push;
+            window.firebaseOnValue = onValue;
+            window.firebaseSet = set;
+            window.firebaseUpdate = update;
+            window.dispatchEvent(new Event('firebaseLoaded'));
+        } catch(e) {
+            console.log("Firebase initialized in local mode.");
+        }
     </script>
+
+    <!-- Core Libraries: GSAP, ScrollTrigger, Lenis, Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+    <!-- Main 69 Studio Script -->
+    <script src="script.js?v=2026-v2.0"></script>
 </body>
 
 </html>
