@@ -203,12 +203,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --------------------------------------------------------------------------
-    // 05 — Scroll Progress Line & Percentage Counter
+    // 05 — Scroll Progress Line, Percentage Counter & Nav Scrollspy
     // --------------------------------------------------------------------------
     const initScrollProgress = () => {
         const progressFill = document.getElementById('progressBarFill');
         const percentageBadge = document.getElementById('scrollPercentage');
         const navPill = document.querySelector('.floating-nav-container');
+        const navLinks = document.querySelectorAll('.desktop-nav-menu .nav-link');
+        const trackedSections = ['home', 'about', 'services', 'portfolio', 'playground', 'lab', 'builder', 'contact'];
 
         const onScroll = () => {
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -221,11 +223,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Floating Navigation Pill Morph
             if (navPill) {
-                if (scrollY > 60) {
+                if (scrollY > 50) {
                     navPill.classList.add('is-scrolled');
                 } else {
                     navPill.classList.remove('is-scrolled');
                 }
+            }
+
+            // Active section scrollspy
+            let activeId = '';
+            const checkpoint = scrollY + 180;
+            for (let i = trackedSections.length - 1; i >= 0; i--) {
+                const sec = document.getElementById(trackedSections[i]);
+                if (sec && sec.offsetTop <= checkpoint) {
+                    activeId = trackedSections[i];
+                    break;
+                }
+            }
+
+            if (activeId) {
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href === `#${activeId}`) {
+                        link.classList.add('active');
+                    } else if (href && href.startsWith('#')) {
+                        link.classList.remove('active');
+                    }
+                });
             }
         };
 
