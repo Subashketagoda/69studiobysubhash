@@ -997,6 +997,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 challenge: "Scaling appointments, project lead tracking, and client team chat into a unified real-time portal.",
                 solution: "Built a reactive Firebase Realtime system with automated WhatsApp dispatch and appointment scheduling.",
                 stack: ["Firebase RTDB", "Next.js", "PWA Architecture", "WhatsApp Cloud API"]
+            },
+            'cargo-pizza': {
+                title: "Cargo Pizza Woodfired Experience",
+                category: "Food & Hospitality Digital Platform",
+                year: "2026",
+                image: "p5.jpg",
+                client: "Cargo Pizza Nawala",
+                liveUrl: "https://cargopizzeria.online/",
+                challenge: "Cargo Pizza needed a high-converting digital storefront to showcase 20+ woodfired varieties, handle peak ordering hours, and promote BOGO campaigns with zero checkout friction.",
+                solution: "Engineered a rapid-response mobile-first ordering engine with WhatsApp dispatch integration, sub-second menu filtering, and localized geo-SEO.",
+                stack: ["HTML5 / PWA", "Next-Gen CSS", "WhatsApp Cloud Engine", "Dynamic Deal System", "Local SEO & Geo-Targeting"]
             }
         };
 
@@ -1031,8 +1042,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             ${data.stack.map(s => `<span style="font-family: var(--font-mono); font-size: 0.75rem; background: rgba(204,255,0,0.1); color: var(--accent-lime); border: 1px solid var(--accent-lime-border); padding: 6px 14px; border-radius: var(--radius-pill);">${s}</span>`).join('')}
                         </div>
                     </div>
-                    <div style="margin-top: 16px; display: flex; gap: 16px;">
-                        <a href="appointments.html" target="_blank" class="nav-cta-btn" style="padding: 12px 24px; font-size: 0.85rem;">REQUEST SIMILAR PROJECT ↗</a>
+                    <div style="margin-top: 16px; display: flex; gap: 16px; flex-wrap: wrap;">
+                        ${data.liveUrl ? `<a href="${data.liveUrl}" target="_blank" rel="noopener noreferrer" class="nav-cta-btn" style="padding: 12px 24px; font-size: 0.85rem; background: var(--accent-lime); color: #000; font-weight: 700;">VISIT LIVE SITE ↗</a>` : ''}
+                        <a href="appointments.html" target="_blank" class="nav-cta-btn" style="padding: 12px 24px; font-size: 0.85rem; border: 1px solid var(--border-subtle); background: transparent; color: #fff;">REQUEST SIMILAR PROJECT ↗</a>
                     </div>
                 </div>
             `;

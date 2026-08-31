@@ -1339,7 +1339,7 @@ html.light-theme .dark-icon { display: block; }
 
 .partners-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 20px;
 }
 
@@ -4059,8 +4059,8 @@ html.light-theme .dark-icon { display: block; }
 
     /* Partners */
     .partners-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
     }
     .partner-item {
         padding: 12px 14px;
