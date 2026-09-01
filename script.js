@@ -979,15 +979,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const projectsData = {
             'roccos': {
-                title: "Rocco's Italian Dining Platform",
-                category: "E-Commerce & Hospitality Architecture",
+                title: "Rocco's Italian Dining Platform & Cloud POS",
+                category: "Restaurant Cloud POS & E-Commerce Architecture",
                 year: "2026",
                 image: "p1.jpg",
                 client: "Rocco's Sri Lanka",
                 liveUrl: "https://69studiobysubash.online/",
-                challenge: "Rocco's required a high-converting digital ordering platform and real-time reservation architecture with zero latency.",
-                solution: "We engineered a Next.js headless storefront integrated with Stripe and PayHere, delivering sub-second checkout and a 42% lift in reservations.",
-                stack: ["Next.js 15", "TypeScript", "TailwindCSS", "Realtime WebSockets", "GSAP Animations"]
+                challenge: "Rocco's required a high-converting digital ordering platform, real-time table reservations, and a synchronized Cloud Point of Sale (POS) with Kitchen Order Ticket (KOT) workflow.",
+                solution: "We engineered a bespoke Next.js storefront paired with a real-time Cloud POS and billing engine, delivering sub-second checkout, thermal receipt printing, and a 42% lift in dining orders.",
+                stack: ["Custom Cloud POS", "Next.js 15", "Realtime KOT Sync", "Thermal Receipt Engine", "Stripe & PayHere"]
             },
             'ceylon-gems': {
                 title: "Real Ceylon Gems Luxury 3D Showcase",
@@ -1257,18 +1257,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const getAIResponse = (query) => {
             const q = query.toLowerCase();
-            if (q.includes('rate') || q.includes('price') || q.includes('cost') || q.includes('how much')) {
-                return "Our custom high-performance web development starts from <strong>25,000 LKR ($100)</strong> for starter setups, and <strong>50,000–150,000+ LKR ($200–$500+)</strong> for bespoke Awwwards-grade experiences with 3D/Next.js. You can configure your scope directly in our <a href='#builder' style='color:var(--accent-lime);text-decoration:underline;'>Project Builder</a>!";
+            if (q.includes('pos') || q.includes('point of sale') || q.includes('billing') || q.includes('inventory') || q.includes('cash register')) {
+                return "Yes! <strong>69 Studio develops custom Cloud & Offline Point of Sale (POS) Systems</strong> tailored for retail stores, supermarkets, restaurants, and cafes. Our POS engines include <strong>barcode scanning, 80mm thermal receipt printing, real-time inventory tracking, restaurant KOT kitchen display, and multi-branch cloud syncing</strong>! You can configure your POS requirements in our <a href='#builder' style='color:var(--accent-lime);text-decoration:underline;'>Project Builder</a> or contact Subhash directly.";
+            } else if (q.includes('rate') || q.includes('price') || q.includes('cost') || q.includes('how much')) {
+                return "Our custom high-performance web development starts from <strong>25,000 LKR ($100)</strong> for starter setups, and <strong>50,000–150,000+ LKR ($200–$500+)</strong> for bespoke Awwwards-grade experiences with 3D/Next.js and POS business engines. You can configure your scope directly in our <a href='#builder' style='color:var(--accent-lime);text-decoration:underline;'>Project Builder</a>!";
             } else if (q.includes('timeline') || q.includes('how long') || q.includes('time')) {
-                return "Standard web projects deliver in <strong>2 to 4 weeks</strong>. We also offer rapid 1-week design sprints for urgent launches.";
+                return "Standard web and POS software projects deliver in <strong>2 to 4 weeks</strong>. We also offer rapid 1-week deployment sprints for urgent business rollouts.";
             } else if (q.includes('website') || q.includes('web design') || q.includes('build')) {
-                return "We craft ultra-fast, modern websites using <strong>Next.js 15, React, Three.js (WebGL), and GSAP</strong>. Every website scores 100/100 on Google PageSpeed.";
+                return "We craft ultra-fast, modern websites and custom software using <strong>Next.js 15, React, Three.js (WebGL), Node.js, and GSAP</strong>. Every solution scores 100/100 on performance.";
             } else if (q.includes('subhash') || q.includes('founder') || q.includes('who')) {
                 return "69 Studio was founded by <strong>Subhash Ketagoda</strong>, Lead Creative Technologist based in Colombo & Dubai with over 8 years of engineering experience and 150+ shipped projects.";
             } else if (q.includes('appointment') || q.includes('consultation') || q.includes('book') || q.includes('call')) {
                 return "You can schedule a consultation directly on our <a href='appointments.html' target='_blank' style='color:var(--accent-lime);text-decoration:underline;'>Appointments Portal</a> or WhatsApp Subhash at <strong>+94 78 965 6969</strong>.";
             } else {
-                return "Thank you for reaching out! We can build a bespoke digital solution tailored to your goals. Would you like to test our <a href='#builder' style='color:var(--accent-lime);text-decoration:underline;'>Project Builder</a> or speak with Subhash on <a href='https://wa.me/94789656969' target='_blank' style='color:var(--accent-lime);text-decoration:underline;'>WhatsApp</a>?";
+                return "Thank you for reaching out! We build bespoke websites, custom POS systems, and brand platforms tailored to your business. Would you like to try our <a href='#builder' style='color:var(--accent-lime);text-decoration:underline;'>Project Builder</a> or speak with Subhash on <a href='https://wa.me/94789656969' target='_blank' style='color:var(--accent-lime);text-decoration:underline;'>WhatsApp</a>?";
             }
         };
 

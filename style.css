@@ -2025,7 +2025,233 @@ header.scrolled .menu-toggle {
     color: var(--accent-lime);
 }
 
-/* Visual 02: Branding Canvas */
+/* Visual 02: Mockup POS Terminal System */
+.mockup-pos-terminal {
+    width: 100%;
+    height: 100%;
+    background: #0b0c0e;
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7);
+}
+
+.pos-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: #121316;
+    border-bottom: 1px solid var(--border-glass-subtle);
+}
+
+.pos-status-cluster {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pos-pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-lime);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-lime-glow);
+    animation: posPulse 1.8s infinite;
+}
+
+@keyframes posPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.pos-system-title {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #ffffff;
+}
+
+.pos-mode-badge {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--accent-lime);
+    background: var(--accent-lime-dim);
+    border: 1px solid var(--accent-lime-border);
+    padding: 3px 8px;
+    border-radius: var(--radius-pill);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.pos-terminal-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 12px;
+    padding: 14px;
+    overflow: hidden;
+}
+
+.pos-cart-col {
+    background: #0f1013;
+    border: 1px solid var(--border-glass-subtle);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.pos-cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--border-glass);
+}
+
+.pos-time-tag {
+    color: var(--accent-lime);
+}
+
+.pos-cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.pos-cart-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.70rem;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.pos-item-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pos-item-title {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.72rem;
+}
+
+.pos-item-sku {
+    color: var(--text-muted);
+    font-size: 0.60rem;
+}
+
+.pos-item-qty {
+    color: var(--text-secondary);
+    font-size: 0.68rem;
+}
+
+.pos-item-val {
+    color: var(--accent-lime);
+    font-weight: 700;
+}
+
+.pos-cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-glass-bright);
+    color: #ffffff;
+}
+
+.pos-grand-total {
+    color: var(--accent-lime);
+    font-size: 0.88rem;
+}
+
+.pos-hw-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: space-between;
+}
+
+.pos-hw-badge {
+    background: #0f1013;
+    border: 1px solid var(--border-glass-subtle);
+    border-radius: var(--radius-sm);
+    padding: 9px 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+}
+
+.pos-hw-badge i {
+    font-size: 0.85rem;
+    color: var(--accent-lime);
+}
+
+.pos-hw-badge div {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.pos-hw-badge strong {
+    font-size: 0.68rem;
+    color: #ffffff;
+}
+
+.pos-hw-badge span {
+    font-size: 0.58rem;
+    color: var(--text-muted);
+}
+
+.pos-action-pay {
+    background: var(--accent-lime);
+    color: #000000;
+    font-family: var(--font-mono);
+    font-size: 0.70rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 0 16px var(--accent-lime-glow);
+}
+
+@media (max-width: 600px) {
+    .pos-terminal-body {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    .pos-hw-sidebar {
+        display: none;
+    }
+}
+
+/* Visual 03: Branding Canvas */
 .mockup-branding-canvas {
     width: 100%;
     height: 100%;
