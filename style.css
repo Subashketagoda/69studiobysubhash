@@ -2418,6 +2418,81 @@ header.scrolled .menu-toggle {
 .l3 { color: transparent; -webkit-text-stroke: 1px #fff; }
 
 /* --------------------------------------------------------------------------
+   11B — Monumental Big Typography Break
+   -------------------------------------------------------------------------- */
+.big-typography-break-section {
+    position: relative;
+    padding: clamp(60px, 8vh, 110px) 0;
+    background: #000000;
+    overflow: hidden;
+    border-top: 1px solid var(--border-glass-subtle);
+    border-bottom: 1px solid var(--border-glass-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.typo-break-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60vw;
+    height: 300px;
+    background: radial-gradient(circle, rgba(204, 255, 0, 0.06) 0%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.typo-break-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 2vw, 24px);
+    overflow: hidden;
+}
+
+.typo-break-row {
+    display: flex;
+    align-items: center;
+    gap: clamp(20px, 3vw, 45px);
+    white-space: nowrap;
+    width: fit-content;
+    will-change: transform;
+}
+
+.typo-huge-word {
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 7.5vw, 8rem);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.word-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.45);
+}
+
+.word-lime {
+    color: var(--accent-lime);
+    text-shadow: 0 0 45px var(--accent-lime-glow);
+}
+
+.typo-accent-star {
+    color: var(--accent-lime);
+    font-size: clamp(1.8rem, 4vw, 4rem);
+    animation: spinGlowRing 20s linear infinite;
+    display: inline-block;
+}
+
+/* --------------------------------------------------------------------------
    12 — Horizontal Portfolio Reel (Pinned Horizontal Scroll)
    -------------------------------------------------------------------------- */
 .horizontal-portfolio-section {

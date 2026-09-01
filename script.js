@@ -184,7 +184,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
                 gsap.registerPlugin(ScrollTrigger);
-                lenis.on('scroll', ScrollTrigger.update);
+                lenis.on('scroll', (e) => {
+                    ScrollTrigger.update();
+                    
+                    // 24 — Scroll Velocity Subtle Typography Stretching & Settle
+                    const velocity = e.velocity || 0;
+                    const clampedVel = Math.max(-10, Math.min(10, velocity));
+                    const skew = clampedVel * 0.15;
+                    const velocityTargets = document.querySelectorAll('.marquee-content');
+                    velocityTargets.forEach(el => {
+                        el.style.transform = `skewX(${skew}deg)`;
+                    });
+                });
 
                 gsap.ticker.add((time) => {
                     lenis.raf(time * 1000);
@@ -637,6 +648,33 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (seqCounter) seqCounter.textContent = `0${activeIndex + 1}`;
                     if (seqProgress) seqProgress.style.width = `${((activeIndex + 1) / totalSlides) * 100}%`;
                 },
+            });
+        }
+
+        // 16 — Big Typography Break Horizontal Kinetic Scrub
+        const typoRow1 = document.getElementById('typoRow1');
+        const typoRow2 = document.getElementById('typoRow2');
+        if (typoRow1 && typoRow2) {
+            gsap.to(typoRow1, {
+                x: '-16%',
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '#bigTypoBreak',
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 1,
+                }
+            });
+
+            gsap.to(typoRow2, {
+                x: '14%',
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '#bigTypoBreak',
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 1,
+                }
             });
         }
 
@@ -1439,7 +1477,100 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
 
     // --------------------------------------------------------------------------
-    // 20 — Back to Top Button
+    // 21 — Digital Store Dynamic Products Renderer (store.html)
+    // --------------------------------------------------------------------------
+    const initStorePage = () => {
+        const storeGrid = document.getElementById('storeGrid');
+        if (!storeGrid) return;
+
+        const defaultProducts = [
+            {
+                name: "Studio Darkroom UI Kit 2026",
+                category: "FIGMA & DESIGN TOKENS",
+                priceLKR: "15,000 LKR",
+                priceUSD: "$49",
+                icon: "fa-cube",
+                desc: "Complete dark-mode design system with 250+ responsive components, tokens, and Next.js starter templates.",
+                badge: "BESTSELLER"
+            },
+            {
+                name: "Liquid Shader Pack 2026",
+                category: "WEBGL & THREE.JS",
+                priceLKR: "25,000 LKR",
+                priceUSD: "$79",
+                icon: "fa-wand-magic-sparkles",
+                desc: "5 customizable Three.js GLSL liquid chrome & glass distortion shaders with mouse-reactive physics.",
+                badge: "POPULAR"
+            },
+            {
+                name: "69 Ecommerce Engine",
+                category: "NEXT.JS & PAYMENTS",
+                priceLKR: "65,000 LKR",
+                priceUSD: "$199",
+                icon: "fa-bolt",
+                desc: "High-speed storefront with Stripe & PayHere Sri Lanka integration, cart engine, and WhatsApp order alerts.",
+                badge: "SYSTEM"
+            },
+            {
+                name: "Cloud POS Software Engine",
+                category: "POS & INVENTORY",
+                priceLKR: "45,000 LKR",
+                priceUSD: "$150",
+                icon: "fa-cash-register",
+                desc: "Realtime barcode billing, 80mm thermal receipt printing engine, live inventory sync, and multi-branch cloud ERP.",
+                badge: "BUSINESS"
+            },
+            {
+                name: "Spatial 3D Model Pack",
+                category: "3D ASSETS",
+                priceLKR: "20,000 LKR",
+                priceUSD: "$65",
+                icon: "fa-gem",
+                desc: "Optimized GLTF/USDZ 3D jewelry, electronics, and architectural assets ready for interactive WebGL experiences.",
+                badge: "3D ASSET"
+            },
+            {
+                name: "Awwwards Motion Preset Pack",
+                category: "GSAP & LENIS",
+                priceLKR: "18,000 LKR",
+                priceUSD: "$55",
+                icon: "fa-film",
+                desc: "Ready-to-use GSAP ScrollTrigger timelines, word-by-word reading scrub presets, and custom cursor physics.",
+                badge: "ANIMATION"
+            }
+        ];
+
+        storeGrid.innerHTML = defaultProducts.map(p => {
+            const waLink = `https://wa.me/94789656969?text=${encodeURIComponent(`Hi Subhash! I would like to purchase the ${p.name} (${p.priceLKR} / ${p.priceUSD}).`)}`;
+            return `
+                <div class="store-product-card" data-cursor="CLICK" style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 28px; display: flex; flex-direction: column; justify-content: space-between; gap: 18px; transition: all 0.35s ease;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-family: var(--font-mono); font-size: 0.70rem; color: var(--accent-lime); font-weight: 700; letter-spacing: 0.1em;">${p.category}</span>
+                        <span style="font-family: var(--font-mono); font-size: 0.65rem; background: var(--accent-lime-dim); color: var(--accent-lime); border: 1px solid var(--accent-lime-border); padding: 3px 8px; border-radius: var(--radius-pill); font-weight: 700;">${p.badge}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 14px;">
+                        <div style="width: 46px; height: 46px; border-radius: var(--radius-md); background: rgba(204,255,0,0.1); display: flex; align-items: center; justify-content: center; color: var(--accent-lime); font-size: 1.2rem; flex-shrink: 0;">
+                            <i class="fas ${p.icon}"></i>
+                        </div>
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 2px;">${p.name}</h3>
+                            <span style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent-lime); font-weight: 700;">${p.priceLKR} / ${p.priceUSD}</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;">${p.desc}</p>
+                    <div style="padding-top: 12px; border-top: 1px solid var(--border-glass-subtle);">
+                        <a href="${waLink}" target="_blank" class="nav-cta-btn" style="width: 100%; text-align: center; justify-content: center; padding: 10px; font-size: 0.75rem;">
+                            PURCHASE & INSTANT ACCESS ↗
+                        </a>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    };
+    initStorePage();
+
+    // --------------------------------------------------------------------------
+    // 22 — Smooth Back to Top
     // --------------------------------------------------------------------------
     const backToTopBtn = document.getElementById('backToTopBtn');
     if (backToTopBtn) {
