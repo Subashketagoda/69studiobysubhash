@@ -1575,7 +1575,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const backToTopBtn = document.getElementById('backToTopBtn');
     if (backToTopBtn) {
         backToTopBtn.addEventListener('click', () => {
-            if (lenis) {
+            if (typeof lenis !== 'undefined' && lenis) {
                 lenis.scrollTo(0, { duration: 1.5 });
             } else {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1583,4 +1583,120 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --------------------------------------------------------------------------
+    // 23 — Interactive Web Audio Synthesizer & Spatial Sound FX
+    // --------------------------------------------------------------------------
+    const initSiteAudio = () => {
+        let audioActive = localStorage.getItem('69_audio_active') === 'true';
+        let audioCtx = null;
+
+        const soundBtn = document.getElementById('siteSoundToggle');
+        const soundIcon = document.getElementById('siteSoundIcon');
+
+        const updateSoundUI = () => {
+            if (!soundBtn || !soundIcon) return;
+            if (audioActive) {
+                soundIcon.className = 'fas fa-volume-high';
+                soundBtn.style.color = 'var(--accent-lime)';
+                soundBtn.style.borderColor = 'var(--accent-lime-border)';
+                soundBtn.style.background = 'var(--accent-lime-dim)';
+            } else {
+                soundIcon.className = 'fas fa-volume-xmark';
+                soundBtn.style.color = 'var(--text-secondary)';
+                soundBtn.style.borderColor = 'var(--border-glass)';
+                soundBtn.style.background = 'rgba(255,255,255,0.04)';
+            }
+        };
+        updateSoundUI();
+
+        const playTone = (freq = 440, type = 'sine', duration = 0.08, vol = 0.04) => {
+            if (!audioActive) return;
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        };
+
+        if (soundBtn) {
+            soundBtn.addEventListener('click', () => {
+                audioActive = !audioActive;
+                localStorage.setItem('69_audio_active', audioActive ? 'true' : 'false');
+                updateSoundUI();
+                if (audioActive) {
+                    playTone(880, 'sine', 0.12, 0.06);
+                }
+            });
+        }
+
+        // Attach subtle hover sounds to interactive elements
+        document.querySelectorAll('.nav-link, .hero-btn, .magnetic-btn, .service-nav-item, .project-card, .filter-chip').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                playTone(587.33, 'sine', 0.05, 0.02); // D5 high-tech blip
+            }, { passive: true });
+        });
+    };
+    initSiteAudio();
+
+    // --------------------------------------------------------------------------
+    // 24 — Realtime 3D Card Spotlight Cursor Tracking
+    // --------------------------------------------------------------------------
+    const initCardSpotlightHover = () => {
+        if (isTouch) return;
+        const spotlightCards = document.querySelectorAll('.project-card, .service-nav-item, .playground-card, .lab-card, .review-card, .proof-card, .philosophy-stat-card');
+
+        spotlightCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            }, { passive: true });
+        });
+    };
+    initCardSpotlightHover();
+
+    // --------------------------------------------------------------------------
+    // 25 — Interactive POS Demo Terminal Simulator
+    // --------------------------------------------------------------------------
+    const initInteractivePosDemo = () => {
+        const printBtn = document.getElementById('posPrintBtn');
+        const toast = document.getElementById('posReceiptToast');
+        if (!printBtn) return;
+
+        printBtn.addEventListener('click', () => {
+            printBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PRINTING RECEIPT...';
+            printBtn.style.opacity = '0.7';
+
+            setTimeout(() => {
+                printBtn.innerHTML = '<i class="fas fa-check"></i> SLIP DISPATCHED!';
+                printBtn.style.background = 'var(--accent-emerald)';
+                printBtn.style.color = '#000';
+                if (toast) toast.style.display = 'block';
+
+                setTimeout(() => {
+                    printBtn.innerHTML = '<i class="fas fa-receipt"></i> PRINT BILL & FINALIZE ↗';
+                    printBtn.style.background = '';
+                    printBtn.style.color = '';
+                    printBtn.style.opacity = '1';
+                    if (toast) toast.style.display = 'none';
+                }, 3000);
+            }, 600);
+        });
+    };
+    initInteractivePosDemo();
+
 });
+

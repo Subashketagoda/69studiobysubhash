@@ -207,6 +207,12 @@
             </nav>
 
             <div class="nav-actions">
+                <!-- Sound Toggle Button -->
+                <button class="sound-toggle-btn" id="siteSoundToggle" aria-label="Toggle Interactive Audio" title="Toggle Sound Feedback" data-cursor="CLICK">
+                    <i class="fas fa-volume-high" id="siteSoundIcon"></i>
+                    <span class="sound-label">AUDIO FX</span>
+                </button>
+
                 <!-- 36 — Light / Dark Theme Switcher -->
                 <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle theme mode" title="Toggle Theme" data-cursor="CLICK">
                     <i class="fas fa-sun light-icon" aria-hidden="true"></i>
@@ -269,7 +275,11 @@
 
                 <div class="hero-container">
                     <div class="hero-top-meta">
-                        <div class="meta-tag"><span class="neon-bullet"></span> 69 STUDIO / DIGITAL CREATIVE STUDIO</div>
+                        <div class="hero-availability-pill" data-cursor="CLICK">
+                            <span class="live-dot-glow"></span>
+                            <span>ACCEPTING Q4 2026 COMMISSIONS</span>
+                            <span class="avail-badge">OPEN</span>
+                        </div>
                         <div class="meta-coords">COLOMBO [6.9271° N] • DUBAI [25.2048° N]</div>
                     </div>
 
@@ -700,8 +710,11 @@
                                                     <span>Realtime Deduction</span>
                                                 </div>
                                             </div>
-                                            <div class="pos-action-pay">
+                                            <div class="pos-action-pay" id="posPrintBtn" data-cursor="PRINT" style="cursor:pointer;">
                                                 <i class="fas fa-receipt"></i> PRINT BILL & FINALIZE ↗
+                                            </div>
+                                            <div class="pos-receipt-toast" id="posReceiptToast" style="display:none; font-family:var(--font-mono); font-size:0.65rem; color:var(--accent-lime); text-align:center; padding:4px; margin-top:6px; background:rgba(204,255,0,0.08); border-radius:4px;">
+                                                <i class="fas fa-check"></i> 80mm THERMAL SLIP PRINTED!
                                             </div>
                                         </div>
                                     </div>
