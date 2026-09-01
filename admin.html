@@ -16,7 +16,7 @@
     <!-- Google Fonts: Space Grotesk, Syne, Outfit, Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -24,9 +24,13 @@
 </head>
 
 <body>
+    <!-- Interactive Background Canvas -->
+    <canvas id="adminBgCanvas"></canvas>
+
     <!-- Login Screen / Security Vault -->
     <section id="login-section">
         <div class="login-card">
+            <div class="vault-glow-ring"></div>
             <div class="login-logo">
                 <span class="login-mark">69</span>
                 <span class="login-brand-name">STUDIO</span>
@@ -39,6 +43,9 @@
                     <div class="input-wrapper">
                         <i class="fas fa-fingerprint"></i>
                         <input type="password" id="adminPassword" placeholder="Enter security key" required autocomplete="current-password">
+                        <button type="button" id="togglePasswordBtn" class="toggle-pwd-btn" title="Toggle Visibility">
+                            <i class="fas fa-eye"></i>
+                        </button>
                     </div>
                 </div>
                 <button type="submit" class="login-btn">
@@ -55,13 +62,17 @@
                 </button>
             </div>
 
-            <p class="pwa-hint"><i class="fas fa-shield-halved"></i> 256-Bit Encrypted Cloud Connection</p>
+            <div class="security-telemetry-badge">
+                <span class="pulse-dot"></span>
+                <span>256-BIT ENCRYPTED REALTIME CLOUD</span>
+            </div>
         </div>
     </section>
 
     <!-- Loading Overlay -->
     <div id="loading-overlay">
         <div class="loader-circle"></div>
+        <p style="margin-top:16px; font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-lime); letter-spacing:0.15em;">INITIALIZING COMMAND CENTER...</p>
     </div>
 
     <!-- Main App Shell -->
@@ -72,7 +83,7 @@
                 <div class="topbar-logo">
                     <span class="topbar-mark">69</span>
                     <span>STUDIO</span>
-                    <span class="topbar-badge-tag">// ADMIN</span>
+                    <span class="topbar-badge-tag">// COMMAND CENTER</span>
                 </div>
             </div>
             <div class="topbar-right">
@@ -80,6 +91,9 @@
                     <div class="status-dot"></div>
                     <span>LIVE SYNC</span>
                 </div>
+                <button class="topbar-icon-btn" id="audio-toggle-btn" title="Toggle Sound Feedback">
+                    <i class="fas fa-volume-high" id="audioIcon"></i>
+                </button>
                 <button class="topbar-icon-btn" id="notif-btn" title="Inquiries & Notifications" style="position:relative;">
                     <i class="fas fa-bell"></i>
                     <span id="notif-badge" style="display:none; position:absolute; top:4px; right:4px; background:var(--accent-lime); width:8px; height:8px; border-radius:50%; box-shadow:0 0 8px var(--accent-lime);"></span>
@@ -89,80 +103,124 @@
             </div>
         </header>
 
+        <!-- Live System Telemetry Strip -->
+        <div class="telemetry-strip">
+            <div class="telemetry-item"><span class="t-dot lime"></span> UPTIME: 99.98%</div>
+            <div class="telemetry-item"><span class="t-dot cyan"></span> REGION: COLOMBO & DUBAI</div>
+            <div class="telemetry-item"><span class="t-dot emerald"></span> FIREBASE: SYNCHRONIZED</div>
+            <div class="telemetry-item"><span class="t-dot lime"></span> WHATSAPP DISPATCH: ACTIVE</div>
+        </div>
+
         <!-- Tab Views -->
         <div class="app-views">
             <!-- 01 Dashboard Tab -->
             <div class="app-view active" id="view-dashboard">
                 <div class="view-scroll">
-                    <h2 class="view-title">Command Center</h2>
-                    <p class="view-subtitle" id="greeting-text">Welcome back, Subhash Ketagoda</p>
+                    <div class="view-title-row">
+                        <div>
+                            <h2 class="view-title">Executive Dashboard</h2>
+                            <p class="view-subtitle" id="greeting-text">Welcome back, Subhash Ketagoda // Creative Lead</p>
+                        </div>
+                        <div class="clock-display" id="clockDisplay">00:00:00</div>
+                    </div>
 
                     <!-- KPI Stat Cards -->
                     <div class="stats-row">
                         <div class="mini-stat-card" onclick="switchTab('leads')">
-                            <i class="fas fa-bolt"></i>
+                            <div class="stat-card-header">
+                                <span class="mini-stat-label">Inquiries</span>
+                                <i class="fas fa-bolt stat-icon"></i>
+                            </div>
                             <span class="mini-stat-num" id="stat-leads">0</span>
-                            <span class="mini-stat-label">Total Leads</span>
+                            <span class="stat-trend positive"><i class="fas fa-arrow-trend-up"></i> +28% this month</span>
                         </div>
+
                         <div class="mini-stat-card" onclick="updateStat('activeProjects','Active Projects')">
-                            <i class="fas fa-diagram-project"></i>
+                            <div class="stat-card-header">
+                                <span class="mini-stat-label">Active Sprints</span>
+                                <i class="fas fa-diagram-project stat-icon"></i>
+                            </div>
                             <span class="mini-stat-num" id="stat-projects">24</span>
-                            <span class="mini-stat-label">Active Projects</span>
+                            <span class="stat-trend neutral"><i class="fas fa-circle-check"></i> On Track</span>
                         </div>
+
                         <div class="mini-stat-card" onclick="updateStat('successRate','Success Rate (%)')">
-                            <i class="fas fa-chart-line"></i>
+                            <div class="stat-card-header">
+                                <span class="mini-stat-label">Success Rate</span>
+                                <i class="fas fa-chart-line stat-icon"></i>
+                            </div>
                             <span class="mini-stat-num" id="stat-success">98%</span>
-                            <span class="mini-stat-label">Success Rate</span>
+                            <span class="stat-trend positive"><i class="fas fa-star"></i> 5.0 Rating</span>
                         </div>
+
                         <div class="mini-stat-card">
-                            <i class="fas fa-sack-dollar"></i>
+                            <div class="stat-card-header">
+                                <span class="mini-stat-label">Shipped Systems</span>
+                                <i class="fas fa-shield-halved stat-icon"></i>
+                            </div>
                             <span class="mini-stat-num" id="stat-pipeline">150+</span>
-                            <span class="mini-stat-label">Shipped Systems</span>
+                            <span class="stat-trend positive"><i class="fas fa-globe"></i> Global Clients</span>
                         </div>
                     </div>
 
                     <!-- Live Analytics Card -->
                     <div class="app-card">
                         <div class="card-header">
-                            <h3><i class="fas fa-chart-area"></i> Visitor Telemetry & Traffic</h3>
-                            <span class="badge-active"><i class="fas fa-circle"></i> Live Realtime</span>
+                            <h3><i class="fas fa-chart-area"></i> Visitor Telemetry & Inquiries</h3>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span class="badge-active"><i class="fas fa-circle"></i> Live Realtime</span>
+                            </div>
                         </div>
                         <div class="traffic-num-row">
                             <span class="traffic-big-num" id="visit-count">0</span>
-                            <span class="traffic-label">Total Page Impressions</span>
+                            <span class="traffic-label">Total Unique Impressions</span>
                         </div>
                         <div class="chart-container"><canvas id="trafficChart"></canvas></div>
                     </div>
 
-                    <!-- Announcement Broadcast Manager -->
+                    <!-- Live Marquee Broadcast Manager -->
                     <div class="app-card">
                         <div class="card-header">
                             <h3><i class="fas fa-bullhorn"></i> Live Website Marquee Broadcast</h3>
-                            <button onclick="saveAnnouncement()" class="fab-inline" title="Publish Announcement"><i class="fas fa-paper-plane"></i></button>
+                            <button onclick="saveAnnouncement()" class="fab-inline" title="Push Announcement to Live Site"><i class="fas fa-paper-plane"></i></button>
                         </div>
                         <input type="text" id="announcement-text" class="modal-input" placeholder="e.g. ✦ NOW BOOKING Q4 2026 WEB & POS SYSTEMS — LIMITED SLOTS AVAILABLE" style="margin-top:5px;">
-                        <p style="font-size:0.72rem; color:var(--text-muted); margin-top:8px; font-family:var(--font-mono);">Push updates to the marquee banner on the live website.</p>
-                    </div>
-
-                    <!-- Project Tasks & Roadmap -->
-                    <div class="app-card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-list-check"></i> Studio Sprint & Tasks</h3>
-                            <button onclick="addProjectTask()" class="fab-inline" title="Add New Task"><i class="fas fa-plus"></i></button>
-                        </div>
-                        <div id="project-tasks" class="card-list" style="margin-top:10px; gap:8px;">
-                            <!-- Injected tasks -->
+                        <div class="marquee-live-preview" id="marqueeLivePreview">
+                            <span>PREVIEW: </span><span id="marqueePreviewText">No active broadcast announcement set.</span>
                         </div>
                     </div>
 
-                    <!-- Quick Actions Grid -->
-                    <div class="app-card">
+                    <!-- Studio Sprint Tasks & Scratchpad Grid -->
+                    <div class="dashboard-dual-grid">
+                        <!-- Project Tasks -->
+                        <div class="app-card" style="margin-bottom:0;">
+                            <div class="card-header">
+                                <h3><i class="fas fa-list-check"></i> Studio Sprint & Tasks</h3>
+                                <button onclick="addProjectTask()" class="fab-inline" title="Add New Task"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <div id="project-tasks" class="card-list" style="margin-top:10px; gap:8px;">
+                                <!-- Injected tasks -->
+                            </div>
+                        </div>
+
+                        <!-- Studio Quick Scratchpad -->
+                        <div class="app-card" style="margin-bottom:0;">
+                            <div class="card-header">
+                                <h3><i class="fas fa-pen-to-square"></i> Studio Scratchpad / Notes</h3>
+                                <span style="font-family:var(--font-mono); font-size:0.65rem; color:var(--text-muted);"><i class="fas fa-floppy-disk"></i> Auto-Saved</span>
+                            </div>
+                            <textarea id="studioNotesText" class="modal-input" style="min-height:140px; font-family:var(--font-mono); font-size:0.85rem;" placeholder="Jot down quick client notes, server credentials, or sprint ideas..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Quick Operations Grid -->
+                    <div class="app-card" style="margin-top:18px;">
                         <h3 class="card-title"><i class="fas fa-wand-magic-sparkles"></i> Quick Operations</h3>
                         <div class="quick-actions-grid">
-                            <button onclick="switchTab('leads')" class="qa-btn"><i class="fas fa-user-plus"></i><span>Leads</span></button>
+                            <button onclick="switchTab('leads')" class="qa-btn"><i class="fas fa-inbox"></i><span>View Leads</span></button>
                             <button onclick="switchTab('products')" class="qa-btn"><i class="fas fa-cube"></i><span>Store Assets</span></button>
                             <button onclick="switchTab('staff')" class="qa-btn"><i class="fas fa-users-gear"></i><span>Staff Hub</span></button>
-                            <button onclick="exportLeads()" class="qa-btn"><i class="fas fa-file-export"></i><span>Export</span></button>
+                            <button onclick="exportLeads()" class="qa-btn"><i class="fas fa-file-export"></i><span>Export Leads</span></button>
                             <a href="index.html" target="_blank" class="qa-btn"><i class="fas fa-globe"></i><span>Live Site</span></a>
                         </div>
                     </div>
@@ -179,6 +237,22 @@
                         </div>
                         <button onclick="exportLeads()" class="fab-inline" title="Export Leads JSON"><i class="fas fa-download"></i></button>
                     </div>
+
+                    <!-- Search & Filter Controls -->
+                    <div class="leads-control-bar">
+                        <div class="search-box">
+                            <i class="fas fa-magnifying-glass"></i>
+                            <input type="text" id="leadSearchInput" placeholder="Search by name, email, or service..." oninput="filterLeads()">
+                        </div>
+                        <div class="filter-pills">
+                            <button class="filter-pill active" data-filter="all" onclick="setLeadFilter('all')">ALL</button>
+                            <button class="filter-pill" data-filter="pos" onclick="setLeadFilter('pos')">POS</button>
+                            <button class="filter-pill" data-filter="web" onclick="setLeadFilter('web')">WEB</button>
+                            <button class="filter-pill" data-filter="branding" onclick="setLeadFilter('branding')">BRAND</button>
+                            <button class="filter-pill" data-filter="appointment" onclick="setLeadFilter('appointment')">APPOINTMENTS</button>
+                        </div>
+                    </div>
+
                     <div id="leads-list" class="card-list">
                         <!-- Lead cards injected here -->
                     </div>
@@ -275,7 +349,7 @@
         </nav>
     </main>
 
-    <!-- Lead Details Modal -->
+    <!-- Lead Details Modal with Quick WhatsApp Templates -->
     <div id="leadModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">

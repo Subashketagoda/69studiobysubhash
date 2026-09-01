@@ -14,23 +14,32 @@ const errorMsg = document.getElementById('errorMsg');
 const tabButtons = document.querySelectorAll('.tab-btn');
 const views = document.querySelectorAll('.app-view');
 
+let currentLeadFilter = 'all';
+let audioFeedbackEnabled = true;
+
 // App Initialization
 document.addEventListener('DOMContentLoaded', () => {
-    // Biometric Credential Check
+    // 01 Initialize Cyber Background Canvas
+    initBackgroundCanvas();
+
+    // 02 Live Clock
+    initLiveClock();
+
+    // 03 Biometric Credential Check
     if (window.PublicKeyCredential && localStorage.getItem('auth_id')) {
         const bioContainer = document.getElementById('bio-login-container');
         if (bioContainer) bioContainer.style.display = 'block';
     }
 
-    // Default Seed Data if fresh
+    // 04 Default Seed Data if fresh
     seedDefaultData();
 
-    // Check Stored Login Session
+    // 05 Check Stored Login Session
     if (localStorage.getItem('adminAccess') === 'true') {
         showApp();
     }
 
-    // Setup Biometric UI button state
+    // 06 Setup Biometric UI button state
     if (localStorage.getItem('auth_id')) {
         const setupBtn = document.getElementById('setup-face-lock');
         if (setupBtn) {
@@ -39,20 +48,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Bottom Tabs Navigation
+    // 07 Bottom Tabs Navigation
     tabButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const tabId = btn.getAttribute('data-tab');
+            playAudioBlip(520, 0.05);
             switchTab(tabId);
         });
     });
 
-    // Login Form Submit
+    // 08 Login Form Submit
     if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const passwordInput = document.getElementById('adminPassword');
             if (passwordInput.value.trim() === SECRET_KEY) {
+                playAudioBlip(880, 0.1);
                 passwordInput.blur();
                 if (overlay) overlay.style.display = 'flex';
                 setTimeout(() => {
@@ -61,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     showApp();
                 }, 600);
             } else {
+                playAudioBlip(220, 0.2);
                 if (errorMsg) errorMsg.style.display = 'block';
                 passwordInput.value = '';
                 setTimeout(() => { if (errorMsg) errorMsg.style.display = 'none'; }, 2800);
@@ -68,21 +80,68 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Top Bar Quick Actions
+    // 09 Password Toggle Button
+    const togglePwdBtn = document.getElementById('togglePasswordBtn');
+    if (togglePwdBtn) {
+        togglePwdBtn.addEventListener('click', () => {
+            const pwdInput = document.getElementById('adminPassword');
+            if (pwdInput.type === 'password') {
+                pwdInput.type = 'text';
+                togglePwdBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            } else {
+                pwdInput.type = 'password';
+                togglePwdBtn.innerHTML = '<i class="fas fa-eye"></i>';
+            }
+        });
+    }
+
+    // 10 Top Bar Quick Actions
     document.getElementById('notif-btn')?.addEventListener('click', () => switchTab('leads'));
     document.getElementById('logout-btn')?.addEventListener('click', logout);
     document.getElementById('refresh-btn')?.addEventListener('click', () => {
+        playAudioBlip(600, 0.08);
         if (overlay) overlay.style.display = 'flex';
         setTimeout(() => location.reload(), 400);
     });
 
-    // Biometric Handlers
+    // 11 Audio Feedback Toggle
+    const audioBtn = document.getElementById('audio-toggle-btn');
+    if (audioBtn) {
+        audioBtn.addEventListener('click', () => {
+            audioFeedbackEnabled = !audioFeedbackEnabled;
+            const icon = document.getElementById('audioIcon');
+            if (icon) {
+                icon.className = audioFeedbackEnabled ? 'fas fa-volume-high' : 'fas fa-volume-xmark';
+                audioBtn.style.color = audioFeedbackEnabled ? 'var(--accent-lime)' : 'var(--text-muted)';
+            }
+        });
+    }
+
+    // 12 Biometric Handlers
     document.getElementById('bio-login-btn')?.addEventListener('click', authenticateBiometric);
 
-    // Initial Push Notification Check
+    // 13 Initial Push Notification Check
     checkNotifPermissionUI();
 
-    // Product Image Preview
+    // 14 Studio Scratchpad Auto-Save
+    const notesEl = document.getElementById('studioNotesText');
+    if (notesEl) {
+        notesEl.value = localStorage.getItem('studio_quick_notes') || '';
+        notesEl.addEventListener('input', () => {
+            localStorage.setItem('studio_quick_notes', notesEl.value);
+        });
+    }
+
+    // 15 Announcement input live preview
+    const announceInput = document.getElementById('announcement-text');
+    if (announceInput) {
+        announceInput.addEventListener('input', () => {
+            const prevText = document.getElementById('marqueePreviewText');
+            if (prevText) prevText.innerText = announceInput.value.trim() || 'No active broadcast announcement set.';
+        });
+    }
+
+    // 16 Product Image Preview
     const imageFileInput = document.getElementById('productImageFile');
     imageFileInput?.addEventListener('change', function(e) {
         const file = e.target.files[0];
@@ -100,6 +159,110 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// Audio Feedback Engine
+function playAudioBlip(freq = 440, duration = 0.08) {
+    if (!audioFeedbackEnabled) return;
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    } catch(e) {}
+}
+
+// Live Digital Clock
+function initLiveClock() {
+    const clockEl = document.getElementById('clockDisplay');
+    if (!clockEl) return;
+    const updateClock = () => {
+        const now = new Date();
+        clockEl.innerText = now.toLocaleTimeString('en-US', { hour12: false });
+    };
+    updateClock();
+    setInterval(updateClock, 1000);
+}
+
+// Interactive Background Canvas
+function initBackgroundCanvas() {
+    const canvas = document.getElementById('adminBgCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+    const count = Math.min(width > 768 ? 60 : 30, 80);
+    for (let i = 0; i < count; i++) {
+        particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.4,
+            vy: (Math.random() - 0.5) * 0.4,
+            radius: Math.random() * 1.5 + 0.5,
+            alpha: Math.random() * 0.5 + 0.2
+        });
+    }
+
+    let mouseX = -1000;
+    let mouseY = -1000;
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    const animate = () => {
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+
+            if (p.x < 0) p.x = width;
+            if (p.x > width) p.x = 0;
+            if (p.y < 0) p.y = height;
+            if (p.y > height) p.y = 0;
+
+            // Draw particle
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(204, 255, 0, ${p.alpha})`;
+            ctx.fill();
+
+            // Connect nearby particles
+            for (let j = i + 1; j < particles.length; j++) {
+                const p2 = particles[j];
+                const dx = p.x - p2.x;
+                const dy = p.y - p2.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < 120) {
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.strokeStyle = `rgba(204, 255, 0, ${0.08 * (1 - dist / 120)})`;
+                    ctx.lineWidth = 0.6;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animate);
+    };
+    animate();
+}
 
 // Seed default initial data if none exists
 function seedDefaultData() {
@@ -151,6 +314,16 @@ function seedDefaultData() {
                 date: "Yesterday",
                 status: "Pending",
                 timestamp: Date.now() - 86400000
+            },
+            {
+                name: "Cargo Pizzeria Nawala",
+                email: "cargopizza@gmail.com",
+                phone: "+94789656969",
+                interest: "Cloud POS & Delivery Engine",
+                message: "Multi-branch cloud ordering and direct thermal kitchen ticket printer setup.",
+                date: "Aug 29",
+                status: "Completed",
+                timestamp: Date.now() - 172800000
             }
         ]));
     }
@@ -232,16 +405,20 @@ window.loadDashboardData = function() {
     // Render Traffic Chart
     initTrafficChart(stats);
 
-    // Update Announcement field
+    // Update Announcement field & preview
     const announceInput = document.getElementById('announcement-text');
+    const prevText = document.getElementById('marqueePreviewText');
     if (announceInput && !announceInput.value && settings.announcement) {
         announceInput.value = settings.announcement;
+    }
+    if (prevText && settings.announcement) {
+        prevText.innerText = settings.announcement;
     }
 
     // Render Roadmap Tasks
     renderProjectTasks(projectTasks);
 
-    // Render Leads View
+    // Render Leads View with filtering
     renderLeads(leads);
     const leadsCountText = document.getElementById('leads-count-text');
     if (leadsCountText) leadsCountText.innerText = `${leads.length} total client inquiries`;
@@ -262,19 +439,65 @@ window.loadDashboardData = function() {
     checkNewLeadsAlert(leads.length, apps.length);
 };
 
+// Lead Filtering Engine
+window.setLeadFilter = function(filterType) {
+    currentLeadFilter = filterType;
+    document.querySelectorAll('.filter-pill').forEach(btn => {
+        if (btn.getAttribute('data-filter') === filterType) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+    playAudioBlip(500, 0.05);
+    filterLeads();
+};
+
+window.filterLeads = function() {
+    const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
+    const searchVal = (document.getElementById('leadSearchInput')?.value || '').toLowerCase().trim();
+
+    const filtered = leads.filter(lead => {
+        const matchSearch = !searchVal || 
+            (lead.name && lead.name.toLowerCase().includes(searchVal)) ||
+            (lead.email && lead.email.toLowerCase().includes(searchVal)) ||
+            (lead.interest && lead.interest.toLowerCase().includes(searchVal)) ||
+            (lead.message && lead.message.toLowerCase().includes(searchVal));
+
+        if (!matchSearch) return false;
+
+        if (currentLeadFilter === 'all') return true;
+        const interestLower = (lead.interest || '').toLowerCase();
+        const msgLower = (lead.message || '').toLowerCase();
+
+        if (currentLeadFilter === 'pos') return interestLower.includes('pos') || msgLower.includes('pos') || msgLower.includes('billing');
+        if (currentLeadFilter === 'web') return interestLower.includes('web') || interestLower.includes('3d') || msgLower.includes('web');
+        if (currentLeadFilter === 'branding') return interestLower.includes('brand') || msgLower.includes('brand') || msgLower.includes('logo');
+        if (currentLeadFilter === 'appointment') return interestLower.includes('appointment') || msgLower.includes('appointment');
+
+        return true;
+    });
+
+    renderLeadsList(filtered);
+};
+
 function renderLeads(leads) {
+    filterLeads();
+}
+
+function renderLeadsList(leads) {
     const leadsList = document.getElementById('leads-list');
     if (!leadsList) return;
     leadsList.innerHTML = '';
 
     if (leads.length === 0) {
-        leadsList.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>No client inquiries found yet.</p></div>';
+        leadsList.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>No matching client inquiries found.</p></div>';
         return;
     }
 
     leads.forEach((lead, index) => {
         const phoneClean = (lead.phone || '').replace(/[^0-9+]/g, '');
-        const waText = encodeURIComponent(`Hi ${lead.name}, thank you for reaching out to 69 Studio regarding your ${lead.interest || 'project'}!`);
+        const waText = encodeURIComponent(`Hi ${lead.name}, thank you for contacting 69 Studio regarding "${lead.interest || 'your project'}"!`);
         const waUrl = phoneClean ? `https://wa.me/${phoneClean.replace('+', '')}?text=${waText}` : null;
 
         const card = document.createElement('div');
@@ -439,8 +662,7 @@ window.viewLead = function(index) {
     const modalBody = document.getElementById('modal-body');
 
     const phoneClean = (lead.phone || '').replace(/[^0-9+]/g, '');
-    const waText = encodeURIComponent(`Hi ${lead.name}, Subhash from 69 Studio here. I received your inquiry regarding "${lead.interest || 'your project'}".`);
-    const waUrl = phoneClean ? `https://wa.me/${phoneClean.replace('+', '')}?text=${waText}` : null;
+    const waBase = phoneClean ? `https://wa.me/${phoneClean.replace('+', '')}?text=` : '#';
 
     modalBody.innerHTML = `
         <div class="lead-detail-item"><label>Client / Brand</label><p><strong>${lead.name}</strong></p></div>
@@ -450,8 +672,26 @@ window.viewLead = function(index) {
         <div class="lead-detail-item"><label>Date Received</label><p style="font-family:var(--font-mono); font-size:0.85rem; color:var(--text-secondary);">${lead.date || 'Recent'}</p></div>
         <div class="lead-detail-item lead-msg-box"><label>Inquiry Message / Brief</label><p>${lead.message || 'No additional message.'}</p></div>
         
+        <div style="margin-top:20px;">
+            <label style="font-family:var(--font-mono); font-size:0.70rem; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Instant WhatsApp Quick-Responses</label>
+            <div class="quick-template-grid">
+                <a href="${waBase}${encodeURIComponent(`Hi ${lead.name}, Subhash from 69 Studio here. I reviewed your inquiry for ${lead.interest || 'your project'}. Would you like me to send over our customized studio proposal & pricing?`)}" target="_blank" class="template-btn">
+                    <i class="fab fa-whatsapp"></i> Send Proposal
+                </a>
+                <a href="${waBase}${encodeURIComponent(`Hi ${lead.name}! When would be a convenient time for a brief 10-minute consultation call regarding your ${lead.interest || 'project'}?`)}" target="_blank" class="template-btn">
+                    <i class="fas fa-calendar-check"></i> Schedule Call
+                </a>
+                <a href="${waBase}${encodeURIComponent(`Hi ${lead.name}! Here is a direct video preview of our 69 Studio Cloud POS & Thermal print engine: https://69studiobysubash.online/#services`)}" target="_blank" class="template-btn">
+                    <i class="fas fa-video"></i> POS Demo Link
+                </a>
+                <a href="${waBase}${encodeURIComponent(`Hi ${lead.name}, thank you for reaching out to 69 Studio! How soon are you looking to launch this project?`)}" target="_blank" class="template-btn">
+                    <i class="fas fa-comment-dots"></i> Project Intro
+                </a>
+            </div>
+        </div>
+
         <div style="display:flex; flex-direction:column; gap:10px; margin-top:20px;">
-            ${waUrl ? `<a href="${waUrl}" target="_blank" class="modal-save-btn" style="text-decoration:none; background:#25d366; color:#000; box-shadow:0 0 20px rgba(37,211,102,0.3);"><i class="fab fa-whatsapp"></i> Chat with Client on WhatsApp</a>` : ''}
+            ${phoneClean ? `<a href="${waBase}${encodeURIComponent(`Hi ${lead.name}, Subhash from 69 Studio here.`)}" target="_blank" class="modal-save-btn" style="text-decoration:none; background:#25d366; color:#000; box-shadow:0 0 20px rgba(37,211,102,0.3);"><i class="fab fa-whatsapp"></i> Open Custom WhatsApp Chat</a>` : ''}
             ${lead.email ? `<a href="mailto:${lead.email}" class="modal-save-btn" style="text-decoration:none; background:rgba(255,255,255,0.06); color:#fff; border:1px solid var(--border-glass-bright); box-shadow:none;"><i class="fas fa-envelope"></i> Send Email Reply</a>` : ''}
         </div>
     `;
@@ -643,7 +883,7 @@ function initTrafficChart(stats) {
     }
 
     let gradient = ctx.createLinearGradient(0, 0, 0, 160);
-    gradient.addColorStop(0, 'rgba(204, 255, 0, 0.40)');
+    gradient.addColorStop(0, 'rgba(204, 255, 0, 0.45)');
     gradient.addColorStop(1, 'rgba(204, 255, 0, 0.0)');
 
     trafficChartInstance = new Chart(ctx, {
@@ -657,7 +897,7 @@ function initTrafficChart(stats) {
                 backgroundColor: gradient,
                 borderWidth: 2.5,
                 pointBackgroundColor: '#ccff00',
-                pointBorderColor: '#050505',
+                pointBorderColor: '#040406',
                 pointBorderWidth: 2,
                 pointRadius: 4,
                 pointHoverRadius: 6,
@@ -671,7 +911,7 @@ function initTrafficChart(stats) {
             plugins: {
                 legend: { display: false },
                 tooltip: {
-                    backgroundColor: 'rgba(15, 16, 20, 0.95)',
+                    backgroundColor: 'rgba(13, 14, 18, 0.95)',
                     titleColor: '#ccff00',
                     bodyColor: '#ffffff',
                     borderColor: 'rgba(204, 255, 0, 0.3)',
@@ -683,7 +923,7 @@ function initTrafficChart(stats) {
             scales: {
                 x: {
                     grid: { display: false },
-                    ticks: { color: '#888892', font: { family: "'Space Grotesk', monospace", size: 10 } }
+                    ticks: { color: '#7a7a88', font: { family: "'Space Grotesk', monospace", size: 10 } }
                 },
                 y: {
                     display: false,
@@ -752,6 +992,7 @@ async function authenticateBiometric() {
 
         const assertion = await navigator.credentials.get({ publicKey: options });
         if (assertion) {
+            playAudioBlip(880, 0.1);
             if (overlay) overlay.style.display = 'flex';
             setTimeout(() => {
                 if (overlay) overlay.style.display = 'none';
@@ -774,6 +1015,8 @@ window.saveAnnouncement = function() {
     if (window.firebaseDB && window.firebaseUpdate && window.firebaseRef) {
         window.firebaseUpdate(window.firebaseRef(window.firebaseDB, 'settings'), settings);
     }
+    const prevText = document.getElementById('marqueePreviewText');
+    if (prevText) prevText.innerText = text || 'No active broadcast announcement set.';
     alert("Live Announcement Marquee Broadcast Updated!");
 };
 
