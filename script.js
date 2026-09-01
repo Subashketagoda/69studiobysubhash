@@ -768,11 +768,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // --------------------------------------------------------------------------
     // 11 — Sticky Services Interactive Visual Crossfade
     // --------------------------------------------------------------------------
+    // 11 — Sticky Services Interactive Visual Crossfade & Scroll Sync
+    // --------------------------------------------------------------------------
     const initServicesCrossfade = () => {
         const navItems = document.querySelectorAll('.service-nav-item');
         const visualPanels = document.querySelectorAll('.service-visual-panel');
+        const audioBarsContainer = document.getElementById('servicesAudioBars');
 
-        const switchService = (index) => {
+        if (navItems.length === 0 || visualPanels.length === 0) return;
+
+        // Populate audio reactive bars in Visual 05
+        if (audioBarsContainer && audioBarsContainer.children.length === 0) {
+            audioBarsContainer.innerHTML = Array(12).fill(0).map((_, i) => 
+                `<span style="display:inline-block; width:3px; height:${Math.floor(10 + Math.random() * 26)}px; background:var(--accent-lime); border-radius:2px; margin:0 2px; animation: barPulse ${0.6 + (i % 5) * 0.15}s infinite ease-in-out alternate;"></span>`
+            ).join('');
+        }
+
+        let activeIdx = 0;
+
+        const switchService = (index, triggerHaptic = false) => {
+            if (index < 0 || index >= navItems.length) return;
+            activeIdx = index;
+
             navItems.forEach((item, i) => {
                 if (i === index) item.classList.add('active');
                 else item.classList.remove('active');
@@ -782,18 +799,49 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (i === index) panel.classList.add('active');
                 else panel.classList.remove('active');
             });
+
+            if (triggerHaptic && window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(8);
+            }
         };
 
+        // Desktop Click and Hover Switch
         navItems.forEach((item) => {
+            const idx = parseInt(item.getAttribute('data-service'), 10);
+
             item.addEventListener('mouseenter', () => {
-                const serviceIndex = parseInt(item.getAttribute('data-service'), 10);
-                switchService(serviceIndex);
+                if (window.innerWidth > 1024) {
+                    switchService(idx);
+                }
             });
+
             item.addEventListener('click', () => {
-                const serviceIndex = parseInt(item.getAttribute('data-service'), 10);
-                switchService(serviceIndex);
+                switchService(idx, true);
             });
         });
+
+        // Scroll Observer: Automatically activate corresponding panel when scrolling past services
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -40% 0px',
+            threshold: [0, 0.25, 0.5, 0.75, 1.0]
+        };
+
+        const serviceObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const idx = parseInt(entry.target.getAttribute('data-service'), 10);
+                    if (!isNaN(idx)) {
+                        switchService(idx);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        navItems.forEach((item) => serviceObserver.observe(item));
+
+        // Initial state
+        switchService(0);
     };
     initServicesCrossfade();
 
