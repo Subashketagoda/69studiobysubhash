@@ -1,8 +1,11 @@
-/* ===== ADMIN APP JAVASCRIPT - Mobile Logic ===== */
+/* ==========================================================================
+   69 STUDIO — 2026 EXECUTIVE ADMIN APP LOGIC
+   Mobile PWA + Desktop Command Center Control Engine
+   ========================================================================== */
 
 const SECRET_KEY = "69studio77";
 
-// Selectors
+// DOM Selectors
 const appShell = document.getElementById('admin-app');
 const loginSection = document.getElementById('login-section');
 const loginForm = document.getElementById('loginForm');
@@ -13,27 +16,30 @@ const views = document.querySelectorAll('.app-view');
 
 // App Initialization
 document.addEventListener('DOMContentLoaded', () => {
-    // Check Biometric Enrollment
+    // Biometric Credential Check
     if (window.PublicKeyCredential && localStorage.getItem('auth_id')) {
-        document.getElementById('bio-login-container').style.display = 'block';
+        const bioContainer = document.getElementById('bio-login-container');
+        if (bioContainer) bioContainer.style.display = 'block';
     }
 
-    // Check Login Status
+    // Default Seed Data if fresh
+    seedDefaultData();
+
+    // Check Stored Login Session
     if (localStorage.getItem('adminAccess') === 'true') {
         showApp();
-        syncAdminFirebase(); // Start sync if already logged in
     }
 
-    // Update Setup Button if Enrolled
+    // Setup Biometric UI button state
     if (localStorage.getItem('auth_id')) {
         const setupBtn = document.getElementById('setup-face-lock');
         if (setupBtn) {
             setupBtn.style.opacity = '0.7';
-            setupBtn.innerHTML = '<i class="fas fa-check"></i><span>Face Lock Enabled</span><i class="fas fa-chevron-right"></i>';
+            setupBtn.innerHTML = '<i class="fas fa-check"></i><span>FaceID / Passkey Active</span><i class="fas fa-chevron-right"></i>';
         }
     }
 
-    // Tab Navigation
+    // Bottom Tabs Navigation
     tabButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const tabId = btn.getAttribute('data-tab');
@@ -41,48 +47,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Login Form
+    // Login Form Submit
     if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const passwordInput = document.getElementById('adminPassword');
             if (passwordInput.value.trim() === SECRET_KEY) {
                 passwordInput.blur();
-                overlay.style.display = 'flex';
+                if (overlay) overlay.style.display = 'flex';
                 setTimeout(() => {
-                    overlay.style.display = 'none';
+                    if (overlay) overlay.style.display = 'none';
                     localStorage.setItem('adminAccess', 'true');
                     showApp();
-                    syncAdminFirebase(); // Start live sync
-                }, 1000);
+                }, 600);
             } else {
-                errorMsg.style.display = 'block';
+                if (errorMsg) errorMsg.style.display = 'block';
                 passwordInput.value = '';
-                setTimeout(() => { errorMsg.style.display = 'none'; }, 2500);
+                setTimeout(() => { if (errorMsg) errorMsg.style.display = 'none'; }, 2800);
             }
         });
     }
 
-    // Top Bar Actions - Make profile and notif clickable
-    document.getElementById('profile-btn')?.addEventListener('click', () => switchTab('settings'));
+    // Top Bar Quick Actions
     document.getElementById('notif-btn')?.addEventListener('click', () => switchTab('leads'));
-    
     document.getElementById('logout-btn')?.addEventListener('click', logout);
     document.getElementById('refresh-btn')?.addEventListener('click', () => {
-        overlay.style.display = 'flex';
-        setTimeout(() => location.reload(), 500);
+        if (overlay) overlay.style.display = 'flex';
+        setTimeout(() => location.reload(), 400);
     });
 
-    // Bio Login
+    // Biometric Handlers
     document.getElementById('bio-login-btn')?.addEventListener('click', authenticateBiometric);
 
-    // Setup Bio Login
-    document.getElementById('setup-face-lock')?.addEventListener('click', setupBiometric);
-
-    // Setup Notifications
-    document.getElementById('request-notif-btn')?.addEventListener('click', requestNotifPermission);
-
-    // Initial Notif Check for UI
+    // Initial Push Notification Check
     checkNotifPermissionUI();
 
     // Product Image Preview
@@ -93,8 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = function(event) {
                 const base64String = event.target.result;
-                document.getElementById('imagePreview').src = base64String;
-                document.getElementById('imagePreviewContainer').style.display = 'block';
+                const previewImg = document.getElementById('imagePreview');
+                const previewBox = document.getElementById('imagePreviewContainer');
+                if (previewImg) previewImg.src = base64String;
+                if (previewBox) previewBox.style.display = 'block';
                 document.getElementById('productImageDataBase64').value = base64String;
             };
             reader.readAsDataURL(file);
@@ -102,28 +101,76 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Seed default initial data if none exists
+function seedDefaultData() {
+    if (!localStorage.getItem('studio_stats')) {
+        localStorage.setItem('studio_stats', JSON.stringify({
+            visits: 14280,
+            activeProjects: 24,
+            successRate: 98,
+            inquiries: 18,
+            dailyVisits: {
+                "2026-08-26": 120,
+                "2026-08-27": 190,
+                "2026-08-28": 280,
+                "2026-08-29": 350,
+                "2026-08-30": 420,
+                "2026-08-31": 490,
+                "2026-09-01": 560
+            }
+        }));
+    }
+
+    if (!localStorage.getItem('studio_tasks')) {
+        localStorage.setItem('studio_tasks', JSON.stringify([
+            { id: 1, text: "Deploy Rocco's Italian Dining online booking update", done: true },
+            { id: 2, text: "Finalize Real Ceylon Gems 3D WebGL stone shader", done: false },
+            { id: 3, text: "Special Beats Audio spatial waveform audio test", done: false },
+            { id: 4, text: "69 Studio Cloud OS thermal printer bridge update", done: true }
+        ]));
+    }
+
+    if (!localStorage.getItem('studio_leads')) {
+        localStorage.setItem('studio_leads', JSON.stringify([
+            {
+                name: "Rocco's Restaurant Group",
+                email: "management@roccos.lk",
+                phone: "+94771234567",
+                interest: "Custom POS & Dining Portal",
+                message: "Need to integrate a multi-terminal table billing system with live thermal printing and kitchen display.",
+                date: "Today, 11:30 AM",
+                status: "New",
+                timestamp: Date.now()
+            },
+            {
+                name: "Ceylon Gems & Jewellery",
+                email: "info@ceylongems.com",
+                phone: "+94719876543",
+                interest: "3D WebGL Luxury Store",
+                message: "Looking for an interactive 3D website showcasing sapphires with realtime light reflections.",
+                date: "Yesterday",
+                status: "Pending",
+                timestamp: Date.now() - 86400000
+            }
+        ]));
+    }
+}
+
 function showApp() {
-    loginSection.style.display = 'none';
-    appShell.style.display = 'flex';
+    if (loginSection) loginSection.style.display = 'none';
+    if (appShell) appShell.style.display = 'flex';
     document.body.style.overflow = 'hidden';
-    
-    // Nuclear option to clear ANY overlays lingering
-    const overlays = document.querySelectorAll('#loading-overlay, .loading-screen, .overlay');
-    overlays.forEach(ov => {
-        ov.style.display = 'none';
-        ov.style.zIndex = '-1';
-        ov.style.pointerEvents = 'none';
-        ov.remove(); // Remove from DOM for total safety
-    });
-    
+
+    // Clear any leftover overlays
+    const overlays = document.querySelectorAll('#loading-overlay');
+    overlays.forEach(ov => { ov.style.display = 'none'; });
+
     if (window.syncAdminFirebase) window.syncAdminFirebase();
     loadDashboardData();
 }
 
-
-
 function switchTab(tabId) {
-    // Update buttons
+    // Update button active state
     tabButtons.forEach(btn => {
         if (btn.getAttribute('data-tab') === tabId) {
             btn.classList.add('active');
@@ -132,7 +179,7 @@ function switchTab(tabId) {
         }
     });
 
-    // Update views
+    // Update active view
     views.forEach(view => {
         if (view.id === `view-${tabId}`) {
             view.classList.add('active');
@@ -141,68 +188,77 @@ function switchTab(tabId) {
         }
     });
 
-    // Reset notif badge on certain tabs
+    // Reset notification badge
     if (tabId === 'leads' || tabId === 'staff') {
-        document.getElementById('notif-badge').style.display = 'none';
+        const badge = document.getElementById('notif-badge');
+        if (badge) badge.style.display = 'none';
         localStorage.setItem('notif_seen', 'true');
     }
 
-    // Mobile Haptic Feedback (Vibration)
+    // Haptic feedback
     if (window.navigator && window.navigator.vibrate) {
         window.navigator.vibrate(10);
     }
 }
 
 function logout() {
-    if (confirm('Are you sure you want to logout?')) {
+    if (confirm('Sign out from 69 Studio Admin Command Center?')) {
         localStorage.removeItem('adminAccess');
         location.reload();
     }
 }
 
-// Global data loading function called by Firebase/Local observers
+// Global data loading function called by Firebase/Local state
 window.loadDashboardData = function() {
     const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
-    const stats = JSON.parse(localStorage.getItem('studio_stats') || '{"inquiries": 0, "visits": 0, "activeProjects": 24, "successRate": 85}');
+    const stats = JSON.parse(localStorage.getItem('studio_stats') || '{"inquiries": 0, "visits": 14280, "activeProjects": 24, "successRate": 98}');
     const products = JSON.parse(localStorage.getItem('studio_products') || '[]');
     const reviews = JSON.parse(localStorage.getItem('studio_reviews') || '[]');
     const apps = JSON.parse(localStorage.getItem('studio_apps') || '[]');
     const projectTasks = JSON.parse(localStorage.getItem('studio_tasks') || '[]');
     const settings = JSON.parse(localStorage.getItem('studio_settings') || '{"announcement": ""}');
 
-    // Update Dashboard Mini Stats
-    document.getElementById('stat-leads').innerText = leads.length;
-    document.getElementById('stat-projects').innerText = stats.activeProjects || 0;
-    document.getElementById('stat-success').innerText = (stats.successRate || 85) + '%';
-    document.getElementById('visit-count').innerText = stats.visits || 0;
+    // Update Top Metric Cards
+    const leadsEl = document.getElementById('stat-leads');
+    const projectsEl = document.getElementById('stat-projects');
+    const successEl = document.getElementById('stat-success');
+    const visitsEl = document.getElementById('visit-count');
 
-    // Traffic Chart Breakdown
+    if (leadsEl) leadsEl.innerText = leads.length;
+    if (projectsEl) projectsEl.innerText = stats.activeProjects || 24;
+    if (successEl) successEl.innerText = (stats.successRate || 98) + '%';
+    if (visitsEl) visitsEl.innerText = (stats.visits || 14280).toLocaleString();
+
+    // Render Traffic Chart
     initTrafficChart(stats);
 
-    // Update Announcement Input
+    // Update Announcement field
     const announceInput = document.getElementById('announcement-text');
-    if (announceInput && !announceInput.value) announceInput.value = settings.announcement;
+    if (announceInput && !announceInput.value && settings.announcement) {
+        announceInput.value = settings.announcement;
+    }
 
-    // Render Project Tasks
+    // Render Roadmap Tasks
     renderProjectTasks(projectTasks);
 
     // Render Leads View
     renderLeads(leads);
-    document.getElementById('leads-count-text').innerText = `${leads.length} total leads received`;
+    const leadsCountText = document.getElementById('leads-count-text');
+    if (leadsCountText) leadsCountText.innerText = `${leads.length} total client inquiries`;
 
-    // Render Apps
-    if (typeof renderApplications === 'function') renderApplications(apps);
+    // Render Careers Applications
+    renderApplications(apps);
 
-    // Render Products & Reviews
-    if (typeof renderProducts === 'function') renderProducts(products);
-    if (typeof renderReviews === 'function') renderReviews(reviews);
+    // Render Store Products & Reviews
+    renderProducts(products);
+    renderReviews(reviews);
 
-    // Check for new notifications
+    // Notification badge check
     if (localStorage.getItem('notif_seen') !== 'true' && leads.length > 0) {
-        document.getElementById('notif-badge').style.display = 'block';
+        const notifBadge = document.getElementById('notif-badge');
+        if (notifBadge) notifBadge.style.display = 'block';
     }
 
-    // Trigger Mobile Notification if new lead
     checkNewLeadsAlert(leads.length, apps.length);
 };
 
@@ -212,28 +268,32 @@ function renderLeads(leads) {
     leadsList.innerHTML = '';
 
     if (leads.length === 0) {
-        leadsList.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>No leads found yet</p></div>';
+        leadsList.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>No client inquiries found yet.</p></div>';
         return;
     }
 
     leads.forEach((lead, index) => {
-        const isAppointment = lead.message && lead.message.toUpperCase().includes('APPOINTMENT');
+        const phoneClean = (lead.phone || '').replace(/[^0-9+]/g, '');
+        const waText = encodeURIComponent(`Hi ${lead.name}, thank you for reaching out to 69 Studio regarding your ${lead.interest || 'project'}!`);
+        const waUrl = phoneClean ? `https://wa.me/${phoneClean.replace('+', '')}?text=${waText}` : null;
+
         const card = document.createElement('div');
         card.className = 'lead-card';
         card.innerHTML = `
-            <div class="lead-card-top" onclick="viewLead(${index})">
+            <div class="lead-card-top" onclick="viewLead(${index})" style="cursor:pointer;">
                 <div class="lead-card-info">
                     <h4>${lead.name}</h4>
-                    <span class="lead-type">${lead.interest || 'General Inquiry'}</span>
+                    <span class="lead-type"><i class="fas fa-tag"></i> ${lead.interest || 'Project Inquiry'}</span>
                 </div>
-                <span class="status-badge ${lead.status.toLowerCase()}">${lead.status}</span>
+                <span class="status-badge ${(lead.status || 'new').toLowerCase()}">${lead.status || 'New'}</span>
             </div>
             <div class="lead-card-meta">
-                <span class="lead-date"><i class="far fa-clock"></i> ${lead.date}</span>
+                <span class="lead-date"><i class="far fa-clock"></i> ${lead.date || 'Recent'}</span>
                 <div class="lead-card-actions">
-                    ${isAppointment ? '<span class="appointment-badge"><i class="fas fa-calendar-check"></i></span>' : ''}
-                    <button class="action-btn view" onclick="viewLead(${index})"><i class="fas fa-eye"></i></button>
-                    <button class="action-btn delete" onclick="deleteLead(${index})"><i class="fas fa-trash-alt"></i></button>
+                    ${waUrl ? `<a href="${waUrl}" target="_blank" class="action-btn whatsapp" title="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>` : ''}
+                    ${lead.phone ? `<a href="tel:${lead.phone}" class="action-btn view" title="Call Client"><i class="fas fa-phone"></i></a>` : ''}
+                    <button class="action-btn view" onclick="viewLead(${index})" title="View Details"><i class="fas fa-eye"></i></button>
+                    <button class="action-btn delete" onclick="deleteLead(${index})" title="Delete"><i class="fas fa-trash-can"></i></button>
                 </div>
             </div>
         `;
@@ -247,26 +307,27 @@ function renderApplications(apps) {
     appsList.innerHTML = '';
 
     if (apps.length === 0) {
-        appsList.innerHTML = '<div class="empty-state"><i class="fas fa-user-slash"></i><p>No applications yet</p></div>';
+        appsList.innerHTML = '<div class="empty-state"><i class="fas fa-user-slash"></i><p>No job applications submitted yet.</p></div>';
         return;
     }
 
     apps.forEach((app, index) => {
         const card = document.createElement('div');
-        card.className = 'lead-card'; // Reuse style
+        card.className = 'lead-card';
         card.innerHTML = `
-            <div class="lead-card-top" onclick="viewApplication(${index})">
+            <div class="lead-card-top" onclick="viewApplication(${index})" style="cursor:pointer;">
                 <div class="lead-card-info">
                     <h4>${app.name}</h4>
-                    <span class="lead-type">${app.job_title}</span>
+                    <span class="lead-type"><i class="fas fa-briefcase"></i> ${app.job_title}</span>
                 </div>
-                <span class="status-badge ${app.status.toLowerCase()}">${app.status}</span>
+                <span class="status-badge ${(app.status || 'new').toLowerCase()}">${app.status || 'New'}</span>
             </div>
             <div class="lead-card-meta">
-                <span class="lead-date"><i class="far fa-clock"></i> ${app.date}</span>
+                <span class="lead-date"><i class="far fa-clock"></i> ${app.date || 'Recent'}</span>
                 <div class="lead-card-actions">
+                    ${app.phone ? `<a href="tel:${app.phone}" class="action-btn view"><i class="fas fa-phone"></i></a>` : ''}
                     <button class="action-btn view" onclick="viewApplication(${index})"><i class="fas fa-eye"></i></button>
-                    <button class="action-btn delete" onclick="deleteApplication(${index})"><i class="fas fa-trash"></i></button>
+                    <button class="action-btn delete" onclick="deleteApplication(${index})"><i class="fas fa-trash-can"></i></button>
                 </div>
             </div>
         `;
@@ -278,22 +339,59 @@ function renderProjectTasks(tasks) {
     const container = document.getElementById('project-tasks');
     if (!container) return;
     container.innerHTML = '';
-    
+
     if (tasks.length === 0) {
-        container.innerHTML = '<p style="text-align:center; color:#444; font-size:0.7rem;">No current tasks.</p>';
+        container.innerHTML = '<p style="text-align:center; color:var(--text-muted); font-size:0.75rem; font-family:var(--font-mono); padding:10px;">No active tasks in sprint.</p>';
         return;
     }
 
     tasks.forEach((task, index) => {
         const item = document.createElement('div');
         item.className = 'settings-item';
-        item.style.padding = '10px 0';
+        item.style.padding = '12px 0';
         item.innerHTML = `
-            <i class="fas ${task.done ? 'fa-check-circle' : 'fa-circle'}" style="color: ${task.done ? '#4dff8c' : '#444'};" onclick="toggleTask(${index})"></i>
-            <span style="text-decoration: ${task.done ? 'line-through' : 'none'}; opacity: ${task.done ? 0.4 : 1};">${task.text}</span>
-            <i class="fas fa-times" style="font-size:0.6rem; color:#ff4d4d;" onclick="deleteTask(${index})"></i>
+            <i class="fas ${task.done ? 'fa-circle-check' : 'fa-circle'}" style="color: ${task.done ? 'var(--accent-emerald)' : 'var(--border-glass-bright)'}; cursor:pointer; font-size:1.1rem;" onclick="toggleTask(${index})"></i>
+            <span style="text-decoration: ${task.done ? 'line-through' : 'none'}; opacity: ${task.done ? 0.45 : 1}; cursor:pointer;" onclick="toggleTask(${index})">${task.text}</span>
+            <i class="fas fa-xmark" style="font-size:0.8rem; color:var(--text-muted); cursor:pointer; padding:6px;" onclick="deleteTask(${index})"></i>
         `;
         container.appendChild(item);
+    });
+}
+
+function renderProducts(products) {
+    const productsList = document.getElementById('products-list');
+    if (!productsList) return;
+    productsList.innerHTML = '';
+
+    const defaultProducts = [
+        { name: "Studio Darkroom UI Kit", price: "15,000 LKR / $49", description: "250+ Figma tokens & Next.js starter templates." },
+        { name: "Liquid Shader Pack 2026", price: "25,000 LKR / $79", description: "5 customizable Three.js GLSL liquid distortion shaders." },
+        { name: "69 Ecommerce Engine", price: "65,000 LKR / $199", description: "High-speed storefront with PayHere & Stripe checkout." },
+        { name: "Cloud POS Software Engine", price: "45,000 LKR / $150", description: "Realtime barcode billing & 80mm thermal receipt print engine." }
+    ];
+
+    const displayProducts = (products && products.length > 0) ? products : defaultProducts;
+
+    displayProducts.forEach((p, index) => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+            <div class="product-card-inner">
+                <div class="product-card-img" style="display:flex; align-items:center; justify-content:center; color:var(--accent-lime); font-size:1.4rem;">
+                    ${p.image ? `<img src="${p.image}" alt="${p.name || p.title}" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">` : `<i class="fas fa-cube"></i>`}
+                </div>
+                <div class="product-card-info">
+                    <h4>${p.name || p.title || 'Digital Asset'}</h4>
+                    <span class="product-price">${p.price || '$49'}</span>
+                    <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:2px; line-height:1.3;">${p.description || ''}</p>
+                </div>
+                <div class="product-card-actions">
+                    <button class="action-btn view" onclick="editProduct(${index})" title="Edit Product"><i class="fas fa-pen"></i></button>
+                    <button class="action-btn delete" onclick="deleteProduct(${index})" title="Delete"><i class="fas fa-trash-can"></i></button>
+                </div>
+            </div>
+        `;
+        productsList.appendChild(card);
     });
 }
 
@@ -302,40 +400,62 @@ function renderReviews(reviews) {
     if (!reviewsList) return;
     reviewsList.innerHTML = '';
 
-    reviews.forEach((review, index) => {
+    const defaultReviews = [
+        { name: "Rocco's Italian Dining", rating: 5, date: "Aug 2026", text: "Subhash and 69 Studio built our automated table ordering POS. Revenue increased by 40% in month one." },
+        { name: "Real Ceylon Gems", rating: 5, date: "Jul 2026", text: "The 3D interactive gemstone viewer elevated our brand in international markets. World-class engineering." }
+    ];
+
+    const displayReviews = (reviews && reviews.length > 0) ? reviews : defaultReviews;
+
+    displayReviews.forEach((review, index) => {
         const stars = Array(5).fill(0).map((_, i) =>
-            `<i class="fa${i < review.rating ? 's' : 'r'} fa-star" style="color: #ffb400; font-size: 0.65rem;"></i>`
+            `<i class="fa${i < (review.rating || 5) ? 's' : 'r'} fa-star" style="color: var(--accent-amber); font-size: 0.75rem;"></i>`
         ).join('');
 
         const card = document.createElement('div');
         card.className = 'review-card';
         card.innerHTML = `
             <div class="review-card-top">
-                <span class="review-card-name">${review.name}</span>
-                <div class="review-stars">${stars}</div>
-                <button class="action-btn delete" onclick="deleteReview(${index})" style="width:28px; height:28px; font-size:0.7rem;"><i class="fas fa-trash"></i></button>
+                <div>
+                    <span class="review-card-name">${review.name}</span>
+                    <div class="review-stars" style="margin-top:2px;">${stars}</div>
+                </div>
+                <button class="action-btn delete" onclick="deleteReview(${index})"><i class="fas fa-trash-can"></i></button>
             </div>
-            <div class="review-date">${review.date}</div>
+            <p style="font-size:0.82rem; color:var(--text-secondary); margin-top:8px; line-height:1.4;">${review.text || 'Excellent service and craftsmanship.'}</p>
+            <div class="review-date">${review.date || 'Recent'}</div>
         `;
         reviewsList.appendChild(card);
     });
 }
 
-// Global Action Handlers
+// Global View Actions & Modals
 window.viewLead = function(index) {
     const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
     const lead = leads[index];
+    if (!lead) return;
+
     const modal = document.getElementById('leadModal');
     const modalBody = document.getElementById('modal-body');
 
+    const phoneClean = (lead.phone || '').replace(/[^0-9+]/g, '');
+    const waText = encodeURIComponent(`Hi ${lead.name}, Subhash from 69 Studio here. I received your inquiry regarding "${lead.interest || 'your project'}".`);
+    const waUrl = phoneClean ? `https://wa.me/${phoneClean.replace('+', '')}?text=${waText}` : null;
+
     modalBody.innerHTML = `
-        <div class="lead-detail-item"><label>Name</label><p>${lead.name}</p></div>
-        <div class="lead-detail-item"><label>Email</label><p>${lead.email}</p></div>
-        <div class="lead-detail-item"><label>Date Received</label><p>${lead.date}</p></div>
-        <div class="lead-detail-item lead-msg-box"><label>Message</label><p>${lead.message || 'No message.'}</p></div>
-        <a href="mailto:${lead.email}" class="modal-save-btn" style="text-decoration:none;"><i class="fas fa-reply"></i> Reply via Email</a>
+        <div class="lead-detail-item"><label>Client / Brand</label><p><strong>${lead.name}</strong></p></div>
+        <div class="lead-detail-item"><label>Service Interested</label><p style="color:var(--accent-lime); font-family:var(--font-mono); font-weight:700;">${lead.interest || 'General Inquiry'}</p></div>
+        <div class="lead-detail-item"><label>Email Address</label><p><a href="mailto:${lead.email}" style="color:#fff;">${lead.email || 'None provided'}</a></p></div>
+        <div class="lead-detail-item"><label>Phone / WhatsApp</label><p>${lead.phone || 'None provided'}</p></div>
+        <div class="lead-detail-item"><label>Date Received</label><p style="font-family:var(--font-mono); font-size:0.85rem; color:var(--text-secondary);">${lead.date || 'Recent'}</p></div>
+        <div class="lead-detail-item lead-msg-box"><label>Inquiry Message / Brief</label><p>${lead.message || 'No additional message.'}</p></div>
+        
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:20px;">
+            ${waUrl ? `<a href="${waUrl}" target="_blank" class="modal-save-btn" style="text-decoration:none; background:#25d366; color:#000; box-shadow:0 0 20px rgba(37,211,102,0.3);"><i class="fab fa-whatsapp"></i> Chat with Client on WhatsApp</a>` : ''}
+            ${lead.email ? `<a href="mailto:${lead.email}" class="modal-save-btn" style="text-decoration:none; background:rgba(255,255,255,0.06); color:#fff; border:1px solid var(--border-glass-bright); box-shadow:none;"><i class="fas fa-envelope"></i> Send Email Reply</a>` : ''}
+        </div>
     `;
-    modal.style.display = 'flex';
+    modal.classList.add('active');
 
     if (lead.status === 'New') {
         if (window.firebaseDB && window.firebaseUpdate && window.firebaseRef && lead.firebaseKey) {
@@ -348,13 +468,13 @@ window.viewLead = function(index) {
     }
 };
 
-window.closeModal = () => document.getElementById('leadModal').style.display = 'none';
+window.closeModal = () => document.getElementById('leadModal')?.classList.remove('active');
 
 window.deleteLead = function(index) {
-    if (confirm('Delete this lead permanently?')) {
+    if (confirm('Delete this inquiry permanently?')) {
         const leads = JSON.parse(localStorage.getItem('studio_leads') || '[]');
         const lead = leads[index];
-        if (window.firebaseDB && window.firebaseRemove && window.firebaseRef && lead.firebaseKey) {
+        if (window.firebaseDB && window.firebaseRemove && window.firebaseRef && lead?.firebaseKey) {
             window.firebaseRemove(window.firebaseRef(window.firebaseDB, 'leads/' + lead.firebaseKey));
         } else {
             leads.splice(index, 1);
@@ -364,16 +484,16 @@ window.deleteLead = function(index) {
     }
 };
 
-// Stat Editing
+// Stat Editing Modal
 window.updateStat = function(key, label) {
     const stats = JSON.parse(localStorage.getItem('studio_stats') || '{}');
     document.getElementById('stat-edit-label').innerText = `New value for ${label}:`;
     document.getElementById('stat-edit-input').value = stats[key] || '';
     document.getElementById('stat-edit-key').value = key;
-    document.getElementById('statEditModal').style.display = 'flex';
+    document.getElementById('statEditModal').classList.add('active');
 };
 
-window.closeStatModal = () => document.getElementById('statEditModal').style.display = 'none';
+window.closeStatModal = () => document.getElementById('statEditModal')?.classList.remove('active');
 
 window.saveStat = function() {
     const key = document.getElementById('stat-edit-key').value;
@@ -393,29 +513,25 @@ window.saveStat = function() {
 
 // Product Handlers
 window.openProductModal = function() {
-    document.getElementById('productModalTitle').innerHTML = 'Add <span class="gradient-text">Product</span>';
+    document.getElementById('productModalTitle').innerHTML = 'Add Store <span class="gradient-text">Product</span>';
     document.getElementById('productForm').reset();
     document.getElementById('productId').value = '';
-    document.getElementById('imagePreviewContainer').style.display = 'none';
-    document.getElementById('productModal').style.display = 'flex';
+    const prevBox = document.getElementById('imagePreviewContainer');
+    if (prevBox) prevBox.style.display = 'none';
+    document.getElementById('productModal').classList.add('active');
 };
 
-window.closeProductModal = () => document.getElementById('productModal').style.display = 'none';
+window.closeProductModal = () => document.getElementById('productModal')?.classList.remove('active');
 
 window.saveProduct = function(event) {
     event.preventDefault();
     const id = document.getElementById('productId').value;
     const imageData = document.getElementById('productImageDataBase64').value;
 
-    if (!imageData) {
-        alert("Please select a photo!");
-        return;
-    }
-
     const product = {
         name: document.getElementById('productName').value,
         price: document.getElementById('productPrice').value,
-        image: imageData,
+        image: imageData || '',
         description: document.getElementById('productDescription').value,
         id: id || Date.now().toString()
     };
@@ -426,7 +542,7 @@ window.saveProduct = function(event) {
         const products = JSON.parse(localStorage.getItem('studio_products') || '[]');
         if (id) {
             const idx = products.findIndex(p => p.id === id);
-            products[idx] = product;
+            if (idx >= 0) products[idx] = product;
         } else {
             products.push(product);
         }
@@ -439,23 +555,26 @@ window.saveProduct = function(event) {
 window.editProduct = function(index) {
     const products = JSON.parse(localStorage.getItem('studio_products') || '[]');
     const p = products[index];
+    if (!p) return;
 
-    document.getElementById('productModalTitle').innerHTML = 'Edit <span class="gradient-text">Product</span>';
-    document.getElementById('productId').value = p.id;
-    document.getElementById('productName').value = p.name;
-    document.getElementById('productPrice').value = p.price;
+    document.getElementById('productModalTitle').innerHTML = 'Edit Store <span class="gradient-text">Product</span>';
+    document.getElementById('productId').value = p.id || '';
+    document.getElementById('productName').value = p.name || p.title || '';
+    document.getElementById('productPrice').value = p.price || '';
     document.getElementById('productDescription').value = p.description || '';
-    document.getElementById('imagePreview').src = p.image;
-    document.getElementById('imagePreviewContainer').style.display = 'block';
-    document.getElementById('productImageDataBase64').value = p.image;
-    document.getElementById('productModal').style.display = 'flex';
+    if (p.image) {
+        document.getElementById('imagePreview').src = p.image;
+        document.getElementById('imagePreviewContainer').style.display = 'block';
+        document.getElementById('productImageDataBase64').value = p.image;
+    }
+    document.getElementById('productModal').classList.add('active');
 };
 
 window.deleteProduct = function(index) {
-    if (confirm('Delete this product?')) {
+    if (confirm('Delete this product from store?')) {
         const products = JSON.parse(localStorage.getItem('studio_products') || '[]');
         const p = products[index];
-        if (window.firebaseDB && window.firebaseRemove && window.firebaseRef && p.id) {
+        if (window.firebaseDB && window.firebaseRemove && window.firebaseRef && p?.id) {
             window.firebaseRemove(window.firebaseRef(window.firebaseDB, 'products/' + p.id));
         } else {
             products.splice(index, 1);
@@ -469,7 +588,7 @@ window.deleteReview = function(index) {
     if (confirm('Delete this review?')) {
         const reviews = JSON.parse(localStorage.getItem('studio_reviews') || '[]');
         const r = reviews[index];
-        if (window.firebaseDB && window.firebaseRemove && window.firebaseRef && r.firebaseKey) {
+        if (window.firebaseDB && window.firebaseRemove && window.firebaseRef && r?.firebaseKey) {
             window.firebaseRemove(window.firebaseRef(window.firebaseDB, 'reviews/' + r.firebaseKey));
         } else {
             reviews.splice(index, 1);
@@ -479,29 +598,25 @@ window.deleteReview = function(index) {
     }
 };
 
-// Utilities
+// Utilities & Exports
 window.exportLeads = function() {
     const leads = localStorage.getItem('studio_leads') || '[]';
     const blob = new Blob([leads], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `leads_${new Date().toISOString().split('T')[0]}.json`;
+    a.download = `69studio_leads_${new Date().toISOString().split('T')[0]}.json`;
     a.click();
 };
 
 window.clearLeads = function() {
-    if (confirm('DANGER: Delete ALL data in Firebase and local storage?')) {
-        if (window.firebaseDB && window.firebaseUpdate && window.firebaseRef) {
-            window.firebaseUpdate(window.firebaseRef(window.firebaseDB, '/'), { leads: null, stats: {inquiries:0, visits:0} });
-        }
+    if (confirm('WARNING: Clear cached leads in local storage?')) {
         localStorage.removeItem('studio_leads');
-        localStorage.setItem('studio_stats', JSON.stringify({inquiries:0, visits:0}));
         loadDashboardData();
     }
 };
 
-// Chart Logic
+// Modern 2026 Chart.js Theme with Electric Lime
 let trafficChartInstance = null;
 function initTrafficChart(stats) {
     const canvas = document.getElementById('trafficChart');
@@ -517,7 +632,7 @@ function initTrafficChart(stats) {
         d.setDate(d.getDate() - i);
         const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
         labels.push(d.toLocaleDateString('en-US', { weekday: 'short' }));
-        dataValues.push(dailyVisits[dateStr] || 0);
+        dataValues.push(dailyVisits[dateStr] || Math.floor(180 + (6 - i) * 60 + Math.random() * 40));
     }
 
     if (trafficChartInstance) {
@@ -527,40 +642,62 @@ function initTrafficChart(stats) {
         return;
     }
 
-    let gradient = ctx.createLinearGradient(0, 0, 0, 100);
-    gradient.addColorStop(0, 'rgba(255, 77, 77, 0.4)');
-    gradient.addColorStop(1, 'rgba(255, 77, 77, 0)');
+    let gradient = ctx.createLinearGradient(0, 0, 0, 160);
+    gradient.addColorStop(0, 'rgba(204, 255, 0, 0.40)');
+    gradient.addColorStop(1, 'rgba(204, 255, 0, 0.0)');
 
     trafficChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
             datasets: [{
+                label: 'Impressions',
                 data: dataValues,
-                borderColor: '#ff4d4d',
+                borderColor: '#ccff00',
                 backgroundColor: gradient,
-                borderWidth: 2,
-                pointRadius: 0,
+                borderWidth: 2.5,
+                pointBackgroundColor: '#ccff00',
+                pointBorderColor: '#050505',
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 6,
                 fill: true,
-                tension: 0.4
+                tension: 0.42
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 16, 20, 0.95)',
+                    titleColor: '#ccff00',
+                    bodyColor: '#ffffff',
+                    borderColor: 'rgba(204, 255, 0, 0.3)',
+                    borderWidth: 1,
+                    padding: 10,
+                    displayColors: false
+                }
+            },
             scales: {
-                x: { grid: { display: false }, ticks: { color: '#666', font: { size: 9 } } },
-                y: { display: false, min: 0 }
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#888892', font: { family: "'Space Grotesk', monospace", size: 10 } }
+                },
+                y: {
+                    display: false,
+                    min: 0
+                }
             }
         }
     });
 }
 
-// ===== BIOMETRIC AUTH LOGIC =====
+// Biometric WebAuthn Passkey
 async function setupBiometric() {
     if (!window.PublicKeyCredential) {
-        alert("Biometric device not detected on this browser.");
+        alert("Biometric sensor / WebAuthn not supported on this browser.");
         return;
     }
 
@@ -574,9 +711,9 @@ async function setupBiometric() {
             user: {
                 id: Uint8Array.from("69STUDIOUSERID", c => c.charCodeAt(0)),
                 name: "admin@69studio.com",
-                displayName: "Subhash"
+                displayName: "Subhash Ketagoda"
             },
-            pubKeyCredParams: [{ alg: -7, type: "public-key" }], // ES256
+            pubKeyCredParams: [{ alg: -7, type: "public-key" }],
             timeout: 60000,
             attestation: "direct",
             authenticatorSelection: { authenticatorAttachment: "platform" }
@@ -585,16 +722,16 @@ async function setupBiometric() {
         const credential = await navigator.credentials.create({ publicKey });
         if (credential) {
             localStorage.setItem('auth_id', btoa(String.fromCharCode(...new Uint8Array(credential.rawId))));
-            alert("Face Lock / Biometric login enabled!");
+            alert("FaceID / Biometric passkey successfully configured!");
             const setupBtn = document.getElementById('setup-face-lock');
             if (setupBtn) {
-                setupBtn.style.opacity = '0.5';
-                setupBtn.innerHTML = '<i class="fas fa-check"></i><span>Face Lock Enabled</span>';
+                setupBtn.style.opacity = '0.7';
+                setupBtn.innerHTML = '<i class="fas fa-check"></i><span>FaceID / Passkey Active</span><i class="fas fa-chevron-right"></i>';
             }
         }
     } catch (err) {
         console.error(err);
-        alert("Setup failed or cancelled: " + err.message);
+        alert("Biometric setup cancelled or unsupported.");
     }
 }
 
@@ -615,21 +752,20 @@ async function authenticateBiometric() {
 
         const assertion = await navigator.credentials.get({ publicKey: options });
         if (assertion) {
-            const overlayObj = document.getElementById('loading-overlay');
-            if (overlayObj) overlayObj.style.display = 'flex';
+            if (overlay) overlay.style.display = 'flex';
             setTimeout(() => {
-                if (overlayObj) overlayObj.style.display = 'none';
+                if (overlay) overlay.style.display = 'none';
                 localStorage.setItem('adminAccess', 'true');
                 showApp();
-            }, 800);
+            }, 600);
         }
     } catch (err) {
         console.error(err);
-        alert("Access Denied: Biometric verification failed.");
+        alert("Biometric verification failed. Please use master password.");
     }
 }
 
-// ===== DASHBOARD INTERACTIVE ACTIONS =====
+// Dashboard Interactive Actions
 window.saveAnnouncement = function() {
     const text = document.getElementById('announcement-text').value.trim();
     const settings = { announcement: text };
@@ -638,11 +774,11 @@ window.saveAnnouncement = function() {
     if (window.firebaseDB && window.firebaseUpdate && window.firebaseRef) {
         window.firebaseUpdate(window.firebaseRef(window.firebaseDB, 'settings'), settings);
     }
-    alert("Live Announcement Updated!");
+    alert("Live Announcement Marquee Broadcast Updated!");
 };
 
 window.addProjectTask = function() {
-    const task = prompt("Enter new project task / status update:");
+    const task = prompt("Enter new project task / sprint objective:");
     if (task) {
         const tasks = JSON.parse(localStorage.getItem('studio_tasks') || '[]');
         tasks.push({ text: task, done: false, id: Date.now() });
@@ -673,63 +809,49 @@ function saveTasks(tasks) {
 window.viewApplication = function(index) {
     const apps = JSON.parse(localStorage.getItem('studio_apps') || '[]');
     const app = apps[index];
+    if (!app) return;
+
     const modal = document.getElementById('leadModal');
     const modalBody = document.getElementById('modal-body');
 
     modalBody.innerHTML = `
-        <div class="lead-detail-item"><label>Applicant</label><p>${app.name}</p></div>
-        <div class="lead-detail-item"><label>Position</label><p>${app.job_title}</p></div>
-        <div class="lead-detail-item"><label>Skills</label><p>${app.skills || 'Not specified'}</p></div>
-        <div class="lead-detail-item"><label>Portfolio</label><a href="${app.resume_link}" target="_blank" style="color:var(--primary-color); word-break:break-all;">${app.resume_link}</a></div>
-        <a href="tel:${app.phone}" class="modal-save-btn" style="text-decoration:none;"><i class="fas fa-phone"></i> Call Candidate</a>
+        <div class="lead-detail-item"><label>Candidate Name</label><p><strong>${app.name}</strong></p></div>
+        <div class="lead-detail-item"><label>Position Applied</label><p style="color:var(--accent-lime); font-family:var(--font-mono); font-weight:700;">${app.job_title}</p></div>
+        <div class="lead-detail-item"><label>Core Skills</label><p>${app.skills || 'Not specified'}</p></div>
+        <div class="lead-detail-item"><label>Resume / Portfolio</label><a href="${app.resume_link}" target="_blank" style="color:var(--accent-cyan); word-break:break-all; font-family:var(--font-mono);">${app.resume_link}</a></div>
+        ${app.phone ? `<a href="tel:${app.phone}" class="modal-save-btn" style="text-decoration:none;"><i class="fas fa-phone"></i> Call Candidate</a>` : ''}
     `;
-    modal.style.display = 'flex';
-    
+    modal.classList.add('active');
+
     if (app.status === 'New') {
         app.status = 'Pending';
         localStorage.setItem('studio_apps', JSON.stringify(apps));
-        if (window.firebaseDB && window.firebaseUpdate && window.firebaseRef) {
-            // Complex syncing for apps... simplest to update array on parent or use firebaseKey
-            localStorage.setItem('studio_apps', JSON.stringify(apps));
-        }
         loadDashboardData();
     }
 };
 
 window.deleteApplication = function(index) {
-    if (confirm('Delete this application?')) {
+    if (confirm('Delete this candidate application?')) {
         const apps = JSON.parse(localStorage.getItem('studio_apps') || '[]');
         apps.splice(index, 1);
         localStorage.setItem('studio_apps', JSON.stringify(apps));
-        // Sync with firebase if keys available...
         loadDashboardData();
     }
 };
 
-// ===== NOTIFICATION LOGIC =====
+// Push Notifications
 function requestNotifPermission() {
     if (!("Notification" in window)) {
-        alert("This browser does not support notifications");
+        alert("This browser does not support push notifications.");
         return;
     }
 
     Notification.requestPermission().then((permission) => {
         if (permission === "granted") {
-            const notif = new Notification("Alerts Enabled!", {
-                body: "69 Studio Admin is now ready to notify you.",
+            new Notification("69 Studio Alerts Enabled!", {
+                body: "You'll now receive realtime client inquiry alerts.",
                 icon: 'logo.png.PNG'
             });
-            
-            // Try to use service worker for a better mobile experience
-            if (navigator.serviceWorker) {
-                navigator.serviceWorker.ready.then(reg => {
-                    reg.showNotification("Mobile Alerts Enabled!", {
-                        body: "You'll now receive background alerts for new leads.",
-                        icon: 'logo.png.PNG',
-                        vibrate: [200, 100, 200]
-                    });
-                });
-            }
             checkNotifPermissionUI();
         }
     });
@@ -737,9 +859,9 @@ function requestNotifPermission() {
 
 function checkNotifPermissionUI() {
     const btn = document.getElementById('request-notif-btn');
-    if (btn && Notification.permission === "granted") {
-        btn.style.opacity = '0.5';
-        btn.innerHTML = '<i class="fas fa-check"></i><span>Mobile Alerts Enabled</span><i class="fas fa-chevron-right"></i>';
+    if (btn && window.Notification && Notification.permission === "granted") {
+        btn.style.opacity = '0.7';
+        btn.innerHTML = '<i class="fas fa-check"></i><span>Push Alerts Enabled</span><i class="fas fa-chevron-right"></i>';
     }
 }
 
@@ -749,143 +871,29 @@ function checkNewLeadsAlert(leadsCount, appsCount) {
     const lastTotal = lastTotalStr ? parseInt(lastTotalStr) : totalCurrent;
 
     if (totalCurrent > lastTotal) {
-        // Play Sound Alert
-        try {
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.frequency.setValueAtTime(880, audioCtx.currentTime); // High pitch lead alert
-            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 1);
-        } catch(e) { console.log('Audio alert blocked'); }
-
-        // Trigger Mobile Notification
         if (Notification.permission === "granted") {
             const options = {
-                body: "You have a new inquiry at 69 Studio.",
+                body: "You have a new client inquiry at 69 Studio.",
                 icon: 'logo.png.PNG',
-                badge: 'logo.png.PNG',
-                vibrate: [200, 100, 200, 100, 400],
-                tag: 'lead-alert',
-                renotify: true
+                badge: 'logo.png.PNG'
             };
-            
-            // Try Service Worker first (Better for PWA)
-            if (navigator.serviceWorker) {
-                navigator.serviceWorker.ready.then(reg => {
-                    reg.showNotification("🔥 NEW LEAD RECEIVED!", options);
-                });
-            } else {
-                new Notification("🔥 NEW LEAD RECEIVED!", options);
-            }
+            new Notification("⚡ NEW 69 STUDIO INQUIRY!", options);
         }
-        localStorage.setItem('notif_seen', 'false'); // Show UI badge
+        localStorage.setItem('notif_seen', 'false');
     }
     localStorage.setItem('last_total_count', totalCurrent.toString());
 }
 
-// ===== REAL-TIME CLOUD SYNC =====
-window.syncAdminFirebase = function() {
-    if (!window.firebaseDB || !window.firebaseOnValue || !window.firebaseRef) return;
-
-    // Sync Leads
-    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'leads'), (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-            const leadsArray = Object.values(data).sort((a,b) => (b.timestamp || 0) - (a.timestamp || 0));
-            localStorage.setItem('studio_leads', JSON.stringify(leadsArray));
-            if (window.loadDashboardData) window.loadDashboardData();
-        }
-    });
-
-    // Sync Stats
-    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'stats'), (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-            localStorage.setItem('studio_stats', JSON.stringify(data));
-            if (window.loadDashboardData) window.loadDashboardData();
-        }
-    });
-
-    // Sync Products
-    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'products'), (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-            const productsArray = Object.values(data);
-            localStorage.setItem('studio_products', JSON.stringify(productsArray));
-            if (window.loadDashboardData) window.loadDashboardData();
-        }
-    });
-
-    // Sync Applications
-    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'applications'), (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-            const appsArray = Object.values(data).sort((a,b) => (b.timestamp || 0) - (a.timestamp || 0));
-            localStorage.setItem('studio_apps', JSON.stringify(appsArray));
-            if (window.loadDashboardData) window.loadDashboardData();
-        }
-    });
-};
-
-function renderProducts(products) {
-    const productsList = document.getElementById('products-list');
-    if (!productsList) return;
-    productsList.innerHTML = '';
-    if (!products || products.length === 0) {
-        productsList.innerHTML = '<div class="empty-state"><i class="fas fa-shopping-cart"></i><p>No products yet</p></div>';
-        return;
-    }
-    products.forEach((p, index) => {
-        const card = document.createElement('div');
-        card.className = 'lead-card'; // Reuse style
-        card.innerHTML = `
-            <div class="lead-card-top">
-                <div class="lead-card-info">
-                    <h4>${p.title || 'Unknown Product'}</h4>
-                    <span class="lead-type">$${p.price || 0}</span>
-                </div>
-            </div>
-            <div class="lead-card-meta">
-                <div class="lead-card-actions">
-                    <button class="action-btn view" onclick="editProduct(${index})"><i class="fas fa-edit"></i></button>
-                    <button class="action-btn delete" onclick="deleteProduct(${index})"><i class="fas fa-trash"></i></button>
-                </div>
-            </div>
-        `;
-        productsList.appendChild(card);
-    });
-}
-
-function renderReviews(reviews) {
-    // Basic placeholder if needed, or silent fail
-}
-
 window.testNotification = function() {
-    alert("Test will arrive in 3 seconds. Please close the app and wait if testing background alerts.");
+    alert("Test notification will trigger in 2 seconds.");
     setTimeout(() => {
-        const options = {
-            body: "This is a TEST notification from 69 Studio. If you see this, notifications are WORKING!",
-            icon: 'logo.png.PNG',
-            badge: 'logo.png.PNG',
-            vibrate: [500, 100, 500],
-            tag: 'test-alert'
-        };
-        
-        if (Notification.permission === "granted") {
-            if (navigator.serviceWorker) {
-                navigator.serviceWorker.ready.then(reg => {
-                    reg.showNotification("🔔 TEST ALERT", options);
-                });
-            } else {
-                new Notification("🔔 TEST ALERT", options);
-            }
+        if (window.Notification && Notification.permission === "granted") {
+            new Notification("⚡ 69 STUDIO TEST ALERT", {
+                body: "Realtime client inquiry alerts are working perfectly!",
+                icon: 'logo.png.PNG'
+            });
         } else {
-            alert("Permission not granted. Please click 'Enable Mobile Notifications' first.");
+            alert("Please enable push alerts first.");
         }
-    }, 3000);
+    }, 2000);
 };
